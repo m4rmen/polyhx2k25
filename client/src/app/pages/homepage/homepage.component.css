@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
+
 :host {
     display: block;
     width: 100%;
@@ -27,7 +29,8 @@
     left: 20px;
     color: white;
     font-size: 2rem;
-    font-family: Arial, sans-serif;
+    font-family: "Special Elite", serif;
+    z-index: 1;
 }
 
 /* Button container */
