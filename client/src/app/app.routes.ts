@@ -4,8 +4,8 @@ import { HomepageComponent } from './pages/homepage/homepage.component';
 import { EmissionsComponent } from './pages/emissions/emissions.component';
 
 export const routes: Routes = [
-    // { path: '', redirectTo: '/homepage', pathMatch: 'full' },
-    { path: 'homepage', component: HomepageComponent },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
+    { path: 'home', component: HomepageComponent },
     { path: 'dashboard', component: DashboardComponent },
     {path: 'emissions', component: EmissionsComponent}
 ];

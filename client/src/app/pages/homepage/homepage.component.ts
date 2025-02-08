@@ -1,13 +1,14 @@
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Renderer2 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { QuizPopupComponent } from '../../components/quiz-popup/quiz-popup.component';
 import { trigger, transition, style, animate } from '@angular/animations';
 
 import { Router} from '@angular/router';
-import Globe from 'globe.gl';
+import Globe, { GlobeInstance } from 'globe.gl';
 import * as THREE from 'three';
-
+import { createClouds, animateClouds } from '../utils/clouds';
+import { createBackground } from '../utils/background';
 @Component({
     selector: 'app-homepage',
     imports: [
@@ -34,10 +35,13 @@ import * as THREE from 'three';
 })
 export class HomepageComponent implements AfterViewInit {
     @ViewChild('globeContainer', { static: false }) globeContainer!: ElementRef;
+    @ViewChild('globeContainer2', { static: false }) globeContainer2!: ElementRef;
     isHidden = false;
     showQuizPopup = false;
-    hideButton = false;
-    constructor(private router: Router){}
+    hideButton = false;    
+    world: GlobeInstance | null = null;
+    clouds: any | null = null;
+    constructor(private renderer: Renderer2private router: Router){}
 
     ngAfterViewInit(): void {
         this.initGlobe();
@@ -47,81 +51,47 @@ export class HomepageComponent implements AfterViewInit {
         this.router.navigate([path])
     }
 
-    initGlobe(): void {
-
-        
-        const world = new Globe(this.globeContainer.nativeElement, { animateIn: true, waitForGlobeReady: true })
-            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-            .backgroundImageUrl('assets/galaxy_starfield.png');
-        // .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-        // .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-        // .backgroundColor('rgba(0,0,0,1)') // Fully black background
-        // .width(window.innerWidth)
-        // .height(window.innerHeight);
-
-        world.pointsData([
-            { lat: 45, lng: -73, size: 5 }, // Montreal
-            { lat: 48.8566, lng: 2.3522, size: 5 } // Paris
-        ]);
-
-        world.controls().autoRotate = true;
-        world.controls().autoRotateSpeed = -0.65;
-            
-            
-        const background = new THREE.TextureLoader().load('assets/galaxy_starfield.png');
-        world.scene().background = background;
-
-        // Add clouds sphere
-        console.log('Local path:', window.location.pathname);
-        const CLOUDS_IMG_URL = 'assets/fair_clouds_4k.png';
-        const CLOUDS_ALT = 0.004;
-        const CLOUDS_ROTATION_SPEED = 0.01; // deg/frame
-
-        new THREE.TextureLoader().load(CLOUDS_IMG_URL, (cloudsTexture) => {
-            const cloudsMaterial = new THREE.MeshPhongMaterial({
-                map: cloudsTexture,
-                transparent: true,
-            });
-
-            const clouds = new THREE.Mesh(
-                new THREE.SphereGeometry(world.getGlobeRadius() * (1 + CLOUDS_ALT), 75, 75),
-                cloudsMaterial
-            );
-
-            clouds.scale.set(0.8, 0.8, 0.8); // Start slightly smaller
-            world.scene().add(clouds);
-
-            let scale = 0.8;
-
-            function animateIn() {
-                scale += 0.02;   // Adjust speed of zooming
-
-                clouds.scale.set(Math.min(scale, 1), Math.min(scale, 1), Math.min(scale, 1));
-
-                if (scale < 1) {
-                    requestAnimationFrame(animateIn);
-                }
-            }
-            animateIn();
-
-            function rotateClouds() {
-                clouds.rotation.y += CLOUDS_ROTATION_SPEED * Math.PI / 180;
-                requestAnimationFrame(rotateClouds);
-            }
-            rotateClouds();
-        });
-    }
-
-    hideText() {
-        this.isHidden = true;
-        this.hideButton = true;
+    changeGlobe() {
+        // Fade out the current globe container
+        this.renderer.addClass(this.globeContainer.nativeElement, 'fade-out');
+        this.renderer.removeClass(this.globeContainer2.nativeElement, 'fade-in');
+        this.renderer.addClass(this.globeContainer2.nativeElement, 'fade-out');
+    
+        // Set timeout to allow the fade-out transition to complete before changing the globe
         setTimeout(() => {
-            this.showQuizPopup = true;
-        }, 500); // Attendre que le texte disparaisse avant d'afficher le quiz
+          const newWorld = new Globe(this.globeContainer2.nativeElement, { waitForGlobeReady: true })
+            .globeImageUrl('assets/earth-dark.jpg')
+            .bumpImageUrl('assets/earth-topology.png');
+    
+          newWorld.controls().autoRotate = true;
+          newWorld.controls().autoRotateSpeed = -0.65;
+          newWorld.controls().maxDistance = 1300;
+    
+          setTimeout(() => {
+            // this.world?.clear();
+            this.world = newWorld;
+    
+            // Fade in the new globe container
+            this.renderer.removeClass(this.globeContainer2.nativeElement, 'fade-out');
+            this.renderer.addClass(this.globeContainer2.nativeElement, 'fade-in');
+          }, 1000); // Allow the previous globe to fade out before switching
+        }, 1000); // Wait a moment before starting the fade-out
+      }
+
+    initGlobe(): void {
+        this.world = new Globe(this.globeContainer.nativeElement, { animateIn: true, waitForGlobeReady: true })
+            // TODO local assets
+            .globeImageUrl('assets/earth-blue-marble.jpg')
+            .bumpImageUrl('assets/earth-topology.png');
+            
+        this.world.controls().autoRotate = true;
+        this.world.controls().autoRotateSpeed = -0.65;
+        this.world.controls().maxDistance = 1300;
+            
+        createBackground(this.world);
+
+        this.clouds = createClouds(this.world, 0);
+        animateClouds(this.clouds);
     }
 
-    closeQuiz() {
-        this.showQuizPopup = false;
-    }
 }
