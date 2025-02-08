@@ -22,35 +22,39 @@ export class HomepageComponent implements AfterViewInit {
         const world = new Globe(this.globeContainer.nativeElement, { animateIn: true, waitForGlobeReady: true })
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
             .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png');
-            // .backgroundImageUrl('assets/galaxy_starfield.png');
-            // .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-            // .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-            // .backgroundColor('rgba(0,0,0,1)') // Fully black background
-            // .width(window.innerWidth)
-            // .height(window.innerHeight);
             
-        world.pointsData([
-            { lat: 45, lng: -73, size: 5 }, // Montreal
-            { lat: 48.8566, lng: 2.3522, size: 5 } // Paris
-        ]);
-        
         world.controls().autoRotate = true;
         world.controls().autoRotateSpeed = -0.65;
+        world.controls().maxDistance = 1300;
             
-            
-        const background = new THREE.TextureLoader().load('assets/galaxy_starfield.png');
-        world.scene().background = background;
+        const backgroundTexture = new THREE.TextureLoader().load('assets/galaxy_starfield.png');
 
-        // Add clouds sphere
+        const backgroundRadius = 1500; 
+        const backgroundGeometry = new THREE.SphereGeometry(backgroundRadius, 60, 60);
+        const backgroundMaterial = new THREE.MeshBasicMaterial({
+            map: backgroundTexture,
+            side: THREE.BackSide, 
+        });
+        const backgroundSphere = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+
+        world.scene().add(backgroundSphere);
+
+        function animateBackground() {
+            backgroundSphere.rotation.y += 0.00075;
+            requestAnimationFrame(animateBackground);
+        }
+        animateBackground();
+
         console.log('Local path:', window.location.pathname);
         const CLOUDS_IMG_URL = 'assets/fair_clouds_4k.png'; 
         const CLOUDS_ALT = 0.004;
-        const CLOUDS_ROTATION_SPEED = 0.01; // deg/frame
+        const CLOUDS_ROTATION_SPEED = 0.01; 
         
         new THREE.TextureLoader().load(CLOUDS_IMG_URL, (cloudsTexture) => {
             const cloudsMaterial = new THREE.MeshPhongMaterial({ 
                 map: cloudsTexture, 
                 transparent: true, 
+                opacity: 0.0,
             });
         
             const clouds = new THREE.Mesh(
@@ -58,21 +62,24 @@ export class HomepageComponent implements AfterViewInit {
                 cloudsMaterial
             );
         
-            clouds.scale.set(0.8, 0.8, 0.8); // Start slightly smaller
+            clouds.scale.set(0.8, 0.8, 0.8); 
             world.scene().add(clouds);
         
-            let scale = 0.8;
-            
+            let scale = 0.50;
+            let opacity = 0.0;
             function animateIn() {
-                scale += 0.02;   // Adjust speed of zooming
-        
+                scale += 0.0291;  
+                opacity += 0.0215; 
                 clouds.scale.set(Math.min(scale, 1), Math.min(scale, 1), Math.min(scale, 1));
-        
-                if (scale < 1) {
+                clouds.material.opacity = Math.min(opacity, 1);
+                
+                if (scale < 1 || opacity < 1) {
                     requestAnimationFrame(animateIn);
                 }
             }
-            animateIn();
+            setTimeout(() => {
+                animateIn();
+            }, 300); 
         
             function rotateClouds() {
                 clouds.rotation.y += CLOUDS_ROTATION_SPEED * Math.PI / 180;
