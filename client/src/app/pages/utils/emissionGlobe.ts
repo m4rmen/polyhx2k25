@@ -26,7 +26,7 @@ export function initCo2Globe(ref: ElementRef): GlobeInstance {
 
       globe
       .polygonsData(countryData.features)
-      .polygonAltitude(0.05)  
+      .polygonAltitude(0.01)  
       .polygonCapColor((feat: any) => {
         const isoCode = feat.id;
         const value = CO2_DATA[isoCode] || 0;
