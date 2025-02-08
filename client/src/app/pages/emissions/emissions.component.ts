@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
-import Globe from 'globe.gl';  
+import Globe, { GlobeInstance } from 'globe.gl';  
 import * as d3 from 'd3';      
 import { CO2_DATA } from '../../../assets/countriesCo2'; 
 
@@ -20,7 +20,7 @@ export class EmissionsComponent implements AfterViewInit {
     this.initCo2Globe();
   }
 
-  private async initCo2Globe(): Promise<void> {
+  private async initCo2Globe(): Promise<GlobeInstance> {
     
     const geoJsonUrl = 'assets/countries-simplified.geojson';
     const countriesGeoJson = await fetch(geoJsonUrl).then(res => res.json());
@@ -58,5 +58,8 @@ export class EmissionsComponent implements AfterViewInit {
 
     globe.controls().autoRotate = false;
     globe.controls().autoRotateSpeed = 0.5;
+
+    return globe;
+
   }
 }
