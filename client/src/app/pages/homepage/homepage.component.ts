@@ -9,7 +9,6 @@ import Globe from 'globe.gl';
 export class HomepageComponent implements AfterViewInit {
     @ViewChild('globeContainer', { static: false }) globeContainer!: ElementRef;
 
-    constructor() {}
 
     ngAfterViewInit(): void {
         this.initGlobe();
