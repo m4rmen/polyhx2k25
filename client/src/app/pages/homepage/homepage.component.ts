@@ -1,4 +1,5 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import { Router} from '@angular/router';
 import Globe from 'globe.gl';
 import * as THREE from 'three';
 
@@ -10,9 +11,14 @@ import * as THREE from 'three';
 export class HomepageComponent implements AfterViewInit {
     @ViewChild('globeContainer', { static: false }) globeContainer!: ElementRef;
 
+    constructor(private router: Router){}
 
     ngAfterViewInit(): void {
         this.initGlobe();
+    }
+
+    redirect(path:string):void{
+        this.router.navigate([path])
     }
 
     initGlobe(): void {
