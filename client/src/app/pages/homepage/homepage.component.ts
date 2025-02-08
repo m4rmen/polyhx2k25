@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { QuizPopupComponent } from '../../components/quiz-popup/quiz-popup.component';
 import { trigger, transition, style, animate } from '@angular/animations';
 
+import { Router} from '@angular/router';
 import Globe from 'globe.gl';
 import * as THREE from 'three';
 
@@ -36,9 +37,14 @@ export class HomepageComponent implements AfterViewInit {
     isHidden = false;
     showQuizPopup = false;
     hideButton = false;
+    constructor(private router: Router){}
 
     ngAfterViewInit(): void {
         this.initGlobe();
+    }
+
+    redirect(path:string):void{
+        this.router.navigate([path])
     }
 
     initGlobe(): void {
