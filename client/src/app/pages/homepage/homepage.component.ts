@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Component, ElementRef, AfterViewInit, ViewChild, Renderer2 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { QuizPopupComponent } from '../../components/quiz-popup/quiz-popup.component';
 import { trigger, transition, style, animate } from '@angular/animations';
 
-import { Router} from '@angular/router';
 import Globe, { GlobeInstance } from 'globe.gl';
 import * as THREE from 'three';
 import { createClouds, animateClouds } from '../utils/clouds';
@@ -41,15 +42,25 @@ export class HomepageComponent implements AfterViewInit {
     hideButton = false;    
     world: GlobeInstance | null = null;
     clouds: any | null = null;
-    constructor(private renderer: Renderer2private router: Router){}
+    constructor(private renderer: Renderer2){}
 
     ngAfterViewInit(): void {
         this.initGlobe();
     }
 
-    redirect(path:string):void{
-        this.router.navigate([path])
+    hideText() {
+        this.isHidden = true;
+        this.hideButton = true;
+        setTimeout(() => {
+            this.showQuizPopup = true;
+        }, 500); // Attendre que le texte disparaisse avant d'afficher le quiz
     }
+
+    closeQuiz() {
+        this.showQuizPopup = false;
+    }
+
+
 
     changeGlobe() {
         // Fade out the current globe container
