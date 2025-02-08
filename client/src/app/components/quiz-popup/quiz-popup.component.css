@@ -4,12 +4,12 @@
     align-items: center;
     justify-content: space-around;
     border: solid black;
-    background-color: #dadada;
     border-radius: 0.5rem;
     width: 25rem;
     height: 45rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
+    color: white;
 }
 
 .start-quiz {

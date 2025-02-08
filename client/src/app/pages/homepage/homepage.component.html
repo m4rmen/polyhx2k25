@@ -34,9 +34,8 @@
     });
   </script>
 </body>
-<!-- Right-side button container -->
 <div class="button-container">
-  <button [routerLink]="['/dashboard']">
+  <button (click)="hideText()" [ngClass]="{ 'hide-button': hideButton }">
     <span>Quiz</span>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 74 74" height="34" width="34">
       <circle stroke-width="3" stroke="black" r="35.5" cy="37" cx="37"></circle>
@@ -51,21 +50,20 @@
   <p>© 2025 TERR.A - Alexandre M. Julien R. Theo G.</p>
 </div>
 
-<div class="homepage-text">
+<div class="homepage-text" [ngClass]="{ 'hide': isHidden }">
   <p>
-    Bienvenue sur TERR.A, votre <span class="important">voyage interactif</span> pour découvrir notre
-    planète Terre ! 🌍
+    Bienvenue sur TERR.A, votre <span class="important">voyage interactif</span> pour découvrir notre planète Terre ! 🌍
   </p>
   <p>
     Plongez dans<span class="important"> une aventure éducative avec des quiz</span> variés et captivants sur les villes
-    emblématiques, les pays
-    fascinants, et les défis environnementaux actuels comme les feux de forêt, la montée des eaux, et les émissions de
-    CO2.
+    emblématiques, les pays fascinants, et les défis environnementaux actuels comme les feux de forêt, la montée des
+    eaux, et les émissions de CO2.
   </p>
   <p>
     Apprenez tout en vous amusant, et découvrez <span class="important">des explications et connaissances
-      supplémentaires grâce à l'IA </span> pour
-    une expérience toujours plus enrichissante.
+      supplémentaires grâce à l'IA</span>
+    pour une expérience toujours plus enrichissante.
   </p>
-
 </div>
+<!-- <button *ngIf="showQuizPopup" (click)="closeQuiz()" class="close-quiz-button">Fermer le quiz</button> -->
+<app-quiz-popup *ngIf="showQuizPopup" [@slideIn] class="quiz-popup"></app-quiz-popup>
