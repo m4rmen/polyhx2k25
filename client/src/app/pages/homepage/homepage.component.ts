@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { QuizPopupComponent } from '../../components/quiz-popup/quiz-popup.component';
 import { trigger, transition, style, animate } from '@angular/animations';
-
+import { initCo2Globe } from '../utils/emissionGlobe';
 import Globe, { GlobeInstance } from 'globe.gl';
 import * as THREE from 'three';
 import { createClouds, animateClouds } from '../utils/clouds';
@@ -70,9 +70,7 @@ export class HomepageComponent implements AfterViewInit {
     
         // Set timeout to allow the fade-out transition to complete before changing the globe
         setTimeout(() => {
-          const newWorld = new Globe(this.globeContainer2.nativeElement, { waitForGlobeReady: true })
-            .globeImageUrl('assets/earth-dark.jpg')
-            .bumpImageUrl('assets/earth-topology.png');
+          const newWorld = initCo2Globe(this.globeContainer2);
     
           newWorld.controls().autoRotate = true;
           newWorld.controls().autoRotateSpeed = -0.65;
