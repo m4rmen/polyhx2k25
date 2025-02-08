@@ -27,9 +27,11 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-prettier": "^5.2.2",
     "glob": "^11.0.1",
+    "globe.gl": "^2.39.7",
     "prettier": "^3.4.2",
     "rimraf": "^6.0.1",
     "rxjs": "~7.8.0",
+    "three": "^0.173.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

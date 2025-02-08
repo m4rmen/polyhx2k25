@@ -1,23 +1,28 @@
-import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
-import { HttpService } from '../../services/http/http.service';
-import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
+import Globe from 'globe.gl';
 
 @Component({
     selector: 'app-homepage',
-    imports: [RouterModule, MatButtonModule, MatDividerModule, MatIconModule],
     templateUrl: './homepage.component.html',
-    styleUrl: './homepage.component.css',
+    styleUrls: ['./homepage.component.css']
 })
-export class HomepageComponent {
-    serverResponse = '';
-    constructor(private httpService: HttpService) {}
+export class HomepageComponent implements AfterViewInit {
+    @ViewChild('globeContainer', { static: false }) globeContainer!: ElementRef;
 
-    getServerStatus(): void {
-        this.httpService.ping().subscribe((status) => {
-            this.serverResponse = `${status.message} - ${status.lastPing != null ? new Date(status.lastPing)?.toLocaleString('fr-FR') : ''}`;
-        });
+    constructor() {}
+
+    ngAfterViewInit(): void {
+        this.initGlobe();
+    }
+
+    initGlobe(): void {
+        const globe = new Globe(this.globeContainer.nativeElement)
+            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+            .backgroundColor('rgba(0,0,0,0)')  // Transparent background
+            .width(300)
+            .height(300);
+
+            globe.pointsData([{ lat: 45, lng: -73, size: 5 }]); // Example marker
     }
 }
