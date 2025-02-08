@@ -19,7 +19,8 @@ export class HomepageComponent implements AfterViewInit {
     initGlobe(): void {
         const world = new Globe(this.globeContainer.nativeElement, { animateIn: true })
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png');
+            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+            .backgroundImageUrl('assets/galaxy_starfield.png');
             // .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
             // .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
             // .backgroundColor('rgba(0,0,0,1)') // Fully black background
