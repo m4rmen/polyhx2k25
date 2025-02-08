@@ -1,17 +1,41 @@
 import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { QuizPopupComponent } from '../../components/quiz-popup/quiz-popup.component';
+import { trigger, transition, style, animate } from '@angular/animations';
+
 import Globe from 'globe.gl';
 import * as THREE from 'three';
 
 @Component({
     selector: 'app-homepage',
-    imports: [RouterModule],
+    imports: [
+        RouterModule,
+        CommonModule,
+        QuizPopupComponent,],
     templateUrl: './homepage.component.html',
-    styleUrls: ['./homepage.component.css']
+    styleUrls: ['./homepage.component.css'],
+    animations: [
+        trigger('slideIn', [
+            transition(':enter', [
+                style({
+                    transform: 'translateX(0%) translateY(0)',
+                    opacity: 0,
+                    top: '15%'
+                }),
+                animate('0.5s ease-out', style({
+                    transform: 'translateX(0) translateY(0)',
+                    opacity: 1
+                }))
+            ])
+        ])
+    ]
 })
 export class HomepageComponent implements AfterViewInit {
     @ViewChild('globeContainer', { static: false }) globeContainer!: ElementRef;
-
+    isHidden = false;
+    showQuizPopup = false;
+    hideButton = false;
 
     ngAfterViewInit(): void {
         this.initGlobe();
@@ -75,5 +99,17 @@ export class HomepageComponent implements AfterViewInit {
             }
             rotateClouds();
         });
+    }
+
+    hideText() {
+        this.isHidden = true;
+        this.hideButton = true;
+        setTimeout(() => {
+            this.showQuizPopup = true;
+        }, 500); // Attendre que le texte disparaisse avant d'afficher le quiz
+    }
+
+    closeQuiz() {
+        this.showQuizPopup = false;
     }
 }

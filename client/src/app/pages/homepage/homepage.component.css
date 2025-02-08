@@ -88,6 +88,7 @@ button:active {
     z-index: 1;
 }
 
+/* Animation de disparition du texte vers la gauche */
 .homepage-text {
     position: absolute;
     top: 80%;
@@ -99,6 +100,30 @@ button:active {
     z-index: 1;
     width: 25rem;
     text-align: justify;
+    transition: transform 0.5s ease-out, opacity 0.5s ease-out;
+}
+
+.homepage-text.hide {
+    transform: translate(-150%, -50%);
+    opacity: 0;
+}
+
+/* Animation de disparition du bouton */
+button {
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+button.hide-button {
+    transform: translateX(20px);
+    opacity: 0;
+}
+
+.quiz-popup {
+    position: absolute;
+    top: 15%;
+    left: 75%;
+    opacity: 1;
+    z-index: 1;
 }
 
 .important {
