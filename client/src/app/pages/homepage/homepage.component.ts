@@ -1,7 +1,8 @@
-import { Component, ElementRef, AfterViewInit, ViewChild } from '@angular/core';
-import Globe from 'globe.gl';
+import { Component, ElementRef, AfterViewInit, ViewChild, Renderer2 } from '@angular/core';
+import Globe, { GlobeInstance } from 'globe.gl';
 import * as THREE from 'three';
-
+import { createClouds, animateClouds } from '../utils/clouds';
+import { createBackground } from '../utils/background';
 @Component({
     selector: 'app-homepage',
     templateUrl: './homepage.component.html',
@@ -9,83 +10,56 @@ import * as THREE from 'three';
 })
 export class HomepageComponent implements AfterViewInit {
     @ViewChild('globeContainer', { static: false }) globeContainer!: ElementRef;
-
-    constructor() {}
+    @ViewChild('globeContainer2', { static: false }) globeContainer2!: ElementRef;
+    world: GlobeInstance | null = null;
+    clouds: any | null = null;
+    constructor(private renderer: Renderer2) {}
 
     ngAfterViewInit(): void {
         this.initGlobe();
     }
 
+    changeGlobe() {
+        // Fade out the current globe container
+        this.renderer.addClass(this.globeContainer.nativeElement, 'fade-out');
+        this.renderer.removeClass(this.globeContainer2.nativeElement, 'fade-in');
+        this.renderer.addClass(this.globeContainer2.nativeElement, 'fade-out');
+    
+        // Set timeout to allow the fade-out transition to complete before changing the globe
+        setTimeout(() => {
+          const newWorld = new Globe(this.globeContainer2.nativeElement, { waitForGlobeReady: true })
+            .globeImageUrl('assets/earth-dark.jpg')
+            .bumpImageUrl('assets/earth-topology.png');
+    
+          newWorld.controls().autoRotate = true;
+          newWorld.controls().autoRotateSpeed = -0.65;
+          newWorld.controls().maxDistance = 1300;
+    
+          setTimeout(() => {
+            // this.world?.clear();
+            this.world = newWorld;
+    
+            // Fade in the new globe container
+            this.renderer.removeClass(this.globeContainer2.nativeElement, 'fade-out');
+            this.renderer.addClass(this.globeContainer2.nativeElement, 'fade-in');
+          }, 1000); // Allow the previous globe to fade out before switching
+        }, 1000); // Wait a moment before starting the fade-out
+      }
+
     initGlobe(): void {
-
-        
-        const world = new Globe(this.globeContainer.nativeElement, { animateIn: true, waitForGlobeReady: true })
-            .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png');
+        this.world = new Globe(this.globeContainer.nativeElement, { animateIn: true, waitForGlobeReady: true })
+            // TODO local assets
+            .globeImageUrl('assets/earth-blue-marble.jpg')
+            .bumpImageUrl('assets/earth-topology.png');
             
-        world.controls().autoRotate = true;
-        world.controls().autoRotateSpeed = -0.65;
-        world.controls().maxDistance = 1300;
+        this.world.controls().autoRotate = true;
+        this.world.controls().autoRotateSpeed = -0.65;
+        this.world.controls().maxDistance = 1300;
             
-        const backgroundTexture = new THREE.TextureLoader().load('assets/galaxy_starfield.png');
+        createBackground(this.world);
 
-        const backgroundRadius = 1500; 
-        const backgroundGeometry = new THREE.SphereGeometry(backgroundRadius, 60, 60);
-        const backgroundMaterial = new THREE.MeshBasicMaterial({
-            map: backgroundTexture,
-            side: THREE.BackSide, 
-        });
-        const backgroundSphere = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
-
-        world.scene().add(backgroundSphere);
-
-        function animateBackground() {
-            backgroundSphere.rotation.y += 0.00075;
-            requestAnimationFrame(animateBackground);
-        }
-        animateBackground();
-
-        console.log('Local path:', window.location.pathname);
-        const CLOUDS_IMG_URL = 'assets/fair_clouds_4k.png'; 
-        const CLOUDS_ALT = 0.004;
-        const CLOUDS_ROTATION_SPEED = 0.01; 
-        
-        new THREE.TextureLoader().load(CLOUDS_IMG_URL, (cloudsTexture) => {
-            const cloudsMaterial = new THREE.MeshPhongMaterial({ 
-                map: cloudsTexture, 
-                transparent: true, 
-                opacity: 0.0,
-            });
-        
-            const clouds = new THREE.Mesh(
-                new THREE.SphereGeometry(world.getGlobeRadius() * (1 + CLOUDS_ALT), 75, 75),
-                cloudsMaterial
-            );
-        
-            clouds.scale.set(0.8, 0.8, 0.8); 
-            world.scene().add(clouds);
-        
-            let scale = 0.50;
-            let opacity = 0.0;
-            function animateIn() {
-                scale += 0.0291;  
-                opacity += 0.0215; 
-                clouds.scale.set(Math.min(scale, 1), Math.min(scale, 1), Math.min(scale, 1));
-                clouds.material.opacity = Math.min(opacity, 1);
-                
-                if (scale < 1 || opacity < 1) {
-                    requestAnimationFrame(animateIn);
-                }
-            }
-            setTimeout(() => {
-                animateIn();
-            }, 300); 
-        
-            function rotateClouds() {
-                clouds.rotation.y += CLOUDS_ROTATION_SPEED * Math.PI / 180;
-                requestAnimationFrame(rotateClouds);
-            }
-            rotateClouds();
-        });
+        this.clouds = createClouds(this.world, 0);
+        animateClouds(this.clouds);
     }
+
 }
