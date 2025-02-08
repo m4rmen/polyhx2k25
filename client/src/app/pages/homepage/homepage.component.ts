@@ -17,24 +17,30 @@ export class HomepageComponent implements AfterViewInit {
     }
 
     initGlobe(): void {
-        const world = new Globe(this.globeContainer.nativeElement, { animateIn: true })
+
+        
+        const world = new Globe(this.globeContainer.nativeElement, { animateIn: true, waitForGlobeReady: true })
             .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-            .backgroundImageUrl('assets/galaxy_starfield.png');
+            .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png');
+            // .backgroundImageUrl('assets/galaxy_starfield.png');
             // .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
             // .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
             // .backgroundColor('rgba(0,0,0,1)') // Fully black background
             // .width(window.innerWidth)
             // .height(window.innerHeight);
-
+            
         world.pointsData([
             { lat: 45, lng: -73, size: 5 }, // Montreal
             { lat: 48.8566, lng: 2.3522, size: 5 } // Paris
         ]);
-  
+        
         world.controls().autoRotate = true;
         world.controls().autoRotateSpeed = -0.65;
-    
+            
+            
+        const background = new THREE.TextureLoader().load('assets/galaxy_starfield.png');
+        world.scene().background = background;
+
         // Add clouds sphere
         console.log('Local path:', window.location.pathname);
         const CLOUDS_IMG_URL = 'assets/fair_clouds_4k.png'; 
