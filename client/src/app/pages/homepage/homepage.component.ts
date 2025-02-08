@@ -10,7 +10,6 @@ import * as THREE from 'three';
 export class HomepageComponent implements AfterViewInit {
     @ViewChild('globeContainer', { static: false }) globeContainer!: ElementRef;
 
-    constructor() {}
 
     ngAfterViewInit(): void {
         this.initGlobe();
