@@ -11,3 +11,37 @@
     display: block;
   }
   
+/* Fullscreen globe */
+.globe-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Title styling */
+.title {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    color: white;
+    font-size: 2rem;
+    font-family: Arial, sans-serif;
+}
+
+/* Button container */
+.button-container {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* Button styling */
+button {
+    width: 120px;
+}
