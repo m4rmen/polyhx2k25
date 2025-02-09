@@ -14,7 +14,7 @@ import { GlobeQuizService } from '../../services/globe-quiz.service';
 import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
 import { initDeforestationQuizGlobe } from '../utils/deforestationQuizGlobe';
 import { initDeforestationAnswerGlobe } from '../utils/deforestationAnswerGlobe';
-
+import { initPopulationGlobe } from '../utils/worldPopulationGlobe';
 
 @Component({
     selector: 'app-homepage',
@@ -78,7 +78,7 @@ export class HomepageComponent implements AfterViewInit {
 
         // Set timeout to allow the fade-out transition to complete before changing the globe
         setTimeout(() => {
-          const newWorld = initDeforestationAnswerGlobe(this.globeContainer2);
+          const newWorld = initPopulationGlobe(this.globeContainer2);
             
           newWorld.controls().autoRotate = true;
           newWorld.controls().autoRotateSpeed = -0.65;
