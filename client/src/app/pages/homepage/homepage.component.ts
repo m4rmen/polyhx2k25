@@ -10,6 +10,11 @@ import Globe, { GlobeInstance } from 'globe.gl';
 import * as THREE from 'three';
 import { createClouds, animateClouds } from '../utils/clouds';
 import { createBackground } from '../utils/background';
+import { GlobeQuizService } from '../../services/globe-quiz.service';
+import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
+
+
+
 @Component({
     selector: 'app-homepage',
     imports: [
@@ -42,7 +47,7 @@ export class HomepageComponent implements AfterViewInit {
     hideButton = false;    
     world: GlobeInstance | null = null;
     clouds: any | null = null;
-    constructor(private renderer: Renderer2){}
+    constructor(private renderer: Renderer2, public globeQuizService: GlobeQuizService ){}
 
     ngAfterViewInit(): void {
         this.initGlobe();
@@ -70,8 +75,8 @@ export class HomepageComponent implements AfterViewInit {
     
         // Set timeout to allow the fade-out transition to complete before changing the globe
         setTimeout(() => {
-          const newWorld = initCo2Globe(this.globeContainer2);
-    
+          const newWorld = initEmissionQuizGlobe(this.globeContainer2, this.globeQuizService);
+            
           newWorld.controls().autoRotate = true;
           newWorld.controls().autoRotateSpeed = -0.65;
           newWorld.controls().maxDistance = 1300;
