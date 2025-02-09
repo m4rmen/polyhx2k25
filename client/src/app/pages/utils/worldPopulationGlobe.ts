@@ -3,6 +3,7 @@ import Globe, { GlobeInstance } from 'globe.gl';
 import * as d3 from 'd3';
 import { ElementRef } from '@angular/core';
 import { WORLD_POPULATION } from '../../../assets/world_population';
+import { createBackground } from './background';
 
 export function initPopulationGlobe(ref: ElementRef): GlobeInstance {
   // Create a color scale for population weight.
@@ -14,7 +15,7 @@ export function initPopulationGlobe(ref: ElementRef): GlobeInstance {
   const globe = new Globe(ref.nativeElement, { animateIn: false, waitForGlobeReady: true })
     .globeImageUrl('assets/earth-blue-marble.jpg')
     .bumpImageUrl('assets/earth-topology.png')
-    .backgroundImageUrl('assets/galaxy_starfield.png')
+    // .backgroundImageUrl('assets/galaxy_starfield.png')
     // Configure the hexbin properties to display population data.
     .hexBinPointWeight('pop')
     .hexAltitude((d: any) => d.sumWeight * 6e-8)
@@ -32,5 +33,6 @@ export function initPopulationGlobe(ref: ElementRef): GlobeInstance {
   globe.controls().autoRotate = true;
   globe.controls().autoRotateSpeed = 0.6;
 
+  createBackground(globe);
   return globe;
 }
