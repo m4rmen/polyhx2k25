@@ -21,6 +21,8 @@ import { baseGlobe } from '../utils/baseGlobe';
 import { GroqComponent } from '../../components/groq/groq.component';
 import { GameService } from '../../services/game.service';
 import { Subscription } from 'rxjs';
+import { initFoodProdGlob } from '../utils/foodProdGlobe';
+import { initFoodProdQuizGlob } from '../utils/foodProdQuizGlobe';
 
 
 @Component({
@@ -79,15 +81,14 @@ export class HomepageComponent implements AfterViewInit, OnInit {
         this.hideButton = true;
         setTimeout(() => {
             this.showQuizPopup = true;
-        }, 500); // Attendre que le texte disparaisse avant d'afficher le quiz
+        }, 500); 
     }
 
     closeQuiz() {
         this.showQuizPopup = false;
-        this.isHidden = false;       // Fait réapparaître le texte
-        this.hideButton = false;     // Fait réapparaître le bouton
+        this.isHidden = false;       
+        this.hideButton = false;    
     }
-
 
     triggerChangeGlobe(globeIndex: number) {
         switch (globeIndex) {
@@ -104,6 +105,12 @@ export class HomepageComponent implements AfterViewInit, OnInit {
                 break;
             case 5:
                 this.changeGlobe(initPopulationGlobe);
+                break;
+            case 6:
+                this.changeGlobe(initFoodProdGlob);
+                break;
+            case 7:
+                this.changeGlobe(initFoodProdQuizGlob);
                 break;
             default:
                 this.changeGlobe(baseGlobe);
