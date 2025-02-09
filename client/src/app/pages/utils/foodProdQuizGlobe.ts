@@ -59,7 +59,6 @@ export function initFoodProdQuizGlob(ref: ElementRef): GlobeInstance {
       });
 
     globe.controls().autoRotate = false;
-    globe.controls().autoRotateSpeed = 0.5;
 
     createBackground(globe);
     return globe;

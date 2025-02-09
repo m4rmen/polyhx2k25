@@ -43,8 +43,8 @@ export function initFoodProdGlob(ref: ElementRef): GlobeInstance {
         `;
       });
 
-    globe.controls().autoRotate = false;
-    globe.controls().autoRotateSpeed = 0.5;
+    globe.controls().autoRotate = true;
+    globe.controls().autoRotateSpeed = -0.65;
 
     createBackground(globe);
     return globe;

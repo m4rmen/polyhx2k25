@@ -18,7 +18,7 @@ export function initOvershootGlobe(ref: ElementRef): GlobeInstance {
     const latestDate = new Date("2025-07-15");
     const firstDate = d3.min(overshootDates) || new Date("2025-01-01");
 
-    const colorScale = d3.scaleLog<string>()
+    const colorScale = d3.scaleLinear<string>()
       .domain([firstDate.getTime(), latestDate.getTime()])
       .range(["red", "green"])
       .clamp(true);
@@ -38,7 +38,10 @@ export function initOvershootGlobe(ref: ElementRef): GlobeInstance {
     .polygonCapColor((feat: any) => {
         const isoCode = feat.id;
         const overshootDate = new Date(OVERSHOOT_DAY_DATA[isoCode]);
-        return colorScale(overshootDate.getTime());
+        if (OVERSHOOT_DAY_DATA[isoCode]) {
+            return colorScale(overshootDate.getTime());
+        }
+        return 'rgba(0, 0, 0, 0.1)'; 
     })
     .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
     .polygonStrokeColor(() => '#111')
@@ -50,8 +53,8 @@ export function initOvershootGlobe(ref: ElementRef): GlobeInstance {
         Overshoot Day: ${overshootDate ? overshootDate.toLocaleDateString('en-US', { day: '2-digit', month: 'long', year: 'numeric' }) : 'No data'}
         `;});   
     
-    globe.controls().autoRotate = false;
-    globe.controls().autoRotateSpeed = 0.5;
+        globe.controls().autoRotate = true;
+        globe.controls().autoRotateSpeed = -0.65;
 
     createBackground(globe);
 
