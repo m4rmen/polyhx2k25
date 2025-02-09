@@ -13,31 +13,25 @@ import { GameService } from '../../services/game.service';
 export class QuizPopupComponent implements OnInit {
   @Output() closePopup = new EventEmitter<void>();
 
-  // Inject the QuizService. Make it public so the template can bind to its properties if needed.
   constructor(public gameService: GameService) { }
 
   ngOnInit(): void {
-    // Load the quiz data.
     this.gameService.loadQuiz().then(() => {
-      // Start the timer and, when finished, start the quiz.
       this.gameService.timerStarted = true;
       this.gameService.startTimer(() => {
         this.gameService.startQuiz();
       });
     });
 
-    // Optionally, subscribe to the close event if you want to react in the component.
     this.gameService.closePopup.subscribe(() => {
       this.closePopup.emit();
     });
   }
 
-  // Delegate option selection to the service.
   onOptionSelect(optionText: string) {
     this.gameService.onOptionSelect(optionText);
   }
 
-  // Delegate answer validation to the service.
   validateAnswer() {
     this.gameService.validateAnswer();
   }

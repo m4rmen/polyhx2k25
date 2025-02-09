@@ -6,10 +6,26 @@
 
     <h1 *ngIf="gameService.quizStarted && !gameService.showStepTitle">Quiz interactif</h1>
 
-    <!-- Étape 1 : QCM -->
-    <div
+
+
+
+    <!-- Étape 1 : Réponse Interactive -->
+    <div *ngIf="gameService.currentStep?.type === 'interactive' && !gameService.showStepTitle">
+        <h3>{{ gameService.currentStep.questions?.text }}</h3>
+        <div *ngIf="gameService.questions[gameService.currentQuestionIndex].answered">
+            <h1>Réponses :</h1>
+        </div>
+        <div *ngIf="gameService.questions.answered" class="interactive-options">
+            {{ gameService.answeredCorrectly ?
+            gameService.questions.answerFeedback.correct :
+            gameService.questions.answerFeedback.incorrect }}
+        </div>
+    </div>
+
+    <!-- Étape 2 : QCM -->
+    <!-- <div
         *ngIf="gameService.quizStarted && gameService.quizSteps[gameService.currentStepIndex]?.type === 'qcm' && !gameService.showStepTitle">
-        <h3>{{ gameService.questions[gameService.currentQuestionIndex]?.text }}</h3>
+        <h3>{{ gameService.questions?.text }}</h3>
         <div class="options-column">
             <button *ngFor="let option of gameService.questions[gameService.currentQuestionIndex]?.options"
                 [class.selected]="gameService.selectedAnswer === option.text && !gameService.questions[gameService.currentQuestionIndex].answered"
@@ -20,26 +36,25 @@
                 {{ option.text }}
             </button>
         </div>
-    </div>
-
-    <!-- Étape 2 : Réponse Interactive -->
-    <div *ngIf="gameService.currentStep?.type === 'interactive' && !gameService.showStepTitle">
-        <h3>{{ gameService.currentStep.questions[gameService.currentQuestionIndex]?.text }}</h3>
-        <div *ngIf="gameService.questions[gameService.currentQuestionIndex].answered" class="interactive-options">
-            {{ gameService.answeredCorrectly ?
-            gameService.questions[gameService.currentQuestionIndex].answerFeedback.correct :
-            gameService.questions[gameService.currentQuestionIndex].answerFeedback.incorrect }}
-        </div>
-    </div>
+    </div> -->
 
 
-    <div *ngIf="gameService.quizStarted && !gameService.showStepTitle" class="quiz-footer">
-        <button (click)="gameService.endQuiz()" class="quit-button"> <i class="fa-solid fa-door-open"></i>
-            Quitter</button>
+    <div *ngIf="gameService.quizStarted" class="quiz-footer">
+        <!-- <button (click)="gameService.endQuiz()" class="quit-button"> <i class="fa-solid fa-door-open"></i>
+            Quitter</button> -->
+
         <button
-            *ngIf="gameService.questions[gameService.currentQuestionIndex] === 'qcm' || gameService.questions[gameService.currentQuestionIndex].answered"
-            (click)="gameService.validateAnswer()" class="button">{{ gameService.buttonText }}</button>
+            *ngIf="gameService.questions[gameService.currentQuestionIndex].type === 'interactive' || gameService.questions[gameService.currentQuestionIndex].answered"
+            class="button" (click)="gameService.nextStep()">
+            Suivant
+        </button>
+        <button *ngIf="gameService.questions[gameService.currentQuestionIndex].type === 'qcm'"
+            class="button">Valider</button>
+        <!-- <button
+            *ngIf="gameService.questions[gameService.currentQuestionIndex].type === 'qcm' || gameService.questions[gameService.currentQuestionIndex].answered"
+            (click)="gameService.validateAnswer()" class="button">{{ gameService.buttonText }}
+        </button> -->
     </div>
-    <h4 *ngIf="gameService.quizStarted && !gameService.showStepTitle">Question {{ gameService.currentQuestionIndex + 1
-        }} sur {{ gameService.questions.length }}</h4>
+    <!-- <h4 *ngIf="gameService.quizStarted && !gameService.showStepTitle">Question {{ gameService.currentQuestionIndex + 1
+        }} sur {{ gameService.questions.length }}</h4> -->
 </div>

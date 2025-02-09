@@ -3,49 +3,37 @@
         {
             "type": "interactive",
             "title": "Question Interactive",
-            "questions": [
-                {
-                    "text": "CLiquez sur les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
-                    "correctAnswers": [
-                        "USA",
-                        "CHN",
-                        "IND"
-                    ],
-                    "answerFeedback": {
-                        "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
-                        "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
-                    }, 
-                    "answered": false
-                    
-                }
-            ]
-            
-        }
-        ,{
+            "question": "Cliquez sur les 3 pays émettant le plus de CO2 dans l'atmosphere",
+            "options": [],
+            "correctAnswers": [
+                "USA",
+                "CHN",
+                "IND"
+            ],
+            "answerFeedback": {
+                "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
+                "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
+            },
+            "answered": false
+        },
+        {
             "type": "qcm",
-            "title": "Question à Choix Multiples",
-            "questions": [
-                {
-                    "text": "Quel est le pays le plus peuplé du monde ?",
-                    "options": [
-                        {
-                            "text": "Chine",
-                            "correct": true
-                        },
-                        {
-                            "text": "Inde",
-                            "correct": false
-                        },
-                        {
-                            "text": "USA",
-                            "correct": false
-                        }
-                    ],
-                    "answered": false
-                }
-                
-            ]
+            "title": "Question a choix multiples",
+            "question": "Quel est le pays le plus peuplé du monde ?",
+            "options": [
+                "Chine",
+                "Inde",
+                "États-Unis",
+                "Russie"
+            ],
+            "correctAnswers": [
+                "Chine"
+            ],
+            "answerFeedback": {
+                "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
+                "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
+            },
+            "answered": false
         }
-       
     ]
 }

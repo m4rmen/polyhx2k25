@@ -19,7 +19,7 @@ export class GameService {
   selectedAnswer: string | null = null;
   quizStarted = false;
   answeredCorrectly = false;
-  globeIndex = 0;
+  globeIndex = 1;
 
   clickedTopEmissionCountries: string[] = [];
   clickedDeforestationCountries: string[] = [];
@@ -36,9 +36,9 @@ export class GameService {
   private clickedTopEmissionCountriesSubscription!: Subscription;
   //subscrbe to the clickedDeforestationCountries
   private clickedDeforestationCountriesSubscription!: Subscription;
-  
 
-  constructor(private globeQuizService: GlobeQuizService) { 
+
+  constructor(private globeQuizService: GlobeQuizService) {
     this.clickedTopEmissionCountriesSubscription = this.globeQuizService.clickedTopEmissionCountries$.subscribe((clickedTopEmissionCountries: string[]) => {
       this.clickedTopEmissionCountries = clickedTopEmissionCountries;
       if (this.clickedTopEmissionCountries.length == 3) {
@@ -74,7 +74,6 @@ export class GameService {
     if (this.quizSteps.length > 0) {
       this.currentStep = this.quizSteps[this.currentStepIndex];
       this.questions = this.currentStep.questions;
-      console.log('Loading current step, passing globe index :', ++this.globeIndex);
       this.setGlobeType(++this.globeIndex);
     }
   }
@@ -169,22 +168,19 @@ export class GameService {
   // either marks the question as answered or moves to the next question.
   validateAnswer(): void {
     const question = this.currentStep.questions[this.currentQuestionIndex];
-    if (this.currentStep.type === 'interactive') {
+    if (this.currentStep.type === 'interactive' && !question.answered) {
       this.checkAnswersPerQuestion();
       question.answered = true;
-      console.log('setting globe type to:', this.globeIndex + 1);
       this.setGlobeType(++this.globeIndex); // 3
-      //this.buttonText = 'Suivant';
+      this.buttonText = 'Suivant';
     } else if (this.buttonText === 'Suivant') {
+      console.log('Prochaine question');
       this.nextStep();
     } else if (this.selectedAnswer) {
       question.answered = true;
       this.buttonText = 'Suivant';
     }
   }
-
-  // Advances to the next question if available, or moves to the next step.
-  
 
   // Advances to the next quiz step, or ends the quiz if none remain.
   nextStep(): void {
