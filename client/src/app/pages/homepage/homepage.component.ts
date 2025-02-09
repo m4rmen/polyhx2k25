@@ -27,7 +27,6 @@ import { endGameGlobe } from '../utils/endGameGlobe';
 import { RessourceComponent } from '../../components/ressource/ressource.component';
 import { animalsGlobe } from '../utils/animalsGlobe';
 
-
 @Component({
     selector: 'app-homepage',
     imports: [
@@ -58,6 +57,8 @@ import { animalsGlobe } from '../utils/animalsGlobe';
 export class HomepageComponent implements AfterViewInit, OnInit {
     @ViewChild('globeContainer1', { static: false }) globeContainer1!: ElementRef;
     @ViewChild('globeContainer2', { static: false }) globeContainer2!: ElementRef;
+    @ViewChild('groqComponent', { static: false }) groqComponent!: GroqComponent;
+
     isContainer1Active = true;
 
     isHidden = false;

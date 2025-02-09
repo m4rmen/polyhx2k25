@@ -16,12 +16,10 @@ import { Subscription } from 'rxjs';
 export class GroqComponent implements OnInit, OnDestroy {
   response: string = "";
   inputText: string = "";
-  displayedText: string = "";
   // On définit ici une vitesse de saisie de 50 ms (ajustez selon vos préférences)
   typingSpeed: number = 50;
   isTyping: boolean = false;
   sendingMessage: boolean = false;
-  clearedChat: boolean = false;
 
   private groqResponseSubscription!: Subscription;
 
@@ -41,7 +39,7 @@ export class GroqComponent implements OnInit, OnDestroy {
 
   async sendMessage(event: any): Promise<void> {
     this.sendingMessage = true;
-    this.clearedChat = false;
+    this.gameService.clearedChat = false;
     const aiResponse = this.gameService.groqService.getChatCompletion(
       event.target.value + ". Limiter réponse à 100 words maximum."
     );
@@ -54,17 +52,13 @@ export class GroqComponent implements OnInit, OnDestroy {
   }
 
   // Méthode pour effacer le texte affiché
-  clearChat(): void {
-    this.displayedText = "";
-    this.clearedChat = true;
-  }
 
   // Méthode pour taper le texte caractère par caractère
   typeText(text: string): void {
     let index = 0;
     const interval = setInterval(() => {
-      if (index < text.length && this.clearedChat === false) {
-        this.displayedText += text[index];
+      if (index < text.length && this.gameService.clearedChat === false) {
+        this.gameService.displayedText += text[index];
         index++;
       } else {
         clearInterval(interval);

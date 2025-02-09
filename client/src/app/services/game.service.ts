@@ -15,6 +15,9 @@ export class GameService {
   private _groqResponse = new BehaviorSubject<string>('');
   public groqResponse$ = this._groqResponse.asObservable();
 
+  displayedText = "";
+  clearedChat = false;
+
   quizQuestions: any[] = [];
   currentQuestionIndex = 0;
   currentQuestion: any = {};
@@ -177,6 +180,12 @@ export class GameService {
     console.log(this.score);
   }
 
+
+  clearChat(): void {
+    this.displayedText = "";
+    this.clearedChat = true;
+  }
+
   nextQuestion(): void {
     if (this.currentQuestionIndex === this.quizQuestions.length - 1) {
       console.log("End of quiz");
@@ -185,6 +194,7 @@ export class GameService {
     }
     this.currentQuestionIndex++;
     this.loadCurrentQuestion();
+    this.clearChat();
     console.log("Next step");
   }
 

@@ -2,7 +2,7 @@
     <div class="output-box">
         <div class="texte-container">
             <div><i class="fa-solid fa-comment"></i> Chaterr.a :</div>
-            <div class="typing-container" [ngClass]="{ 'show': isTyping }">{{ displayedText }}</div>
+            <div class="typing-container" [ngClass]="{ 'show': isTyping }">{{ gameService.displayedText }}</div>
         </div>
     </div>
 
@@ -10,7 +10,7 @@
         <i class="fa-solid fa-robot icon"></i>
         <input type="text" (keydown.enter)="sendMessage($event)" [(ngModel)]="inputText" placeholder="Posez-moi une question...">
         <div *ngIf="sendingMessage" class="loader"></div>
-        <button id="erase-btn" (click)="clearChat()" >Effacer</button>
+        <button id="erase-btn" (click)="gameService.clearChat()" >Effacer</button>
     </div>
 
     <!-- <div class="groq-option-container">
