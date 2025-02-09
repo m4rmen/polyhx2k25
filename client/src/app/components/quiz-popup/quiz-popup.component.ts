@@ -2,124 +2,45 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { GroqComponent } from '../groq/groq.component';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-quiz-popup',
   templateUrl: './quiz-popup.component.html',
   styleUrls: ['./quiz-popup.component.css'],
-  imports: [FormsModule, CommonModule, GroqComponent],
+  imports: [FormsModule, CommonModule],
 })
 export class QuizPopupComponent implements OnInit {
   @Output() closePopup = new EventEmitter<void>();
-  quizStarted = false;
-  currentStepIndex = 0;
-  currentQuestionIndex = 0;
-  buttonText = 'Valider';
-  selectedAnswer: string | null = null;
-  timerStarted = false;
-  timeLeft = 3;
-  interval: any;
-  showStepTitle = false;
 
-  quizSteps: any[] = [];
-  currentStep: any = null;
-  questions: any[] = [];
+  // Inject the QuizService. Make it public so the template can bind to its properties if needed.
+  constructor(public gameService: GameService) {}
 
   ngOnInit(): void {
-    this.loadQuiz();
-    this.timerStarted = true;
-    this.startTimer();
+    // Load the quiz data.
+    this.gameService.loadQuiz().then(() => {
+      // Start the timer and, when finished, start the quiz.
+      this.gameService.timerStarted = true;
+      this.gameService.startTimer(() => {
+        this.gameService.startQuiz();
+      });
+    });
+
+    // Optionally, subscribe to the close event if you want to react in the component.
+    this.gameService.closePopup.subscribe(() => {
+      this.closePopup.emit();
+    });
   }
 
-  selectedInteractiveAnswer = ["Brésil", "France", "Chine", "Russie", "Inde"];
-  async loadQuiz() {
-    try {
-      const response = await fetch('./assets/quiz.json');
-      const data = await response.json();
-      this.quizSteps = data.quizSteps;
-    } catch (error) {
-      console.error("Erreur lors du chargement du quiz :", error);
-    }
-  }
-
-  loadCurrentStep() {
-    if (this.quizSteps.length > 0) {
-      this.currentStep = this.quizSteps[this.currentStepIndex];
-      if (this.currentStep.type === 'qcm') {
-        this.questions = this.currentStep.questions;
-      }
-    }
-  }
-
-  startTimer() {
-    this.interval = setInterval(() => {
-      this.timeLeft--;
-      this.showStepTitle = false;
-      if (this.timeLeft === 0) {
-        clearInterval(this.interval);
-        this.startQuiz();
-        this.showStepTitle = false;
-      }
-    }, 1000);
-  }
-
-  startQuiz() {
-    this.quizStarted = true;
-    this.currentStepIndex = 0;
-    this.loadCurrentStep();
-  }
-
-  endQuiz() {
-    this.closePopup.emit();
-    this.quizStarted = false;
-    this.resetQuestions();
-  }
-
-  resetQuestions() {
-    this.currentQuestionIndex = 0;
-    this.buttonText = 'Valider';
-    this.selectedAnswer = null;
-    this.questions.forEach(q => q.answered = false);
-  }
-
+  // Delegate option selection to the service.
   onOptionSelect(optionText: string) {
-    if (!this.questions[this.currentQuestionIndex].answered) {
-      this.selectedAnswer = optionText;
-    }
+    this.gameService.onOptionSelect(optionText);
   }
 
+  // Delegate answer validation to the service.
   validateAnswer() {
-    const question = this.currentStep.questions[this.currentQuestionIndex];
-
-    if (this.currentStep.type === 'interactive') {
-      this.nextQuestion();
-    } else if (this.buttonText === 'Suivant') {
-      this.nextQuestion();
-    } else if (this.selectedAnswer) {
-      question.answered = true;
-      this.buttonText = 'Suivant';
-    }
+    this.gameService.validateAnswer();
   }
 
-  nextQuestion() {
-    if (this.currentQuestionIndex < this.currentStep.questions.length - 1) {
-      this.currentQuestionIndex++;
-      this.buttonText = 'Valider';
-      this.selectedAnswer = null;
-    } else {
-      this.nextStep();
-    }
-  }
-
-  nextStep() {
-    if (this.currentStepIndex < this.quizSteps.length - 1) {
-      this.currentStepIndex++;
-      this.currentQuestionIndex = 0;
-      this.selectedAnswer = null;
-      this.loadCurrentStep();
-    } else {
-      this.endQuiz();
-    }
-  }
+  // You can also expose other methods (e.g., nextQuestion, nextStep) via buttons in your template.
 }

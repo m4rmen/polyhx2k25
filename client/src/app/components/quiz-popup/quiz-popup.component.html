@@ -1,20 +1,20 @@
 <div class="quiz-container">
 
-    <div *ngIf="!quizStarted && timerStarted" class="timer">
-        <p>Le quiz commencera dans <strong>{{ timeLeft }}</strong> secondes...</p>
+    <div *ngIf="!gameService.quizStarted && gameService.timerStarted" class="timer">
+        <p>Le quiz commencera dans <strong>{{ gameService.timeLeft }}</strong> secondes...</p>
     </div>
 
-    <h1 *ngIf="quizStarted && !showStepTitle">Quiz interactif</h1>
+    <h1 *ngIf="gameService.quizStarted && !gameService.showStepTitle">Quiz interactif</h1>
 
     <!-- Étape 1 : QCM -->
-    <div *ngIf="quizStarted && quizSteps[currentStepIndex]?.type === 'qcm' && !showStepTitle">
-        <h3>{{ questions[currentQuestionIndex]?.text }}</h3>
+    <div *ngIf="gameService.quizStarted && gameService.quizSteps[gameService.currentStepIndex]?.type === 'qcm' && !gameService.showStepTitle">
+        <h3>{{ gameService.questions[gameService.currentQuestionIndex]?.text }}</h3>
         <div class="options-column">
-            <button *ngFor="let option of questions[currentQuestionIndex]?.options"
-                [class.selected]="selectedAnswer === option.text && !questions[currentQuestionIndex].answered"
-                [class.correct]="questions[currentQuestionIndex].answered && option.correct"
-                [class.incorrect]="questions[currentQuestionIndex].answered && !option.correct"
-                [disabled]="questions[currentQuestionIndex].answered" (click)="onOptionSelect(option.text)"
+            <button *ngFor="let option of gameService.questions[gameService.currentQuestionIndex]?.options"
+                [class.selected]="gameService.selectedAnswer === option.text && !gameService.questions[gameService.currentQuestionIndex].answered"
+                [class.correct]="gameService.questions[gameService.currentQuestionIndex].answered && option.correct"
+                [class.incorrect]="gameService.questions[gameService.currentQuestionIndex].answered && !option.correct"
+                [disabled]="gameService.questions[gameService.currentQuestionIndex].answered" (click)="gameService.onOptionSelect(option.text)"
                 class="toggle-button">
                 {{ option.text }}
             </button>
@@ -22,19 +22,17 @@
     </div>
 
     <!-- Étape 2 : Réponse Interactive -->
-    <div *ngIf="currentStep?.type === 'interactive' && !showStepTitle">
-        <h3>{{ currentStep.questions[currentQuestionIndex]?.text }}</h3>
+    <div *ngIf="gameService.currentStep?.type === 'interactive' && !gameService.showStepTitle">
+        <h3>{{ gameService.currentStep.questions[gameService.currentQuestionIndex]?.text }}</h3>
         <div class="interactive-options">
-            {{ selectedInteractiveAnswer }}
+            {{ gameService.selectedAnswer }}
         </div>
     </div>
 
 
-    <div *ngIf="quizStarted && !showStepTitle" class="quiz-footer">
-        <button (click)="endQuiz()" class="quit-button"> <i class="fa-solid fa-door-open"></i> Quitter</button>
-        <button (click)="validateAnswer()" class="button">{{ buttonText }}</button>
+    <div *ngIf="gameService.quizStarted && !gameService.showStepTitle" class="quiz-footer">
+        <button (click)="gameService.endQuiz()" class="quit-button"> <i class="fa-solid fa-door-open"></i> Quitter</button>
+        <button (click)="gameService.validateAnswer()" class="button">{{ gameService.buttonText }}</button>
     </div>
-    <h4 *ngIf="quizStarted && !showStepTitle">Question {{ currentQuestionIndex + 1 }} sur {{ questions.length }}</h4>
+    <h4 *ngIf="gameService.quizStarted && !gameService.showStepTitle">Question {{ gameService.currentQuestionIndex + 1 }} sur {{ gameService.questions.length }}</h4>
 </div>
-
-<app-groq class="groq"></app-groq>

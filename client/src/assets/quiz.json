@@ -7,9 +7,9 @@
                 {
                     "text": "CLiquez sur les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
                     "correctAnswers": [
-                        "États-Unis",
-                        "Chine",
-                        "Inde"
+                        "USA",
+                        "CHN",
+                        "IND"
                     ],
                     "selectedItems": []
                 }

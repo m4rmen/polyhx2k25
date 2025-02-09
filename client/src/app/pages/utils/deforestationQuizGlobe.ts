@@ -28,7 +28,7 @@ export function initDeforestationQuizGlobe(ref: ElementRef, eventService: GlobeQ
 
   globe
     .onPolygonClick((event: any) => {
-      eventService.handleDeforestationCountryClick(event);
+      eventService.handleCountryDeforestationClick(event);
       globe.polygonsData(countryData.features); 
     })
     .polygonsData(countryData.features)
@@ -36,7 +36,7 @@ export function initDeforestationQuizGlobe(ref: ElementRef, eventService: GlobeQ
     .polygonCapColor((feat: any) => {
       const isoCode = feat.id;
       const trend = deforestationMapping[isoCode] || 0;
-      if (eventService.clickedDeforestationCountries.includes(isoCode)) {
+      if (eventService.clickedDeforestationCountries$.subscribe(countries => countries.includes(isoCode))) {
         return colorScale(trend);
       }
       return 'rgba(0, 0, 0, 0.1)';

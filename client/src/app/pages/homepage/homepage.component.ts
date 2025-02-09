@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component, ElementRef, AfterViewInit, ViewChild, Renderer2 } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, Renderer2, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { QuizPopupComponent } from '../../components/quiz-popup/quiz-popup.component';
@@ -15,6 +15,8 @@ import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
 import { initDeforestationQuizGlobe } from '../utils/deforestationQuizGlobe';
 import { initDeforestationAnswerGlobe } from '../utils/deforestationAnswerGlobe';
 import { baseGlobe } from '../utils/testglobe';
+import { GameService } from '../../services/game.service';
+import { Subscription } from 'rxjs';
 
 @Component({
     selector: 'app-homepage',
@@ -40,7 +42,7 @@ import { baseGlobe } from '../utils/testglobe';
         ])
     ]
 })
-export class HomepageComponent implements AfterViewInit {
+export class HomepageComponent implements AfterViewInit, OnInit {
     @ViewChild('globeContainer1', { static: false }) globeContainer1!: ElementRef;
     @ViewChild('globeContainer2', { static: false }) globeContainer2!: ElementRef;
     isContainer1Active = true;
@@ -50,7 +52,17 @@ export class HomepageComponent implements AfterViewInit {
     hideButton = false;
     world: GlobeInstance | null = null;
     clouds: any | null = null;
-    constructor(private renderer: Renderer2, public globeQuizService: GlobeQuizService) { }
+
+    private globeTypeSubscription!: Subscription;
+
+    constructor(private renderer: Renderer2, public globeQuizService: GlobeQuizService, public gameService: GameService) { }
+
+    ngOnInit(): void {
+      this.globeTypeSubscription = this.gameService.globeType$.subscribe((globeType: number) => {
+        console.log('Globe type changed to:', globeType);
+        this.triggerChangeGlobe(globeType);
+      });
+    }
 
     ngAfterViewInit(): void {
         this.initGlobe();
@@ -74,10 +86,10 @@ export class HomepageComponent implements AfterViewInit {
     triggerChangeGlobe(globeIndex: number) {
         switch (globeIndex) {
             case 1:
-                this.changeGlobe(baseGlobe);
                 break;
             case 2:
-                this.changeGlobe(initEmissionQuizGlobe);
+                console.log('Changing to emission quiz globe');
+                this.changeGlobe(initEmissionQuizGlobe, this.globeQuizService);
                 break;
             case 3:
                 this.changeGlobe(initCo2Globe);
@@ -89,7 +101,7 @@ export class HomepageComponent implements AfterViewInit {
     }
     
 
-    changeGlobe(newGlobeFunc: CallableFunction): void {
+    changeGlobe(newGlobeFunc: CallableFunction, globeQuizService?: GlobeQuizService): void {
         let container1: ElementRef; let container2: ElementRef;
         if (this.isContainer1Active) {
             container1 = this.globeContainer1;
@@ -99,7 +111,7 @@ export class HomepageComponent implements AfterViewInit {
             container2 = this.globeContainer1;
         }  
 
-        const newWorld = newGlobeFunc(container2);
+        const newWorld = newGlobeFunc(container2, globeQuizService);
         newWorld.controls().autoRotate = true;
         newWorld.controls().autoRotateSpeed = -0.65;
         newWorld.controls().maxDistance = 1300;
