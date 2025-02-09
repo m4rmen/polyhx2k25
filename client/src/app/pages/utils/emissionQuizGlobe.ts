@@ -5,14 +5,9 @@ import { ElementRef } from '@angular/core';
 import { GlobeQuizService } from '../../services/globe-quiz.service';
 import { createBackground } from './background';
 
-
-
-
-
 export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizService): GlobeInstance {
 
     const top3EmissionCountries: string[] = ['CHN', 'USA', 'IND'];
-
 
     const globe = new Globe(ref.nativeElement)
       .globeImageUrl('assets/earth-blue-marble.jpg')
@@ -50,7 +45,7 @@ export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizSe
     globe.controls().autoRotate = false;
     globe.controls().autoRotateSpeed = 0.5;
     createBackground(globe);
-    
+
     return globe;
 
   }
