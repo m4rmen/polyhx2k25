@@ -8,6 +8,7 @@ import { countryData } from '../../../assets/country-data';
 import * as d3 from 'd3'; 
 import { ElementRef } from '@angular/core';
 import { GlobeQuizService } from '../../services/globe-quiz.service';
+import { createBackground } from './background';
 
 export function initOvershootQuizGlobe(ref: ElementRef): GlobeInstance {
 
@@ -24,8 +25,7 @@ export function initOvershootQuizGlobe(ref: ElementRef): GlobeInstance {
 
     const globe = new Globe(ref.nativeElement)
       .globeImageUrl('assets/earth-blue-marble.jpg')
-      .bumpImageUrl('assets/earth-topology.png')
-      .backgroundImageUrl('assets/galaxy_starfield.png');
+      .bumpImageUrl('assets/earth-topology.png');
 
     globe
     .onPolygonClick((event) => {
@@ -57,6 +57,8 @@ export function initOvershootQuizGlobe(ref: ElementRef): GlobeInstance {
 
     globe.controls().autoRotate = false;
     globe.controls().autoRotateSpeed = 0.5;
+
+    createBackground(globe);
 
     return globe;
 } 

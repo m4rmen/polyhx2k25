@@ -8,6 +8,7 @@ import { countryData } from '../../../assets/country-data';
 import * as d3 from 'd3'; 
 import { ElementRef } from '@angular/core';
 import { GlobeQuizService } from '../../services/globe-quiz.service';
+import { createBackground } from './background';
 
 export function initOvershootGlobe(ref: ElementRef): GlobeInstance {
 
@@ -51,6 +52,8 @@ export function initOvershootGlobe(ref: ElementRef): GlobeInstance {
     
     globe.controls().autoRotate = false;
     globe.controls().autoRotateSpeed = 0.5;
+
+    createBackground(globe);
 
     return globe;
 
