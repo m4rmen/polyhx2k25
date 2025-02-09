@@ -51,14 +51,14 @@
             "id": 3,
             "type": "interactive",
             "title": "Question Interactive",
-            "question": "Quel est le pays qui épuise ses ressources naturelles le plus rapidement ?",
+            "question": "Si tout le monde sur Terre consommait comme les habitants de ce pays, lequel aurait la durée de vie la plus courte ?",
             "options": [],
             "correctAnswers": [
                 "QAT"
             ],
             "answerFeedback": {
-                "correct": "Bravo ! Vous avez trouvé le pays qui épuise ses ressources naturelles le plus rapidement.",
-                "incorrect": "Mauvaise réponse! Le Qatar est le pays qui épuise ses ressources naturelles le plus rapidement."
+                "correct": "Bravo ! Vous avez trouvé le pays qui consomme le plus par habitant.",
+                "incorrect": "Mauvaise réponse! Le Qatar est le pays qui consomme le plus par habitant."
             },
             "answered": false,
             "globeIndexes": [
@@ -70,7 +70,7 @@
             "id": 4,
             "type": "interactive",
             "title": "Question Interactive",
-            "question": "Quels sont les trois plus gros producteurs de Blé dans le monde ?",
+            "question": "Quels pays se classent parmi les 3 principaux exportateurs de blé à l'échelle mondiale ?",
             "options": [],
             "correctAnswers": [
                 "CHN",
@@ -80,8 +80,8 @@
                 "FRA"
             ],
             "answerFeedback": {
-                "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
-                "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
+                "correct": "Bravo, vous avez trouvé les 3 pays plus grand exportateurs de blé.",
+                "incorrect": "Mauvaise réponse! Les 3 pays plsu grand exportateurs de blé sont : les États-Unis, la Chine et l'Inde."
             },
             "answered": false,
             "globeIndexes": [
