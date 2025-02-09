@@ -9,4 +9,4 @@ services:
       - ./client:/usr/src/app
     stdin_open: true
     tty: true
-    command: /bin/sh -c "npm i && npm run start"
+    command: /bin/sh -c "npm i && npm run build"
