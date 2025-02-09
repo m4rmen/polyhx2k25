@@ -19,7 +19,7 @@
   <p>© 2025 TERR.A - Alexandre M. Julien R. Theo G.</p>
 </div>
 
-<div class="homepage-text" [ngClass]="{ 'hide': isHidden }">
+<div *ngIf="!showRessource" class="homepage-text" [ngClass]="{ 'hide': isHidden }">
   <p>
     Bienvenue sur TERR.A, votre <span class="important">voyage interactif</span> pour découvrir notre planète Terre ! 🌍
   </p>
@@ -38,4 +38,4 @@
 <app-quiz-popup *ngIf="showQuizPopup" [@slideIn] class="quiz-popup" (closePopup)="closeQuiz()"></app-quiz-popup>
 
 <app-groq *ngIf="showQuizPopup" class="groq"></app-groq>
-<!-- <app-ressource></app-ressource> -->
+<app-ressource *ngIf="showRessource"></app-ressource>

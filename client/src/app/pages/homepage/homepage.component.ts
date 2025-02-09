@@ -64,6 +64,7 @@ export class HomepageComponent implements AfterViewInit, OnInit {
     hideButton = false;
     world: GlobeInstance | null = null;
     clouds: any | null = null;
+    showRessource = false;
 
     private globeTypeSubscription!: Subscription;
 
@@ -92,6 +93,7 @@ export class HomepageComponent implements AfterViewInit, OnInit {
         this.showQuizPopup = false;
         this.isHidden = false;
         this.hideButton = false;
+        this.showRessource = true;
     }
 
     triggerChangeGlobe(globeIndex: number) {

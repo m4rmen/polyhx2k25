@@ -148,8 +148,13 @@ export class GameService {
   }
 
   nextQuestion(): void {
+    if (this.currentQuestionIndex === this.quizQuestions.length - 1) {
+      this.endQuiz();
+      return;
+    }
     this.currentQuestionIndex++;
     this.loadCurrentQuestion();
     console.log("Next step");
   }
+
 }
