@@ -37,9 +37,8 @@
 
   <!-- Quiz Footer: Navigation buttons -->
   <div *ngIf="gameService.quizStarted" class="quiz-footer">
-    <!-- For interactive questions or when the question has already been answered, show "Suivant" -->
-    <button *ngIf="gameService.currentQuestion?.type === 'interactive' || gameService.currentQuestion?.answered"
-      class="button" (click)="gameService.nextQuestion()">
+    <button *ngIf="gameService.currentQuestion?.type === 'interactive'" class="button"
+      (click)="gameService.nextQuestion()">
       Suivant
     </button>
     <!-- For QCM questions that have not yet been answered, show "Valider" (and when answered, you may also allow "Suivant") -->
