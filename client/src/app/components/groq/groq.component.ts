@@ -15,7 +15,7 @@ export class GroqComponent implements OnInit {
   response: string = "";
 
   displayedText = "";
-  typingSpeed = 10;
+  typingSpeed = 0;
   isTyping = false;
 
   private groqResponseSubscription!: Subscription;
@@ -25,8 +25,7 @@ export class GroqComponent implements OnInit {
 
   ngOnInit(): void {
     this.groqResponseSubscription = this.gameService.groqResponse$.subscribe((groqResponse: any) => {
-      this.response = groqResponse.choices[0].message.content;
-      this.typeText(this.response);
+      this.typeText(groqResponse);
     });
   }
 

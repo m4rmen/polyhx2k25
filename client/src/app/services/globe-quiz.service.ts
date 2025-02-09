@@ -25,5 +25,10 @@ export class GlobeQuizService {
     console.log(this._clickedDeforestationCountries.getValue());
   }
 
+  resetValues(): void {
+    this._clickedTopEmissionCountries.next([]);
+    this._clickedDeforestationCountries.next([]);
+  }
+
 
 }
