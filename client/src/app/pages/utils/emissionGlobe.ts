@@ -9,7 +9,6 @@ import { ElementRef } from '@angular/core';
 
 
 export function initCo2Globe(ref: ElementRef): GlobeInstance {
-
     const emissionValues = Object.values(CO2_DATA).filter(d => d > 0);
     const minEmission = 1000;
     const maxEmission = d3.max(emissionValues) || 1;
@@ -45,5 +44,4 @@ export function initCo2Globe(ref: ElementRef): GlobeInstance {
     globe.controls().autoRotateSpeed = 0.5;
 
     return globe;
-
   }
