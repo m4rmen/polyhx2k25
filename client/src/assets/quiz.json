@@ -20,7 +20,7 @@
                 2,
                 3
             ],
-            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif. Donne-moi les trois pays qui émettent le plus de CO2 en kilotonnes (kt), avec une brève explication de ce phénomène. Limite ta réponse à moins de 100 mots, et n’utilise ni symboles spéciaux ni formules de politesse. Seulement du texte simple et factuel, pas de valeurs numeriques."
+            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif. Donne-moi les trois pays qui émettent le plus de CO2 en kilotonnes (kt), avec une brève explication de ce phénomène. Limite ta réponse à moins de 100 mots, et n’utilise ni symboles spéciaux ni formules de politesse. Seulement du texte simple et factuel, pas de valeurs numériques."
         },
         {
             "id": 2,
@@ -51,7 +51,7 @@
             "id": 3,
             "type": "interactive",
             "title": "Question Interactive",
-            "question": "Quel est le pays qui eppuise ses ressources naturelles le plus rapidement ?",
+            "question": "Quel est le pays qui épuise ses ressources naturelles le plus rapidement ?",
             "options": [],
             "correctAnswers": [
                 "QAT"
