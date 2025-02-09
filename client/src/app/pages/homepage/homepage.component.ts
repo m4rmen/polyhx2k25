@@ -45,10 +45,10 @@ export class HomepageComponent implements AfterViewInit {
     @ViewChild('globeContainer2', { static: false }) globeContainer2!: ElementRef;
     isHidden = false;
     showQuizPopup = false;
-    hideButton = false;    
+    hideButton = false;
     world: GlobeInstance | null = null;
     clouds: any | null = null;
-    constructor(private renderer: Renderer2, public globeQuizService: GlobeQuizService ){}
+    constructor(private renderer: Renderer2, public globeQuizService: GlobeQuizService) { }
 
     ngAfterViewInit(): void {
         this.initGlobe();
@@ -64,6 +64,8 @@ export class HomepageComponent implements AfterViewInit {
 
     closeQuiz() {
         this.showQuizPopup = false;
+        this.isHidden = false;       // Fait réapparaître le texte
+        this.hideButton = false;     // Fait réapparaître le bouton
     }
 
 
@@ -73,7 +75,7 @@ export class HomepageComponent implements AfterViewInit {
         this.renderer.addClass(this.globeContainer.nativeElement, 'fade-out');
         this.renderer.removeClass(this.globeContainer2.nativeElement, 'fade-in');
         this.renderer.addClass(this.globeContainer2.nativeElement, 'fade-out');
-    
+
         // Set timeout to allow the fade-out transition to complete before changing the globe
         setTimeout(() => {
           const newWorld = initDeforestationAnswerGlobe(this.globeContainer2);
@@ -98,11 +100,11 @@ export class HomepageComponent implements AfterViewInit {
             // TODO local assets
             .globeImageUrl('assets/earth-blue-marble.jpg')
             .bumpImageUrl('assets/earth-topology.png');
-            
+
         this.world.controls().autoRotate = true;
         this.world.controls().autoRotateSpeed = -0.65;
         this.world.controls().maxDistance = 1300;
-            
+
         createBackground(this.world);
 
         this.clouds = createClouds(this.world, 0);
