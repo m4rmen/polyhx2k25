@@ -17,6 +17,8 @@ export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizSe
       .onPolygonClick((event) => {
         eventService.handleCountryEmissionClick(event);
         globe.polygonsData(countryData.features);
+        globe.controls().autoRotate = false;
+
       })
       .polygonsData(countryData.features)
       .polygonAltitude(0.01)  
@@ -42,7 +44,8 @@ export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizSe
         `;
       });
 
-    globe.controls().autoRotate = false;
+      globe.controls().autoRotate = true;
+      globe.controls().autoRotateSpeed = -0.65;
 
     createBackground(globe);
 

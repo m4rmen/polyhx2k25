@@ -35,6 +35,7 @@ export function initFoodProdQuizGlob(ref: ElementRef, globeQuizService: GlobeQui
     
       globe
       .onPolygonClick((event) => {
+        globe.controls().autoRotate = false;
         globeQuizService.handleCountryEmissionClick(event);
         globe.polygonsData(countryData.features);
       })
@@ -63,8 +64,8 @@ export function initFoodProdQuizGlob(ref: ElementRef, globeQuizService: GlobeQui
         `;
       });
 
-    globe.controls().autoRotate = false;
-
+    globe.controls().autoRotate = true;
+    globe.controls().autoRotateSpeed = -0.65;
     createBackground(globe);
     return globe;
   }

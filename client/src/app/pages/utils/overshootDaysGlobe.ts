@@ -56,8 +56,13 @@ export function initOvershootGlobe(ref: ElementRef): GlobeInstance {
         globe.controls().autoRotate = true;
         globe.controls().autoRotateSpeed = -0.65;
 
-    createBackground(globe);
+      globe
+      .pointsData([{ lat: 25.276987, lng: 51.520008, size: 0.3, color: 'red' }])
+      .pointAltitude(0.35)
+      .pointColor('color')
+      .pointRadius('size');
 
+    createBackground(globe);
     return globe;
 
 } 
