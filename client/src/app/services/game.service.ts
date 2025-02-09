@@ -30,15 +30,32 @@ export class GameService {
   private clickedDeforestationCountriesSubscription!: Subscription;
 
 
-  constructor(private globeQuizService: GlobeQuizService, private groqService: GroqService) {
+  constructor(private globeQuizService: GlobeQuizService, public groqService: GroqService) {
     this.clickedTopEmissionCountriesSubscription = this.globeQuizService.clickedTopEmissionCountries$.subscribe((clickedTopEmissionCountries: string[]) => {
       this.clickedCountries = clickedTopEmissionCountries;
+      console.log(this.clickedCountries);
+      // Check Co2 question
       if (this.clickedCountries.length == 3 && this.currentQuestion.id === 1) {
         this.validateInteractiveQuestion();
-      } else if (this.clickedCountries.length == 1 && this.currentQuestion.id === 3) {
-        this.validateInteractiveQuestion();
+      } 
+      // check Quatar question overshoot day
+      else if ((this.clickedCountries.length == 3 || this.clickedCountries.includes(this.currentQuestion.correctAnswers[0])) && this.currentQuestion.id === 3) {
+        this.validateInteractiveQuestion(1);
+      } 
+      // Food production question
+      else if (this.clickedCountries.length >= 3 && this.currentQuestion.id === 4) {
+        let count = 0;
+        this.clickedCountries.forEach((country) => {
+          if (this.currentQuestion.correctAnswers.includes(country)) {
+            count++;
+          }
+        });
+        if (count >= 3 || clickedTopEmissionCountries.length >= 5) {
+          this.validateInteractiveQuestion(3);
+        }
       }
     });
+
     this.clickedDeforestationCountriesSubscription = this.globeQuizService.clickedDeforestationCountries$.subscribe((clickedDeforestationCountries: string[]) => {
       this.clickedCountries = clickedDeforestationCountries;
     });
@@ -100,8 +117,20 @@ export class GameService {
   }
 
 
-  validateInteractiveQuestion(): void {
-    if (this.arraysEqual(this.clickedCountries, this.currentQuestion.correctAnswers)) {
+  validateInteractiveQuestion(expectedCorrect=-1): void {
+    let correct = false;
+    if (expectedCorrect === -1) {
+      correct = this.arraysEqual(this.clickedCountries, this.currentQuestion.correctAnswers)
+    } else {
+      let count = 0;
+      this.clickedCountries.forEach((country) => {
+        if (this.currentQuestion.correctAnswers.includes(country)) {
+          count++;
+        }
+      });
+      correct = count >= expectedCorrect
+    }
+    if (correct) {
       this.answeredCorrectly = true;
     } else {
       this.answeredCorrectly = false;

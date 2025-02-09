@@ -15,6 +15,7 @@ export class GroqService {
   }
 
   public async getChatCompletion(userMessage: string): Promise<any> {
+    console.log('getChatCompletion');
     const response = await this.groqClient.chat.completions.create({
       messages: [
         {

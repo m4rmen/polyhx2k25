@@ -8,18 +8,20 @@
 
     <div class="groq-input">
         <i class="fa-solid fa-robot icon"></i>
-        <div class="loader"></div>
+        <input type="text" (keydown.enter)="sendMessage($event)" [(ngModel)]="inputText" placeholder="Posez-moi une question...">
+        <div *ngIf="sendingMessage" class="loader"></div>
+        <button id="erase-btn" (click)="clearChat()" >Effacer</button>
     </div>
 
-    <div class="groq-option-container">
-        <button class="groq-option">
-            <p>Plus d'information </p>
+    <!-- <div class="groq-option-container">
+        <button class="groq-option" (click)="clearChat()">
+            <p>Effacer</p>
             <i class="fa-solid fa-info icon-option"></i>
         </button>
         <button *ngIf="gameService.currentQuestion && !gameService.currentQuestion.answered" class="groq-option">
             <p>Donne moi un hint</p>
             <i class="fa-solid fa-lightbulb icon-option"></i>
         </button>
-    </div>
+    </div> -->
 
 </div>
