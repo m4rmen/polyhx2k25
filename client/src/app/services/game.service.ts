@@ -92,6 +92,7 @@ export class GameService {
     this.closePopup.emit();
     this.quizStarted = false;
     this.resetQuestions();
+    this.setGlobeType(13);
   }
 
   resetQuestions(): void {
@@ -178,6 +179,7 @@ export class GameService {
 
   nextQuestion(): void {
     if (this.currentQuestionIndex === this.quizQuestions.length - 1) {
+      console.log("End of quiz");
       this.endQuiz();
       return;
     }
