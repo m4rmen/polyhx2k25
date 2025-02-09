@@ -1,5 +1,5 @@
 {
     "routes": [
-      { "src": "/(.*)", "dest": "/dist/mon-projet/index.html" }
+      { "src": "/(.*)", "dest": "/dist/client/index.html" }
     ]
   }
