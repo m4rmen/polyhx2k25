@@ -1,0 +1,71 @@
+{
+    "quizSteps": [
+        {
+            "step": 1,
+            "type": "qcm",
+            "title": "Étape 1 : Questions à Choix Multiples",
+            "questions": [
+                {
+                    "text": "Quel est le pays le plus peuplé du monde ?",
+                    "options": [
+                        {
+                            "text": "Chine",
+                            "correct": true
+                        },
+                        {
+                            "text": "Inde",
+                            "correct": false
+                        },
+                        {
+                            "text": "USA",
+                            "correct": false
+                        }
+                    ],
+                    "answered": false
+                },
+                {
+                    "text": "Quelle est la capitale du Japon ?",
+                    "options": [
+                        {
+                            "text": "Tokyo",
+                            "correct": true
+                        },
+                        {
+                            "text": "Kyoto",
+                            "correct": false
+                        },
+                        {
+                            "text": "Osaka",
+                            "correct": false
+                        }
+                    ],
+                    "answered": false
+                }
+            ]
+        },
+        {
+            "step": 2,
+            "type": "interactive",
+            "title": "Étape 2 : Sélection Interactive",
+            "questions": [
+                {
+                    "text": "Cliquez sur les pays ayant une population de plus de 100 millions d'habitants.",
+                    "correctAnswers": [
+                        "Brésil",
+                        "Chine",
+                        "Inde"
+                    ],
+                    "selectedItems": []
+                },
+                {
+                    "text": "Autre question interactive...",
+                    "correctAnswers": [
+                        "USA",
+                        "Indonésie"
+                    ],
+                    "selectedItems": []
+                }
+            ]
+        }
+    ]
+}

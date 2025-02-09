@@ -12,38 +12,51 @@ import { CommonModule } from '@angular/common';
 export class QuizPopupComponent implements OnInit {
   @Output() closePopup = new EventEmitter<void>();
   quizStarted = false;
+  currentStepIndex = 0;
   currentQuestionIndex = 0;
   buttonText = 'Valider';
   selectedAnswer: string | null = null;
   timerStarted = false;
-  timeLeft = 5; // Temps en secondes avant que le quiz commence (ajuster selon les besoins)
+  timeLeft = 1;
   interval: any;
+  showStepTitle = false;
 
-  questions = [
-    {
-      text: 'Quel est le pays le plus grand du monde en termes de superficie ?',
-      options: [
-        { text: 'Brésil', correct: false },
-        { text: 'Chine', correct: false },
-        { text: 'Canada', correct: false },
-        { text: 'Russie', correct: true }
-      ],
-      answered: false
-    },
-    {
-      text: 'Quel est le pays le plus peuplé du monde ?',
-      options: [
-        { text: 'États-Unis', correct: false },
-        { text: 'Inde', correct: false },
-        { text: 'Chine', correct: true }
-      ],
-      answered: false
-    },
-  ];
+  quizSteps: any[] = [];
+  currentStep: any = null;
+  questions: any[] = [];
 
   ngOnInit(): void {
+    this.loadQuiz();
     this.timerStarted = true;
     this.startTimer();
+  }
+
+  selectedInteractiveAnswer = ["Brésil", "France", "Chine", "Russie", "Inde"];
+  async loadQuiz() {
+    try {
+      const response = await fetch('./assets/quiz.json');
+      const data = await response.json();
+      console.log(data);
+      console.log("Hello");
+      this.quizSteps = data.quizSteps;
+      this.startTimer();
+    } catch (error) {
+      console.error("Erreur lors du chargement du quiz :", error);
+    }
+  }
+
+  loadCurrentStep() {
+    if (this.quizSteps.length > 0) {
+      this.currentStep = this.quizSteps[this.currentStepIndex];
+      this.showStepTitle = true; // Afficher le titre
+
+      setTimeout(() => {
+        this.showStepTitle = false; // Masquer le titre après 3 secondes
+        if (this.currentStep.type === 'qcm') {
+          this.questions = this.currentStep.questions;
+        }
+      }, 3000);
+    }
   }
 
   startTimer() {
@@ -58,8 +71,8 @@ export class QuizPopupComponent implements OnInit {
 
   startQuiz() {
     this.quizStarted = true;
-    this.currentQuestionIndex = 0;
-    this.resetQuestions();
+    this.currentStepIndex = 0;
+    this.loadCurrentStep();
   }
 
   endQuiz() {
@@ -82,9 +95,11 @@ export class QuizPopupComponent implements OnInit {
   }
 
   validateAnswer() {
-    const question = this.questions[this.currentQuestionIndex];
+    const question = this.currentStep.questions[this.currentQuestionIndex];
 
-    if (this.buttonText === 'Suivant') {
+    if (this.currentStep.type === 'interactive') {
+      this.nextQuestion();
+    } else if (this.buttonText === 'Suivant') {
       this.nextQuestion();
     } else if (this.selectedAnswer) {
       question.answered = true;
@@ -93,10 +108,21 @@ export class QuizPopupComponent implements OnInit {
   }
 
   nextQuestion() {
-    if (this.currentQuestionIndex < this.questions.length - 1) {
+    if (this.currentQuestionIndex < this.currentStep.questions.length - 1) {
       this.currentQuestionIndex++;
       this.buttonText = 'Valider';
       this.selectedAnswer = null;
+    } else {
+      this.nextStep();
+    }
+  }
+
+  nextStep() {
+    if (this.currentStepIndex < this.quizSteps.length - 1) {
+      this.currentStepIndex++;
+      this.currentQuestionIndex = 0;
+      this.selectedAnswer = null;
+      this.loadCurrentStep();
     } else {
       this.endQuiz();
     }

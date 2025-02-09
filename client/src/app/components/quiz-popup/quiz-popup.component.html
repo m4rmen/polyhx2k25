@@ -4,26 +4,36 @@
         <p>Le quiz commencera dans <strong>{{ timeLeft }}</strong> secondes...</p>
     </div>
 
-    <h1 *ngIf="quizStarted">Quiz interactif</h1>
-    <div *ngIf="quizStarted">
-        <div *ngIf="currentQuestionIndex < questions.length">
-            <h3>{{ questions[currentQuestionIndex].text }}</h3>
-            <div class="options-column">
-                <button *ngFor="let option of questions[currentQuestionIndex].options"
-                    [class.selected]="selectedAnswer === option.text && !questions[currentQuestionIndex].answered"
-                    [class.correct]="questions[currentQuestionIndex].answered && option.correct"
-                    [class.incorrect]="questions[currentQuestionIndex].answered && !option.correct"
-                    [disabled]="questions[currentQuestionIndex].answered" (click)="onOptionSelect(option.text)"
-                    class="toggle-button">
-                    {{ option.text }}
-                </button>
-            </div>
+    <h1 *ngIf="quizStarted && !showStepTitle">Quiz interactif</h1>
+
+    <h2 *ngIf="showStepTitle" class="step-title">{{ currentStep?.title }}</h2>
+    <!-- Étape 1 : QCM -->
+    <div *ngIf="quizStarted && quizSteps[currentStepIndex]?.type === 'qcm' && !showStepTitle">
+        <h3>{{ questions[currentQuestionIndex]?.text }}</h3>
+        <div class="options-column">
+            <button *ngFor="let option of questions[currentQuestionIndex]?.options"
+                [class.selected]="selectedAnswer === option.text && !questions[currentQuestionIndex].answered"
+                [class.correct]="questions[currentQuestionIndex].answered && option.correct"
+                [class.incorrect]="questions[currentQuestionIndex].answered && !option.correct"
+                [disabled]="questions[currentQuestionIndex].answered" (click)="onOptionSelect(option.text)"
+                class="toggle-button">
+                {{ option.text }}
+            </button>
         </div>
     </div>
 
-    <div *ngIf="quizStarted" class="quiz-footer">
+    <!-- Étape 2 : Réponse Interactive -->
+    <div *ngIf="currentStep?.type === 'interactive' && !showStepTitle">
+        <h3>{{ currentStep.questions[currentQuestionIndex]?.text }}</h3>
+        <div class="interactive-options">
+            {{ selectedInteractiveAnswer }}
+        </div>
+    </div>
+
+
+    <div *ngIf="quizStarted && !showStepTitle" class="quiz-footer">
         <button (click)="endQuiz()" class="quit-button"> <i class="fa-solid fa-door-open"></i> Quitter</button>
         <button (click)="validateAnswer()" class="button">{{ buttonText }}</button>
     </div>
-    <h4 *ngIf="quizStarted">Question {{ currentQuestionIndex + 1 }} sur {{ questions.length }}</h4>
+    <h4 *ngIf="quizStarted && !showStepTitle">Question {{ currentQuestionIndex + 1 }} sur {{ questions.length }}</h4>
 </div>

@@ -17,6 +17,11 @@
     color: #fff;
 }
 
+.step-title {
+    font-weight: 700;
+    color: #fff;
+}
+
 .options-column {
     display: flex;
     flex-direction: column;
