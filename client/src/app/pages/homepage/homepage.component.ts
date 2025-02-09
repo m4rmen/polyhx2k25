@@ -33,7 +33,7 @@ import { RessourceComponent } from '../../components/ressource/ressource.compone
         RouterModule,
         CommonModule,
         QuizPopupComponent,
-        GroqComponent, 
+        GroqComponent,
         RessourceComponent
     ],
     templateUrl: './homepage.component.html',

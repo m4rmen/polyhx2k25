@@ -12,8 +12,8 @@
                 "IND"
             ],
             "answerFeedback": {
-                "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
-                "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
+                "correct": "La carte ci-contre représent les emissions de Co2 dans l'air en fonction des pays en 2021.",
+                "incorrect": "La carte ci-contre représent les emissions de Co2 dans l'air en fonction des pays en 2021."
             },
             "answered": false,
             "globeIndexes": [
@@ -45,7 +45,7 @@
                 4,
                 5
             ],
-            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif sans te presenter. Donne moi et explique moi pourquoi la Chine est le pays le plus peuplé et depuis quand"
+            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif sans te presenter. Donne moi et explique moi pourquoi la Chine est le pays le plus peuplé et depuis quand limite toi a 150 mots"
         },
         {
             "id": 3,
@@ -70,7 +70,7 @@
             "id": 4,
             "type": "interactive",
             "title": "Question Interactive",
-            "question": "Quel est le pays qui eppuise ses ressources naturelles le plus rapidement ?",
+            "question": "Quels sont les trois plus gros producteurs de Blé dans le monde ?",
             "options": [],
             "correctAnswers": [
                 "CHN",
@@ -91,26 +91,29 @@
         },
         {
             "id": 5,
-            "type": "interactive",
-            "title": "Question Interactive",
-            "question": "Quel est le pays qui eppuise ses ressources naturelles le plus rapidement ?",
-            "options": [],
+            "type": "qcm",
+            "title": "Question a choix multiples",
+            "question": "Quels sont l'espèces animales la plus menacées dans le monde parmis les 4 mentionnés?",
+            "options": [
+                "Tigre de Sumatra",
+                "Girafe",
+                "Panda roux",
+                "Pangolin"
+            ],
             "correctAnswers": [
-                "CHN",
-                "IND",
-                "RUS",
-                "USA",
-                "FRA"
+                "Tigre de Sumatra",
+                "Pangolin"
             ],
             "answerFeedback": {
-                "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
-                "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
+                "correct": "Bravo ! Ces espèces sont effectivement parmi les plus menacées.",
+                "incorrect": "Ce n'est pas tout à fait exact. Pense aux menaces comme la déforestation et le braconnage."
             },
             "answered": false,
             "globeIndexes": [
                 4,
-                5
-            ]
+                4
+            ],
+            "aiPrompt": "Listez les espèces animales les plus menacées dans le monde et expliquez pourquoi."
         }
     ]
 }

@@ -23,6 +23,7 @@ export class GameService {
   answeredCorrectly = false;
   globeIndex = 0;
   clickedCountries: string[] = [];
+  score = 0;
 
   closePopup = new EventEmitter<void>();
   private clickedTopEmissionCountriesSubscription!: Subscription;
@@ -114,6 +115,8 @@ export class GameService {
         this._groqResponse.next(response.choices[0].message.content);
       });
     }
+    this.scoreManager();
+
   }
 
 
@@ -127,11 +130,21 @@ export class GameService {
     } else {
       this.answeredCorrectly = false;
     }
+    this.scoreManager();
     this.setGlobeType(this.currentQuestion.globeIndexes[1]);
     this.currentQuestion.answered = true;
     this.groqService.getChatCompletion(this.currentQuestion.aiPrompt).then((response: any) => {
       this._groqResponse.next(response.choices[0].message.content);
     });
+  }
+
+  scoreManager(): void {
+    if (this.answeredCorrectly) {
+      this.score += 10;
+    } else {
+      this.score = -4;
+    }
+    console.log(this.score);
   }
 
   nextQuestion(): void {
