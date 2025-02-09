@@ -6,8 +6,8 @@ import { GlobeInstance } from 'globe.gl';
 function createBackground(world: GlobeInstance) {
     const backgroundTexture = new THREE.TextureLoader().load('assets/night-sky.png');
 
-    const backgroundRadius = 10000; // Increased the radius to make the background appear farther
-    const backgroundGeometry = new THREE.SphereGeometry(backgroundRadius, 600, 600);
+    const backgroundRadius = 8000; 
+    const backgroundGeometry = new THREE.SphereGeometry(backgroundRadius, 60, 40);
     const backgroundMaterial = new THREE.MeshBasicMaterial({
         map: backgroundTexture,
         side: THREE.BackSide,

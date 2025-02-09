@@ -4,6 +4,7 @@ import { CO2_DATA } from '../../../assets/countriesCo2';
 import { countryData } from '../../../assets/country-data';
 import * as d3 from 'd3'; 
 import { ElementRef } from '@angular/core';
+import { createBackground } from './background';
 
 
 
@@ -18,10 +19,9 @@ export function initCo2Globe(ref: ElementRef): GlobeInstance {
     .range(["green", "red"])
     .clamp(true);
 
-    const globe = new Globe(ref.nativeElement)
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-      .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
-      .backgroundImageUrl('assets/galaxy_starfield.png');
+    const globe = new Globe(ref.nativeElement, { animateIn: false, waitForGlobeReady: true })
+      .globeImageUrl('assets/earth-blue-marble.jpg')
+      .bumpImageUrl('assets/earth-topology.png');
 
       globe
       .polygonsData(countryData.features)
@@ -43,5 +43,6 @@ export function initCo2Globe(ref: ElementRef): GlobeInstance {
     globe.controls().autoRotate = false;
     globe.controls().autoRotateSpeed = 0.5;
 
+    createBackground(globe);
     return globe;
   }

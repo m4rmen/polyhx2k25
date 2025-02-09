@@ -1,9 +1,9 @@
 <h1 class="title">TERR.A</h1>
-<div #globeContainer class=""></div>
-<div #globeContainer2 class="globe-background"></div>
+<div #globeContainer1 class="globe-background fade-in"></div>
+<div #globeContainer2 class="globe-background fade-out"></div>
 
 <div class="button-container">
-  <button (click)="changeGlobe()" >Trigger</button>
+  <button (click)="triggerChangeGlobe()" >Trigger</button>
   <button (click)="hideText()" [ngClass]="{ 'hide-button': hideButton }">
     <span>Quiz</span>
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 74 74" height="34" width="34">
