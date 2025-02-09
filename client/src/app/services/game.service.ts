@@ -51,7 +51,7 @@ export class GameService {
       console.error("Erreur lors du chargement du quiz :", error);
     }
   }
- 
+
   loadCurrentQuestion(): void {
     if (this.quizQuestions.length > 0) {
       this.currentQuestion = this.quizQuestions[this.currentQuestionIndex];
@@ -100,42 +100,11 @@ export class GameService {
   validateInteractiveQuestion(): void {
     if (this.arraysEqual(this.clickedCountries, this.currentQuestion.correctAnswers)) {
       this.answeredCorrectly = true;
-    }else {
+    } else {
       this.answeredCorrectly = false;
     }
     this.setGlobeType(this.currentQuestion.globeIndexes[1]);
     this.currentQuestion.answered = true;
-
-    //       this.answeredCorrectly = true;
-    //     } else {
-    //       this.answeredCorrectly = false;
-    //     }
-    // switch (this.currentQuestionIndex) {
-    //   case 0:
-    //     //Question 1 emissions co2
-    //     if (this.arraysEqual(this.clickedCountries, this.currentQuestion.correctAnswers)) {
-    //       this.answeredCorrectly = true;
-    //     } else {
-    //       this.answeredCorrectly = false;
-    //     }
-    //     break;
-    //   //modify its template
-    //   case 1:
-    //     if (this.arraysEqual(this.clickedTopEmissionCountries, ['CHN', 'USA', 'IND'])) {
-    //       this.answeredCorrectly = true;
-    //     } else {
-    //       this.answeredCorrectly = false;
-    //     }
-    //     break;
-    //   case 2:
-    //     if (this.arraysEqual(this.clickedTopEmissionCountries, ['CHN', 'USA', 'IND'])) {
-    //       this.answeredCorrectly = true;
-    //     } else {
-    //       this.answeredCorrectly = false;
-    //     }
-    //     break;
-    //   default:
-    //     break;
   }
 
 
@@ -149,32 +118,9 @@ export class GameService {
     this.currentQuestion.answered = true;
   }
 
-  nextStep(): void {
+  nextQuestion(): void {
     this.currentQuestionIndex++;
     this.loadCurrentQuestion();
+    console.log("Next step");
   }
-
-
-  // Validates the current answer. Depending on the quiz type or button state,
-  // either marks the question as answered or moves to the next question.
-  // validateAnswer(): void {
-  //   const question = this.currentStep.questions[this.currentQuestionIndex];
-  //   if (this.currentStep.type === 'interactive') {
-  //     this.checkAnswersPerQuestion();
-  //     question.answered = true;
-  //     this.setGlobeType(++this.globeIndex); // 3
-  //     this.groqService.getChatCompletion(this.questions[0].aiPrompt).then((response) => {
-  //       this._groqResponse.next(response);
-  //     });
-  //     //this.buttonText = 'Suivant';
-  //   } else if (this.buttonText === 'Suivant') {
-  //     //this.nextStep();
-  //   } else if (this.selectedAnswer) {
-  //     question.answered = true;
-  //     this.buttonText = 'Suivant';
-  //   }
-  // }
-
-  // Advances to the next quiz step, or ends the quiz if none remain.
-
 }

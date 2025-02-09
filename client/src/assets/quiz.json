@@ -1,6 +1,7 @@
 {
     "quizQuestions": [
         {
+            "id": 1,
             "type": "interactive",
             "title": "Question Interactive",
             "question": "Cliquez sur les 3 pays émettant le plus de CO2 dans l'atmosphere",
@@ -15,10 +16,14 @@
                 "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
             },
             "answered": false,
-            "globeIndexes": [2,3],
+            "globeIndexes": [
+                2,
+                3
+            ],
             "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif. Donne-moi les trois pays qui émettent le plus de CO2 en kilotonnes (kt), avec une brève explication de ce phénomène. Limite ta réponse à moins de 100 mots, et n’utilise ni symboles spéciaux ni formules de politesse. Seulement du texte simple et factuel, pas de valeurs numeriques."
         },
         {
+            "id": 2,
             "type": "qcm",
             "title": "Question a choix multiples",
             "question": "Quel est le pays le plus peuplé du monde ?",
@@ -32,11 +37,80 @@
                 "Chine"
             ],
             "answerFeedback": {
+                "correct": "",
+                "incorrect": ""
+            },
+            "answered": false,
+            "globeIndexes": [
+                4,
+                5
+            ],
+            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif sans te presenter. Donne moi et explique moi pourquoi la Chine est le pays le plus peuplé et depuis quand"
+        },
+        {
+            "id": 3,
+            "type": "interactive",
+            "title": "Question Interactive",
+            "question": "Quel est le pays qui eppuise ses ressources naturelles le plus rapidement ?",
+            "options": [],
+            "correctAnswers": [
+                "QAT"
+            ],
+            "answerFeedback": {
+                "correct": "Bravo ! Vous avez trouvé le pays qui épuise ses ressources naturelles le plus rapidement.",
+                "incorrect": "Mauvaise réponse! Le Qatar est le pays qui épuise ses ressources naturelles le plus rapidement."
+            },
+            "answered": false,
+            "globeIndexes": [
+                6,
+                7
+            ]
+        },
+        {
+            "id": 4,
+            "type": "interactive",
+            "title": "Question Interactive",
+            "question": "Quel est le pays qui eppuise ses ressources naturelles le plus rapidement ?",
+            "options": [],
+            "correctAnswers": [
+                "CHN",
+                "IND",
+                "RUS",
+                "USA",
+                "FRA"
+            ],
+            "answerFeedback": {
                 "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
                 "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
             },
             "answered": false,
-            "globeIndexes": [4,5]
+            "globeIndexes": [
+                4,
+                5
+            ]
+        },
+        {
+            "id": 5,
+            "type": "interactive",
+            "title": "Question Interactive",
+            "question": "Quel est le pays qui eppuise ses ressources naturelles le plus rapidement ?",
+            "options": [],
+            "correctAnswers": [
+                "CHN",
+                "IND",
+                "RUS",
+                "USA",
+                "FRA"
+            ],
+            "answerFeedback": {
+                "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
+                "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
+            },
+            "answered": false,
+            "globeIndexes": [
+                4,
+                5
+            ]
         }
     ]
 }

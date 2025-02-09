@@ -1,58 +1,52 @@
 <div class="quiz-container">
 
-    <!-- Quiz Title -->
-    <h1 *ngIf="gameService.quizStarted">Quiz interactif</h1>
-  
-    <!-- Interactive Question Section -->
-    <div *ngIf="gameService.quizStarted && gameService.currentQuestion?.type === 'interactive'">
-      <!-- Display the question text -->
-      <h3 *ngIf="!gameService.currentQuestion.answered">{{ gameService.currentQuestion?.question }}</h3>
-      <!-- Only display feedback if the question has been answered -->
+  <!-- Quiz Title -->
+  <h1 *ngIf="gameService.quizStarted">{{ gameService.currentQuestion?.title }}</h1>
 
-      <div *ngIf="gameService.currentQuestion.answered">
-        <h1>Réponses :</h1>
-        <div class="interactive-options">
-          {{ gameService.answeredCorrectly ?
-            gameService.currentQuestion.answerFeedback.correct :
-            gameService.currentQuestion.answerFeedback.incorrect }}
-        </div>
+  <!-- Interactive Question Section -->
+  <div *ngIf="gameService.quizStarted && gameService.currentQuestion?.type === 'interactive'">
+    <!-- Display the question text -->
+    <h3 *ngIf="!gameService.currentQuestion.answered">{{ gameService.currentQuestion?.question }}</h3>
+    <!-- Only display feedback if the question has been answered -->
+
+    <div *ngIf="gameService.currentQuestion.answered">
+      <h1>Réponses :</h1>
+      <div class="interactive-options">
+        {{ gameService.answeredCorrectly ?
+        gameService.currentQuestion.answerFeedback.correct :
+        gameService.currentQuestion.answerFeedback.incorrect }}
       </div>
     </div>
-  
-    <!-- QCM (Multiple Choice) Question Section -->
-    <div *ngIf="gameService.quizStarted && gameService.currentQuestion?.type === 'qcm'">
-      <!-- Display the question text -->
-      <h3>{{ gameService.currentQuestion?.question }}</h3>
-      <!-- List available options -->
-      <div class="options-column">
-        <button *ngFor="let option of gameService.currentQuestion?.options"
-                [ngClass]="{
+  </div>
+
+  <!-- QCM (Multiple Choice) Question Section -->
+  <div *ngIf="gameService.quizStarted && gameService.currentQuestion?.type === 'qcm'">
+    <!-- Display the question text -->
+    <h3>{{ gameService.currentQuestion?.question }}</h3>
+    <!-- List available options -->
+    <div class="options-column">
+      <button *ngFor="let option of gameService.currentQuestion?.options" [ngClass]="{
                   'selected': gameService.selectedAnswer === option && !gameService.currentQuestion?.answered,
                   'correct': gameService.currentQuestion?.answered && gameService.currentQuestion?.correctAnswers[0] === option,
                   'incorrect': gameService.currentQuestion?.answered && gameService.currentQuestion?.correctAnswers[0] !== option
-                }"
-                (click)="gameService.onOptionSelected(option)"
-                class="toggle-button">
-          {{ option }}
-        </button>
-      </div>
-    </div>
-  
-    <!-- Quiz Footer: Navigation buttons -->
-    <div *ngIf="gameService.quizStarted" class="quiz-footer">
-      <!-- For interactive questions or when the question has already been answered, show "Suivant" -->
-      <button *ngIf="gameService.currentQuestion?.type === 'interactive' || gameService.currentQuestion?.answered"
-              class="button" (click)="gameService.nextStep()">
-        Suivant
-      </button>
-      <!-- For QCM questions that have not yet been answered, show "Valider" (and when answered, you may also allow "Suivant") -->
-      <button *ngIf="gameService.currentQuestion?.type === 'qcm'"
-              class="button"
-              (click)="gameService.validateQCMQuestion()">
-        {{ 'Suivant' }}
+                }" (click)="gameService.onOptionSelected(option)" class="toggle-button">
+        {{ option }}
       </button>
     </div>
-  
-  
   </div>
-  
+
+  <!-- Quiz Footer: Navigation buttons -->
+  <div *ngIf="gameService.quizStarted" class="quiz-footer">
+    <!-- For interactive questions or when the question has already been answered, show "Suivant" -->
+    <button *ngIf="gameService.currentQuestion?.type === 'interactive' || gameService.currentQuestion?.answered"
+      class="button" (click)="gameService.nextQuestion()">
+      Suivant
+    </button>
+    <!-- For QCM questions that have not yet been answered, show "Valider" (and when answered, you may also allow "Suivant") -->
+    <button *ngIf="gameService.currentQuestion?.type === 'qcm'" class="button"
+      (click)="gameService.validateQCMQuestion()">
+      {{ 'Suivant' }}
+    </button>
+  </div>
+
+</div>

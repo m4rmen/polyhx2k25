@@ -105,6 +105,12 @@ export class HomepageComponent implements AfterViewInit, OnInit {
             case 5:
                 this.changeGlobe(initPopulationGlobe);
                 break;
+            case 6:
+                this.changeGlobe(initOvershootQuizGlobe, this.globeQuizService);
+                break;
+            case 7:
+                this.changeGlobe(initOvershootGlobe);
+                break;
             default:
                 this.changeGlobe(baseGlobe);
                 break;
@@ -139,7 +145,7 @@ export class HomepageComponent implements AfterViewInit, OnInit {
         setTimeout(() => {
             this.renderer.addClass(container2.nativeElement, 'fade-in');
             this.renderer.removeClass(container2.nativeElement, 'fade-out');
-            
+
             setTimeout(() => {
                 this.renderer.addClass(container1.nativeElement, 'fade-out');
                 this.renderer.removeClass(container1.nativeElement, 'fade-in');
@@ -148,8 +154,8 @@ export class HomepageComponent implements AfterViewInit, OnInit {
             setTimeout(() => {
                 this.world?.scene().clear();
                 this.world = newWorld;
-            }, 3000); 
-        }, 1000); 
+            }, 3000);
+        }, 1000);
     }
 
     initGlobe(): void {

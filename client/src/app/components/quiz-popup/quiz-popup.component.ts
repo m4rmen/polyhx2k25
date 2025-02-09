@@ -24,14 +24,4 @@ export class QuizPopupComponent implements OnInit {
       this.closePopup.emit();
     });
   }
-
-  // onOptionSelect(optionText: string) {
-  //   this.gameService.onOptionSelected(optionText);
-  // }
-
-  // validateAnswer() {
-  //   this.gameService.validateAnswer();
-  // }
-
-  // You can also expose other methods (e.g., nextQuestion, nextStep) via buttons in your template.
 }
