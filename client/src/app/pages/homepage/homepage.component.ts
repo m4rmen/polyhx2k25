@@ -15,13 +15,15 @@ import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
 import { initDeforestationQuizGlobe } from '../utils/deforestationQuizGlobe';
 import { initDeforestationAnswerGlobe } from '../utils/deforestationAnswerGlobe';
 import { baseGlobe } from '../utils/testglobe';
+import { GroqComponent } from '../../components/groq/groq.component';
 
 @Component({
     selector: 'app-homepage',
     imports: [
         RouterModule,
         CommonModule,
-        QuizPopupComponent,],
+        QuizPopupComponent,
+        GroqComponent,],
     templateUrl: './homepage.component.html',
     styleUrls: ['./homepage.component.css'],
     animations: [
@@ -44,7 +46,7 @@ export class HomepageComponent implements AfterViewInit {
     @ViewChild('globeContainer1', { static: false }) globeContainer1!: ElementRef;
     @ViewChild('globeContainer2', { static: false }) globeContainer2!: ElementRef;
     isContainer1Active = true;
-    
+
     isHidden = false;
     showQuizPopup = false;
     hideButton = false;
@@ -87,26 +89,26 @@ export class HomepageComponent implements AfterViewInit {
         } else {
             container1 = this.globeContainer2;
             container2 = this.globeContainer1;
-        }  
+        }
 
         const newWorld = newGlobeFunc(container2);
         newWorld.controls().autoRotate = true;
         newWorld.controls().autoRotateSpeed = -0.65;
         newWorld.controls().maxDistance = 1300;
 
-        
+
         setTimeout(() => {
             this.renderer.addClass(container2.nativeElement, 'fade-in');
             this.renderer.removeClass(container2.nativeElement, 'fade-out');
             this.renderer.addClass(container1.nativeElement, 'fade-out');
             this.renderer.removeClass(container1.nativeElement, 'fade-in');
-            
+
             setTimeout(() => {
                 this.world?.scene().clear();
                 this.world = newWorld;
-            }, 4000); 
-        }, 1000); 
-      }
+            }, 4000);
+        }, 1000);
+    }
 
     initGlobe(): void {
         this.world = new Globe(this.globeContainer1.nativeElement, { animateIn: true, waitForGlobeReady: true })

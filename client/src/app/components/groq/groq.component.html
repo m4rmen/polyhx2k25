@@ -1,1 +1,26 @@
-<p>groq works!</p>
+<div class="groq-container">
+    <div class="output-box">
+        <div class="texte-container">
+            <div><i class="fa-solid fa-comment"></i> Chaterr.a :</div>
+            <div class="typing-container" [ngClass]="{ 'show': isTyping }">{{ displayedText }}</div>
+        </div>
+    </div>
+
+    <div class="groq-input">
+        <i class="fa-solid fa-robot icon"></i>
+        <div class="loader"></div>
+    </div>
+
+    <div class="groq-option-container">
+        <button class="groq-option">
+            <p>Plus d'information </p>
+            <i class="fa-solid fa-info icon-option"></i>
+        </button>
+        <button class="groq-option">
+            <p>Donne moi un hint</p>
+            <i class="fa-solid fa-lightbulb icon-option"></i>
+        </button>
+    </div>
+
+    <button (click)="sendMessage()">Envoyer un message test</button>
+</div>

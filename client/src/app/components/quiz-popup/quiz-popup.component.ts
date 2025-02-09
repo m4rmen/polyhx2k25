@@ -2,13 +2,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { GroqComponent } from '../groq/groq.component';
+
 
 @Component({
   selector: 'app-quiz-popup',
   templateUrl: './quiz-popup.component.html',
   styleUrls: ['./quiz-popup.component.css'],
-  imports: [FormsModule, CommonModule, GroqComponent],
+  imports: [FormsModule, CommonModule],
 })
 export class QuizPopupComponent implements OnInit {
   @Output() closePopup = new EventEmitter<void>();

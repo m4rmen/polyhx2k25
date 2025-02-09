@@ -107,7 +107,7 @@ button.hide-button {
 .globe-background {
     position: fixed;
     top: 0;
-    left: 0; 
+    left: 0;
 }
 
 .globe-background.fade-in {
@@ -124,4 +124,10 @@ button.hide-button {
 
 .important {
     color: #cfef00;
+}
+
+.groq {
+    z-index: 1;
+    top: 80%;
+    left: 5%;
 }
