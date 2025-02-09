@@ -106,7 +106,6 @@ export class HomepageComponent implements AfterViewInit, OnInit {
                 this.changeGlobe(baseGlobe);
                 break;
         }
-
         this.isContainer1Active = !this.isContainer1Active;
     }
     
