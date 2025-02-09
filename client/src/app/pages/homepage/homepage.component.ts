@@ -12,7 +12,8 @@ import { createClouds, animateClouds } from '../utils/clouds';
 import { createBackground } from '../utils/background';
 import { GlobeQuizService } from '../../services/globe-quiz.service';
 import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
-
+import { initDeforestationQuizGlobe } from '../utils/deforestationQuizGlobe';
+import { initDeforestationAnswerGlobe } from '../utils/deforestationAnswerGlobe';
 
 
 @Component({
@@ -75,7 +76,7 @@ export class HomepageComponent implements AfterViewInit {
     
         // Set timeout to allow the fade-out transition to complete before changing the globe
         setTimeout(() => {
-          const newWorld = initEmissionQuizGlobe(this.globeContainer2, this.globeQuizService);
+          const newWorld = initDeforestationAnswerGlobe(this.globeContainer2);
             
           newWorld.controls().autoRotate = true;
           newWorld.controls().autoRotateSpeed = -0.65;
@@ -88,8 +89,8 @@ export class HomepageComponent implements AfterViewInit {
             // Fade in the new globe container
             this.renderer.removeClass(this.globeContainer2.nativeElement, 'fade-out');
             this.renderer.addClass(this.globeContainer2.nativeElement, 'fade-in');
-          }, 1000); // Allow the previous globe to fade out before switching
-        }, 1000); // Wait a moment before starting the fade-out
+          }, 1000); 
+        }, 1000); 
       }
 
     initGlobe(): void {
