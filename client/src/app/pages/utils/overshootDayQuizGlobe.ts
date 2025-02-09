@@ -34,6 +34,8 @@ export function initOvershootQuizGlobe(ref: ElementRef, globeQuizService: GlobeQ
     .onPolygonClick((event) => {
         globeQuizService.handleCountryEmissionClick(event);
             globe.polygonsData(countryData.features);
+        globe.controls().autoRotate = false;
+
         })
         .polygonsData(countryData.features)
         .polygonAltitude(0.01)
@@ -62,8 +64,10 @@ export function initOvershootQuizGlobe(ref: ElementRef, globeQuizService: GlobeQ
         `;
         });
 
-    globe.controls().autoRotate = false;
-
+    
+    globe.controls().autoRotate = true;
+    globe.controls().autoRotateSpeed = -0.65;
+    
     createBackground(globe);
 
     return globe;

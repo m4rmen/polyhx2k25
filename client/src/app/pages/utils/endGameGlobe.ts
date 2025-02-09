@@ -15,7 +15,11 @@ export function endGameGlobe(ref: ElementRef) {
     world.controls().autoRotateSpeed = -0.65;
     world.controls().maxDistance = 1300;
         
-    createClouds(world, 0);
+    // createClouds(world, 0);
     createBackground(world);
+
+    world.controls().autoRotate = true;
+    world.controls().autoRotateSpeed = -0.65;
+
     return world;
 }

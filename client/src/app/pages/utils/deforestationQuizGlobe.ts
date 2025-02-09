@@ -31,6 +31,7 @@ export function initDeforestationQuizGlobe(ref: ElementRef, eventService: GlobeQ
 
     globe
     .onPolygonClick((event) => {
+      globe.controls().autoRotate = false;
       eventService.handleCountryEmissionClick(event);
       globe.polygonsData(countryData.features);
     })
@@ -59,8 +60,8 @@ export function initDeforestationQuizGlobe(ref: ElementRef, eventService: GlobeQ
       `;
     });
 
-  globe.controls().autoRotate = false;
-
+  globe.controls().autoRotate = true;
+  globe.controls().autoRotateSpeed = -0.65;
   createBackground(globe);
   return globe;
 }

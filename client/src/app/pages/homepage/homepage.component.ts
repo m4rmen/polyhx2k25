@@ -178,7 +178,7 @@ export class HomepageComponent implements AfterViewInit, OnInit {
             setTimeout(() => {
                 this.world?.scene().clear();
                 this.world = newWorld;
-            }, 3000);
+            }, 2500);
         }, 1000);
     }
 
