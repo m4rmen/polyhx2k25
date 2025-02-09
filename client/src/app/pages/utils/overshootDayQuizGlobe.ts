@@ -18,19 +18,21 @@ export function initOvershootQuizGlobe(ref: ElementRef, globeQuizService: GlobeQ
 
     const answer = "QAT"
 
-
+    
     const colorScale = d3.scaleLog<string>()
-        .domain([firstDate.getTime(), latestDate.getTime()])
-        .range(["red", "green"])
-        .clamp(true);
-
+    .domain([firstDate.getTime(), latestDate.getTime()])
+    .range(["red", "green"])
+    .clamp(true);
+    
     const globe = new Globe(ref.nativeElement)
-        .globeImageUrl('assets/earth-blue-marble.jpg')
-        .bumpImageUrl('assets/earth-topology.png');
+    .globeImageUrl('assets/earth-blue-marble.jpg')
+    .bumpImageUrl('assets/earth-topology.png');
+    
+    globeQuizService.resetValues();
 
     globe
-        .onPolygonClick((event) => {
-            globeQuizService.handleCountryEmissionClick(event);
+    .onPolygonClick((event) => {
+        globeQuizService.handleCountryEmissionClick(event);
             globe.polygonsData(countryData.features);
         })
         .polygonsData(countryData.features)
@@ -41,7 +43,7 @@ export function initOvershootQuizGlobe(ref: ElementRef, globeQuizService: GlobeQ
             globeQuizService.clickedTopEmissionCountries$.subscribe(countries => {
                 isClickedTopEmissionCountry = countries.includes(isoCode);
             });
-            if (isClickedTopEmissionCountry && isoCode === answer && OVERSHOOT_DAY_DATA[isoCode]) {
+            if (isClickedTopEmissionCountry && isoCode === answer) {
                 const overshootDate = new Date(OVERSHOOT_DAY_DATA[isoCode]);
                 return colorScale(overshootDate.getTime());
             } else if (isClickedTopEmissionCountry && OVERSHOOT_DAY_DATA[isoCode]) {

@@ -70,7 +70,7 @@
             "id": 4,
             "type": "interactive",
             "title": "Question Interactive",
-            "question": "Quels pays se classent parmi les 3 principaux exportateurs de blé à l'échelle mondiale ?",
+            "question": "Donner 3 pays qui se classent parmi les 5 principaux exportateurs de blé à l'échelle mondiale ?",
             "options": [],
             "correctAnswers": [
                 "CHN",
@@ -85,8 +85,8 @@
             },
             "answered": false,
             "globeIndexes": [
-                4,
-                5
+                8,
+                9
             ]
         },
         {
