@@ -43,7 +43,7 @@ export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizSe
       });
 
     globe.controls().autoRotate = false;
-    globe.controls().autoRotateSpeed = 0.5;
+
     createBackground(globe);
 
     return globe;

@@ -18,6 +18,7 @@ export function initOvershootQuizGlobe(ref: ElementRef, globeQuizService: GlobeQ
 
     const answer = "QAT"
 
+    globeQuizService.resetValues();
 
     const colorScale = d3.scaleLog<string>()
         .domain([firstDate.getTime(), latestDate.getTime()])
@@ -61,7 +62,6 @@ export function initOvershootQuizGlobe(ref: ElementRef, globeQuizService: GlobeQ
         });
 
     globe.controls().autoRotate = false;
-    globe.controls().autoRotateSpeed = 0.5;
 
     createBackground(globe);
 

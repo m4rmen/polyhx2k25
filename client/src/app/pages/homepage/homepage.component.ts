@@ -137,8 +137,6 @@ export class HomepageComponent implements AfterViewInit, OnInit {
         }
 
         const newWorld = newGlobeFunc(container2, globeQuizService);
-        newWorld.controls().autoRotate = true;
-        newWorld.controls().autoRotateSpeed = -0.65;
         newWorld.controls().maxDistance = 1300;
 
         const currentCoords = this.world?.pointOfView();

@@ -53,7 +53,6 @@ export function initDeforestationQuizGlobe(ref: ElementRef, eventService: GlobeQ
     });
 
   globe.controls().autoRotate = false;
-  globe.controls().autoRotateSpeed = 0.5;
 
   return globe;
 }
