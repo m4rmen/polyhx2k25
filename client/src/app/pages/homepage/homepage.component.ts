@@ -33,7 +33,7 @@ import { RessourceComponent } from '../../components/ressource/ressource.compone
         RouterModule,
         CommonModule,
         QuizPopupComponent,
-        GroqComponent, 
+        GroqComponent,
         RessourceComponent
     ],
     templateUrl: './homepage.component.html',
@@ -115,6 +115,12 @@ export class HomepageComponent implements AfterViewInit, OnInit {
                 break;
             case 7:
                 this.changeGlobe(initOvershootGlobe);
+                break;
+            case 8:
+                this.changeGlobe(initFoodProdQuizGlob, this.globeQuizService);
+                break;
+            case 9:
+                this.changeGlobe(initFoodProdGlob);
                 break;
             default:
                 this.changeGlobe(baseGlobe);

@@ -101,3 +101,9 @@
     border-color: #007bff;
     color: #fff;
 }
+
+.interactive-options {
+    align-items: center;
+    text-align: justify;
+    margin: 0 auto;
+}

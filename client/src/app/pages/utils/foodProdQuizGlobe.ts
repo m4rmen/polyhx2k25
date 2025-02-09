@@ -12,25 +12,26 @@ export function initFoodProdQuizGlob(ref: ElementRef, globeQuizService: GlobeQui
     const minFood = d3.min(foodProdValues) || 1;
     const maxFood = d3.max(foodProdValues) || 1;
 
-    globeQuizService.resetValues();
-
+    
     const top5FoodProdCountries = Object.entries(FOOD_PROD_DATA)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 5)
-      .map(([isoCode]) => isoCode);
-
+    .sort(([, a], [, b]) => b - a)
+    .slice(0, 5)
+    .map(([isoCode]) => isoCode);
+    
     console.log(top5FoodProdCountries);
-
+    
     const colorScale = d3.scaleLog<string>()
-      .domain([minFood, maxFood])
-      .range(["red", "green"])
-      .clamp(true);
-
+    .domain([minFood, maxFood])
+    .range(["red", "green"])
+    .clamp(true);
+    
     const globe = new Globe(ref.nativeElement)
-      .globeImageUrl('assets/earth-blue-marble.jpg')
-      .bumpImageUrl('assets/earth-topology.png')
-      .backgroundImageUrl('assets/galaxy_starfield.png');
-
+    .globeImageUrl('assets/earth-blue-marble.jpg')
+    .bumpImageUrl('assets/earth-topology.png')
+    .backgroundImageUrl('assets/galaxy_starfield.png');
+    
+    globeQuizService.resetValues();
+    
       globe
       .onPolygonClick((event) => {
         globeQuizService.handleCountryEmissionClick(event);

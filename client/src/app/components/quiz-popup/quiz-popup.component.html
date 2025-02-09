@@ -10,6 +10,7 @@
     <!-- Only display feedback if the question has been answered -->
 
     <div *ngIf="gameService.currentQuestion.answered">
+      <!-- <div> -->
       <h1>Réponses :</h1>
       <div class="interactive-options">
         {{ gameService.answeredCorrectly ?
@@ -21,9 +22,7 @@
 
   <!-- QCM (Multiple Choice) Question Section -->
   <div *ngIf="gameService.quizStarted && gameService.currentQuestion?.type === 'qcm'">
-    <!-- Display the question text -->
     <h3>{{ gameService.currentQuestion?.question }}</h3>
-    <!-- List available options -->
     <div class="options-column">
       <button *ngFor="let option of gameService.currentQuestion?.options" [ngClass]="{
                   'selected': gameService.selectedAnswer === option && !gameService.currentQuestion?.answered,
@@ -46,7 +45,7 @@
       (click)="gameService.validateQCMQuestion()">
       {{ 'Suivant' }}
     </button>
-    
+
   </div>
 
 </div>
