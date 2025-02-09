@@ -1,21 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class GlobeQuizService {
-  clickedTopEmissionCountries: string[] = [];
-  clickedDeforestationCountries: string[] = [];
+  private _clickedTopEmissionCountries = new BehaviorSubject<string[]>([]);
+  private _clickedDeforestationCountries = new BehaviorSubject<string[]>([]);
+  public clickedTopEmissionCountries$ = this._clickedTopEmissionCountries.asObservable();
+  public clickedDeforestationCountries$ = this._clickedDeforestationCountries.asObservable();
+
 
   handleCountryEmissionClick(event: any): void {
-    this.clickedTopEmissionCountries.push(event.id);
-    console.log(this.clickedTopEmissionCountries);
+    const currentValue = this._clickedTopEmissionCountries.getValue();
+    this._clickedTopEmissionCountries.next([...currentValue, event.id]);
+    console.log(this._clickedTopEmissionCountries.getValue());
   }
 
-  handleDeforestationCountryClick(event: any): void {
-    this.clickedDeforestationCountries.push(event.id);
-    console.log(this.clickedDeforestationCountries);
+  handleCountryDeforestationClick(event: any): void {
+    const currentValue = this._clickedDeforestationCountries.getValue();
+    this._clickedDeforestationCountries.next([...currentValue, event.id]);
+    console.log(this._clickedDeforestationCountries.getValue());
   }
 
 

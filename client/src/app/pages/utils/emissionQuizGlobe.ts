@@ -1,8 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Globe, { GlobeInstance } from 'globe.gl';  
-import { CO2_DATA } from '../../../assets/countriesCo2';
 import { countryData } from '../../../assets/country-data';
-import * as d3 from 'd3'; 
 import { ElementRef } from '@angular/core';
 import { GlobeQuizService } from '../../services/globe-quiz.service';
 
@@ -12,19 +10,12 @@ import { GlobeQuizService } from '../../services/globe-quiz.service';
 
 export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizService): GlobeInstance {
 
-    const emissionValues = Object.values(CO2_DATA).filter(d => d > 0);
-    const minEmission = 1000;
-    const maxEmission = d3.max(emissionValues) || 1;
     const top3EmissionCountries: string[] = ['CHN', 'USA', 'IND'];
 
-    const colorScale = d3.scaleLog<string>()
-    .domain([minEmission, maxEmission])
-    .range(["green", "red"])
-    .clamp(true);
 
     const globe = new Globe(ref.nativeElement)
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-      .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+      .globeImageUrl('assets/earth-blue-marble.jpg')
+      .bumpImageUrl('assets/earth-topology.png')
       .backgroundImageUrl('assets/galaxy_starfield.png');
 
       globe
@@ -36,10 +27,13 @@ export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizSe
       .polygonAltitude(0.01)  
       .polygonCapColor((feat: any) => {
         const isoCode = feat.id;
-        const value = CO2_DATA[isoCode] || 0;
-        if (eventService.clickedTopEmissionCountries.includes(isoCode) && top3EmissionCountries.includes(isoCode)) {
-          return colorScale(value);
-        } else if (eventService.clickedTopEmissionCountries.includes(isoCode)) {
+        let isClickedTopEmissionCountry = false;
+        eventService.clickedTopEmissionCountries$.subscribe(countries => {
+          isClickedTopEmissionCountry = countries.includes(isoCode);
+        });
+        if (isClickedTopEmissionCountry && top3EmissionCountries.includes(isoCode)) {
+          return "green";
+        } else if (isClickedTopEmissionCountry) {
           return 'rgb(98, 98, 98)';
 
         }
@@ -50,7 +44,6 @@ export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizSe
       .polygonLabel((feat: any) => {
         return `
           <b>${feat.properties.name}</b><br/>
-          CO₂ Emissions (kt): ${Math.round(CO2_DATA[feat.id]) || 0}
         `;
       });
 

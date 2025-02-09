@@ -21,14 +21,14 @@ export function initDeforestationQuizGlobe(ref: ElementRef, eventService: GlobeQ
     .range(["red", "green"])
     .clamp(true);
 
-  const globe = new Globe(ref.nativeElement)
-    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-    .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+  const globe = new Globe(ref.nativeElement, { animateIn: false, waitForGlobeReady: true })
+    .globeImageUrl('assets/earth-blue-marble.jpg')
+    .bumpImageUrl('assets/earth-topology.png')
     .backgroundImageUrl('assets/galaxy_starfield.png');
 
   globe
     .onPolygonClick((event: any) => {
-      eventService.handleDeforestationCountryClick(event);
+      eventService.handleCountryDeforestationClick(event);
       globe.polygonsData(countryData.features); 
     })
     .polygonsData(countryData.features)
@@ -36,7 +36,7 @@ export function initDeforestationQuizGlobe(ref: ElementRef, eventService: GlobeQ
     .polygonCapColor((feat: any) => {
       const isoCode = feat.id;
       const trend = deforestationMapping[isoCode] || 0;
-      if (eventService.clickedDeforestationCountries.includes(isoCode)) {
+      if (eventService.clickedDeforestationCountries$.subscribe(countries => countries.includes(isoCode))) {
         return colorScale(trend);
       }
       return 'rgba(0, 0, 0, 0.1)';

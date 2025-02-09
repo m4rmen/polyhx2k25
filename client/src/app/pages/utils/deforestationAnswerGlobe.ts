@@ -21,7 +21,7 @@ export function initDeforestationAnswerGlobe(ref: ElementRef): GlobeInstance {
     .range(["red", "green"])
     .clamp(true);
 
-  const globe = new Globe(ref.nativeElement)
+  const globe = new Globe(ref.nativeElement, { animateIn: false, waitForGlobeReady: true })
     .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
     .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
     .backgroundImageUrl('assets/galaxy_starfield.png');
