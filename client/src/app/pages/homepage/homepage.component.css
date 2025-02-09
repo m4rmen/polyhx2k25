@@ -1,28 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Special+Elite&display=swap');
 
 :host {
-    display: block;
-    width: 100%;
-    height: 100%;
+    overflow: hidden;
 }
 
-/* Make sure the canvas fills its container */
-canvas {
-    width: 100%;
-    height: 100%;
-    display: block;
-}
-
-/* Fullscreen globe */
-.globe-background {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-}
-
-/* Title styling */
 .title {
     position: absolute;
     top: 20px;
@@ -33,7 +14,6 @@ canvas {
     z-index: 1;
 }
 
-/* Button container */
 .button-container {
     position: absolute;
     top: 50%;
@@ -88,7 +68,6 @@ button:active {
     z-index: 1;
 }
 
-/* Animation de disparition du texte vers la gauche */
 .homepage-text {
     position: absolute;
     top: 80%;
@@ -108,7 +87,6 @@ button:active {
     opacity: 0;
 }
 
-/* Animation de disparition du bouton */
 button {
     transition: opacity 0.5s ease-out, transform 0.5s ease-out;
 }
@@ -127,20 +105,19 @@ button.hide-button {
 }
 
 .globe-background {
-    opacity: 0;
-    /* Initially invisible */
-    z-index: -1;
+    position: fixed;
+    top: 0;
+    left: 0; 
 }
 
 .globe-background.fade-in {
-    transition: opacity 2s ease;
+    transition: opacity 2s ease-in-out;
     opacity: 1;
-    /* z-index: 1; */
     z-index: 0;
 }
 
 .globe-background.fade-out {
-    transition: opacity 2s ease;
+    transition: opacity 4s ease-in-out;
     opacity: 0;
     z-index: -1;
 }

@@ -12,8 +12,9 @@ import { createClouds, animateClouds } from '../utils/clouds';
 import { createBackground } from '../utils/background';
 import { GlobeQuizService } from '../../services/globe-quiz.service';
 import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
-
-
+import { initDeforestationQuizGlobe } from '../utils/deforestationQuizGlobe';
+import { initDeforestationAnswerGlobe } from '../utils/deforestationAnswerGlobe';
+import { baseGlobe } from '../utils/testglobe';
 
 @Component({
     selector: 'app-homepage',
@@ -40,8 +41,10 @@ import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
     ]
 })
 export class HomepageComponent implements AfterViewInit {
-    @ViewChild('globeContainer', { static: false }) globeContainer!: ElementRef;
+    @ViewChild('globeContainer1', { static: false }) globeContainer1!: ElementRef;
     @ViewChild('globeContainer2', { static: false }) globeContainer2!: ElementRef;
+    isContainer1Active = true;
+    
     isHidden = false;
     showQuizPopup = false;
     hideButton = false;
@@ -67,36 +70,46 @@ export class HomepageComponent implements AfterViewInit {
         this.hideButton = false;     // Fait réapparaître le bouton
     }
 
-
-
-    changeGlobe() {
-        // Fade out the current globe container
-        this.renderer.addClass(this.globeContainer.nativeElement, 'fade-out');
-        this.renderer.removeClass(this.globeContainer2.nativeElement, 'fade-in');
-        this.renderer.addClass(this.globeContainer2.nativeElement, 'fade-out');
-
-        // Set timeout to allow the fade-out transition to complete before changing the globe
-        setTimeout(() => {
-            const newWorld = initEmissionQuizGlobe(this.globeContainer2, this.globeQuizService);
-
-            newWorld.controls().autoRotate = true;
-            newWorld.controls().autoRotateSpeed = -0.65;
-            newWorld.controls().maxDistance = 1300;
-
-            setTimeout(() => {
-                // this.world?.clear();
-                this.world = newWorld;
-
-                // Fade in the new globe container
-                this.renderer.removeClass(this.globeContainer2.nativeElement, 'fade-out');
-                this.renderer.addClass(this.globeContainer2.nativeElement, 'fade-in');
-            }, 1000); // Allow the previous globe to fade out before switching
-        }, 1000); // Wait a moment before starting the fade-out
+    triggerChangeGlobe() {
+        if (this.isContainer1Active) {
+            this.changeGlobe(initCo2Globe);
+        } else {
+            this.changeGlobe(baseGlobe);
+        }
+        this.isContainer1Active = !this.isContainer1Active;
     }
 
+    changeGlobe(newGlobeFunc: CallableFunction): void {
+        let container1: ElementRef; let container2: ElementRef;
+        if (this.isContainer1Active) {
+            container1 = this.globeContainer1;
+            container2 = this.globeContainer2;
+        } else {
+            container1 = this.globeContainer2;
+            container2 = this.globeContainer1;
+        }  
+
+        const newWorld = newGlobeFunc(container2);
+        newWorld.controls().autoRotate = true;
+        newWorld.controls().autoRotateSpeed = -0.65;
+        newWorld.controls().maxDistance = 1300;
+
+        
+        setTimeout(() => {
+            this.renderer.addClass(container2.nativeElement, 'fade-in');
+            this.renderer.removeClass(container2.nativeElement, 'fade-out');
+            this.renderer.addClass(container1.nativeElement, 'fade-out');
+            this.renderer.removeClass(container1.nativeElement, 'fade-in');
+            
+            setTimeout(() => {
+                this.world?.scene().clear();
+                this.world = newWorld;
+            }, 4000); 
+        }, 1000); 
+      }
+
     initGlobe(): void {
-        this.world = new Globe(this.globeContainer.nativeElement, { animateIn: true, waitForGlobeReady: true })
-            // TODO local assets
+        this.world = new Globe(this.globeContainer1.nativeElement, { animateIn: true, waitForGlobeReady: true })
             .globeImageUrl('assets/earth-blue-marble.jpg')
             .bumpImageUrl('assets/earth-topology.png');
 
