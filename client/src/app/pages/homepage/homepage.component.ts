@@ -23,6 +23,7 @@ import { GameService } from '../../services/game.service';
 import { Subscription } from 'rxjs';
 import { initFoodProdGlob } from '../utils/foodProdGlobe';
 import { initFoodProdQuizGlob } from '../utils/foodProdQuizGlobe';
+import { endGameGlobe } from '../utils/endGameGlobe';
 
 
 @Component({
@@ -102,15 +103,6 @@ export class HomepageComponent implements AfterViewInit, OnInit {
                 break;
             case 4:
                 this.changeGlobe(baseGlobe);
-                break;
-            case 5:
-                this.changeGlobe(initPopulationGlobe);
-                break;
-            case 6:
-                this.changeGlobe(initFoodProdGlob);
-                break;
-            case 7:
-                this.changeGlobe(initFoodProdQuizGlob);
                 break;
             default:
                 this.changeGlobe(baseGlobe);
