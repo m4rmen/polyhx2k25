@@ -18,6 +18,7 @@ export class GameService {
   buttonText = 'Valider';
   selectedAnswer: string | null = null;
   quizStarted = false;
+  answeredCorrectly = false;
 
   clickedTopEmissionCountries: string[] = [];
   clickedDeforestationCountries: string[] = [];
@@ -129,17 +130,48 @@ export class GameService {
     return sortedA.every((val, index) => val === sortedB[index]);
   }
 
+
+  checkAnswersPerQuestion(): void {
+    switch (this.currentQuestionIndex) {
+      case 0:
+        //Question 1 emissions co2
+        if (this.arraysEqual(this.clickedTopEmissionCountries, this.questions[this.currentQuestionIndex].correctAnswers)) {
+          this.answeredCorrectly = true;
+        } else {
+          this.answeredCorrectly = false;
+        }
+        break;
+      //modify its template
+      case 1:
+        if (this.arraysEqual(this.clickedTopEmissionCountries, ['CHN', 'USA', 'IND'])) {
+          this.answeredCorrectly = true;
+        } else {
+          this.answeredCorrectly = false;
+        }
+        break;
+      case 2:
+        if (this.arraysEqual(this.clickedTopEmissionCountries, ['CHN', 'USA', 'IND'])) {
+          this.answeredCorrectly = true;
+        } else {
+          this.answeredCorrectly = false;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+
+
   // Validates the current answer. Depending on the quiz type or button state,
   // either marks the question as answered or moves to the next question.
   validateAnswer(): void {
     const question = this.currentStep.questions[this.currentQuestionIndex];
     if (this.currentStep.type === 'interactive') {
-      const correctAnswers: string[] = this.questions[this.currentQuestionIndex].correctAnswers
-      if (this.arraysEqual(correctAnswers, this.clickedTopEmissionCountries)) {
-        console.log('Correct answer');
-        question.answered = true;
-        this.buttonText = 'Suivant';
-      }
+      this.checkAnswersPerQuestion();
+      question.answered = true;
+      this.setGlobeType(3);
+      this.buttonText = 'Suivant';
     } else if (this.buttonText === 'Suivant') {
       this.nextQuestion();
     } else if (this.selectedAnswer) {
@@ -154,6 +186,7 @@ export class GameService {
       this.currentQuestionIndex++;
       this.buttonText = 'Valider';
       this.selectedAnswer = null;
+      this.answeredCorrectly = false;
     } else {
       this.nextStep();
     }

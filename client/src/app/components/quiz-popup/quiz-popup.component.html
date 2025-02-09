@@ -24,15 +24,15 @@
     <!-- Étape 2 : Réponse Interactive -->
     <div *ngIf="gameService.currentStep?.type === 'interactive' && !gameService.showStepTitle">
         <h3>{{ gameService.currentStep.questions[gameService.currentQuestionIndex]?.text }}</h3>
-        <div class="interactive-options">
-            {{ gameService.selectedAnswer }}
+        <div *ngIf="gameService.questions[gameService.currentQuestionIndex].answered" class="interactive-options">
+            {{ gameService.answeredCorrectly ?  gameService.questions[gameService.currentQuestionIndex].answerFeedback.correct : gameService.questions[gameService.currentQuestionIndex].answerFeedback.incorrect }}
         </div>
     </div>
 
 
     <div *ngIf="gameService.quizStarted && !gameService.showStepTitle" class="quiz-footer">
         <button (click)="gameService.endQuiz()" class="quit-button"> <i class="fa-solid fa-door-open"></i> Quitter</button>
-        <button (click)="gameService.validateAnswer()" class="button">{{ gameService.buttonText }}</button>
+        <button *ngIf="gameService.questions[gameService.currentQuestionIndex] === 'qcm' || gameService.questions[gameService.currentQuestionIndex].answered" (click)="gameService.validateAnswer()" class="button">{{ gameService.buttonText }}</button>
     </div>
     <h4 *ngIf="gameService.quizStarted && !gameService.showStepTitle">Question {{ gameService.currentQuestionIndex + 1 }} sur {{ gameService.questions.length }}</h4>
 </div>

@@ -11,9 +11,15 @@
                         "CHN",
                         "IND"
                     ],
-                    "selectedItems": []
+                    "answerFeedback": {
+                        "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
+                        "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
+                    }, 
+                    "answered": false
+                    
                 }
             ]
+            
         }
         ,{
             "type": "qcm",
