@@ -105,9 +105,9 @@ export class GameService {
     }
     this.setGlobeType(this.currentQuestion.globeIndexes[1]);
     this.currentQuestion.answered = true;
-    if (this.currentQuestion.globeIndexes[1] === 3){
-      console.log("Globe index 3");
-      this.groqService.getChatCompletion(this.currentQuestion.aiPrompt).then((response: any) => {
+    if (this.currentQuestion.globeIndexes[1] === 3) {
+      console.log(this.currentQuestion.aiPrompt.toString() + this.clickedCountries.length);
+      this.groqService.getChatCompletion(this.currentQuestion.aiPrompt.toString() + this.answeredCorrectly).then((response: any) => {
         console.log(response.choices[0].message.content);
         this._groqResponse.next(response.choices[0].message.content);
       });
@@ -116,7 +116,7 @@ export class GameService {
 
 
   validateQCMQuestion(): void {
-    if (this.currentQuestion.answered){
+    if (this.currentQuestion.answered) {
       this.nextQuestion();
       return;
     }
@@ -127,6 +127,9 @@ export class GameService {
     }
     this.setGlobeType(this.currentQuestion.globeIndexes[1]);
     this.currentQuestion.answered = true;
+    this.groqService.getChatCompletion(this.currentQuestion.aiPrompt).then((response: any) => {
+      this._groqResponse.next(response.choices[0].message.content);
+    });
   }
 
   nextQuestion(): void {

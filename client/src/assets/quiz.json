@@ -20,7 +20,7 @@
                 2,
                 3
             ],
-            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif. Donne-moi les trois pays qui émettent le plus de CO2 en kilotonnes (kt), avec une brève explication de ce phénomène. Limite ta réponse à moins de 100 mots, et n’utilise ni symboles spéciaux ni formules de politesse. Seulement du texte simple et factuel, pas de valeurs numeriques."
+            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif. Donne-moi les trois pays qui émettent le plus de CO2 en kilotonnes (kt), avec une brève explication de ce phénomène. Limite ta réponse à moins de 150 mots, et n’utilise ni symboles spéciaux ni formules de politesse. Seulement du texte simple et factuel, pas de valeurs numeriques. A la fin tu trouvera le resultat de la personne si c'est true, elle a eu tout bon, si elle a faux elle a eu tout faux au quiz. Peux tu lui faire une message custom pour l'encourager de maniere chaleureuse et sympathique. NE specifie pas que tu connais le resultat du quiz. Il faut que ca soit fluide"
         },
         {
             "id": 2,
