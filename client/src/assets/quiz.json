@@ -12,8 +12,8 @@
                 "IND"
             ],
             "answerFeedback": {
-                "correct": "Bonne réponse! Les pays ayant émis le plus de CO2 en 2021 sont: les États-Unis, la Chine et l'Inde.",
-                "incorrect": "Mauvaise réponse! Les pays ayant émis le plus de CO2 en 2021 sont: les États-Unis, la Chine et l'Inde."
+                "correct": "Bonne réponse!",
+                "incorrect": "Mauvaise réponse!"
             },
             "answered": false,
             "globeIndexes": [
