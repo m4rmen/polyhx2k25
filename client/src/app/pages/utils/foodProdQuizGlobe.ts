@@ -5,12 +5,14 @@ import { countryData } from '../../../assets/country-data';
 import * as d3 from 'd3'; 
 import { ElementRef } from '@angular/core';
 import { createBackground } from './background';
+import { GlobeQuizService } from '../../services/globe-quiz.service';
 
-export function initFoodProdQuizGlob(ref: ElementRef): GlobeInstance {
+export function initFoodProdQuizGlob(ref: ElementRef, globeQuizService: GlobeQuizService): GlobeInstance {
     const foodProdValues = Object.values(FOOD_PROD_DATA).filter(d => d > 0);
     const minFood = d3.min(foodProdValues) || 1;
     const maxFood = d3.max(foodProdValues) || 1;
 
+    globeQuizService.resetValues();
 
     const top5FoodProdCountries = Object.entries(FOOD_PROD_DATA)
       .sort(([, a], [, b]) => b - a)
@@ -31,7 +33,7 @@ export function initFoodProdQuizGlob(ref: ElementRef): GlobeInstance {
 
       globe
       .onPolygonClick((event) => {
-        // eventService.handleCountryEmissionClick(event);
+        globeQuizService.handleCountryEmissionClick(event);
         globe.polygonsData(countryData.features);
       })
       .polygonsData(countryData.features)
@@ -39,15 +41,16 @@ export function initFoodProdQuizGlob(ref: ElementRef): GlobeInstance {
       .polygonCapColor((feat: any) => {
         const isoCode = feat.id;
         const value = FOOD_PROD_DATA[isoCode] || 0;
-
-        if (top5FoodProdCountries.includes(isoCode) && value > 0) {
+        let isClickedTopEmissionCountry = false;
+        globeQuizService.clickedTopEmissionCountries$.subscribe(countries => {
+            isClickedTopEmissionCountry = countries.includes(isoCode);
+        });
+        if (isClickedTopEmissionCountry && top5FoodProdCountries.includes(isoCode) && value > 0) {
             return "green";
-        } else if (value > 0) {
+        } else if (isClickedTopEmissionCountry && value > 0) {
           return 'rgb(98, 98, 98)';
         }
         return 'rgba(0, 0, 0, 0)';
-
-        return colorScale(value);
       })
       .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
       .polygonStrokeColor(() => '#111')

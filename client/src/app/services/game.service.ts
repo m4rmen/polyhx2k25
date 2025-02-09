@@ -32,7 +32,9 @@ export class GameService {
   constructor(private globeQuizService: GlobeQuizService, private groqService: GroqService) {
     this.clickedTopEmissionCountriesSubscription = this.globeQuizService.clickedTopEmissionCountries$.subscribe((clickedTopEmissionCountries: string[]) => {
       this.clickedCountries = clickedTopEmissionCountries;
-      if (this.clickedCountries.length == 3) {
+      if (this.clickedCountries.length == 3 && this.currentQuestion.id === 1) {
+        this.validateInteractiveQuestion();
+      } else if (this.clickedCountries.length == 1 && this.currentQuestion.id === 3) {
         this.validateInteractiveQuestion();
       }
     });
