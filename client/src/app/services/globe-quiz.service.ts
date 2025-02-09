@@ -16,13 +16,11 @@ export class GlobeQuizService {
   handleCountryEmissionClick(event: any): void {
     const currentValue = this._clickedTopEmissionCountries.getValue();
     this._clickedTopEmissionCountries.next([...currentValue, event.id]);
-    console.log(this._clickedTopEmissionCountries.getValue());
   }
 
   handleCountryDeforestationClick(event: any): void {
     const currentValue = this._clickedDeforestationCountries.getValue();
     this._clickedDeforestationCountries.next([...currentValue, event.id]);
-    console.log(this._clickedDeforestationCountries.getValue());
   }
 
   resetValues(): void {

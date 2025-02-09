@@ -31,7 +31,7 @@ export function initPopulationGlobe(ref: ElementRef): GlobeInstance {
 
   // Enable auto-rotation.
   globe.controls().autoRotate = true;
-  globe.controls().autoRotateSpeed = 0.6;
+  globe.controls().autoRotateSpeed = -0.6;
 
   createBackground(globe);
   return globe;

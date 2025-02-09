@@ -18,7 +18,6 @@ export function initOvershootQuizGlobe(ref: ElementRef, globeQuizService: GlobeQ
 
     const answer = "QAT"
 
-    globeQuizService.resetValues();
 
     const colorScale = d3.scaleLog<string>()
         .domain([firstDate.getTime(), latestDate.getTime()])
