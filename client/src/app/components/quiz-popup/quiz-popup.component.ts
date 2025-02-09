@@ -2,12 +2,13 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { GroqComponent } from '../groq/groq.component';
 
 @Component({
   selector: 'app-quiz-popup',
   templateUrl: './quiz-popup.component.html',
   styleUrls: ['./quiz-popup.component.css'],
-  imports: [FormsModule, CommonModule],
+  imports: [FormsModule, CommonModule, GroqComponent],
 })
 export class QuizPopupComponent implements OnInit {
   @Output() closePopup = new EventEmitter<void>();
@@ -17,7 +18,7 @@ export class QuizPopupComponent implements OnInit {
   buttonText = 'Valider';
   selectedAnswer: string | null = null;
   timerStarted = false;
-  timeLeft = 1;
+  timeLeft = 3;
   interval: any;
   showStepTitle = false;
 
@@ -36,10 +37,7 @@ export class QuizPopupComponent implements OnInit {
     try {
       const response = await fetch('./assets/quiz.json');
       const data = await response.json();
-      console.log(data);
-      console.log("Hello");
       this.quizSteps = data.quizSteps;
-      this.startTimer();
     } catch (error) {
       console.error("Erreur lors du chargement du quiz :", error);
     }
@@ -48,23 +46,20 @@ export class QuizPopupComponent implements OnInit {
   loadCurrentStep() {
     if (this.quizSteps.length > 0) {
       this.currentStep = this.quizSteps[this.currentStepIndex];
-      this.showStepTitle = true; // Afficher le titre
-
-      setTimeout(() => {
-        this.showStepTitle = false; // Masquer le titre après 3 secondes
-        if (this.currentStep.type === 'qcm') {
-          this.questions = this.currentStep.questions;
-        }
-      }, 3000);
+      if (this.currentStep.type === 'qcm') {
+        this.questions = this.currentStep.questions;
+      }
     }
   }
 
   startTimer() {
     this.interval = setInterval(() => {
       this.timeLeft--;
+      this.showStepTitle = false;
       if (this.timeLeft === 0) {
         clearInterval(this.interval);
         this.startQuiz();
+        this.showStepTitle = false;
       }
     }, 1000);
   }

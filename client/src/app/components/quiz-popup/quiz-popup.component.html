@@ -6,7 +6,6 @@
 
     <h1 *ngIf="quizStarted && !showStepTitle">Quiz interactif</h1>
 
-    <h2 *ngIf="showStepTitle" class="step-title">{{ currentStep?.title }}</h2>
     <!-- Étape 1 : QCM -->
     <div *ngIf="quizStarted && quizSteps[currentStepIndex]?.type === 'qcm' && !showStepTitle">
         <h3>{{ questions[currentQuestionIndex]?.text }}</h3>
@@ -37,3 +36,5 @@
     </div>
     <h4 *ngIf="quizStarted && !showStepTitle">Question {{ currentQuestionIndex + 1 }} sur {{ questions.length }}</h4>
 </div>
+
+<app-groq class="groq"></app-groq>
