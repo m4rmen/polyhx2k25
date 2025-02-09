@@ -105,6 +105,12 @@ export class GameService {
     }
     this.setGlobeType(this.currentQuestion.globeIndexes[1]);
     this.currentQuestion.answered = true;
+    if (this.currentQuestion.globeIndexes[1] === 3){
+      console.log("Globe index 3");
+      this.groqService.getChatCompletion(this.currentQuestion.aiPrompt).then((response: any) => {
+        this._groqResponse.next(response.choices[0].message.content);
+      });
+    }
   }
 
 
