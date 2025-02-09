@@ -29,7 +29,7 @@ export class GameService {
   private clickedDeforestationCountriesSubscription!: Subscription;
 
 
-  constructor(private globeQuizService: GlobeQuizService, private groqService: GroqService) {
+  constructor(private globeQuizService: GlobeQuizService, public groqService: GroqService) {
     this.clickedTopEmissionCountriesSubscription = this.globeQuizService.clickedTopEmissionCountries$.subscribe((clickedTopEmissionCountries: string[]) => {
       this.clickedCountries = clickedTopEmissionCountries;
       if (this.clickedCountries.length == 3 && this.currentQuestion.id === 1) {
