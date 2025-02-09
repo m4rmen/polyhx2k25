@@ -11,9 +11,9 @@ export function initPopulationGlobe(ref: ElementRef): GlobeInstance {
     .domain([0, 1e7]);
 
   // Initialize the globe using night-themed imagery (as in the original example).
-  const globe = new Globe(ref.nativeElement)
-    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-    .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+  const globe = new Globe(ref.nativeElement, { animateIn: false, waitForGlobeReady: true })
+    .globeImageUrl('assets/earth-blue-marble.jpg')
+    .bumpImageUrl('assets/earth-topology.png')
     .backgroundImageUrl('assets/galaxy_starfield.png')
     // Configure the hexbin properties to display population data.
     .hexBinPointWeight('pop')
