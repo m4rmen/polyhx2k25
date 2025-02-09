@@ -90,12 +90,14 @@ export class HomepageComponent implements AfterViewInit, OnInit {
     triggerChangeGlobe(globeIndex: number) {
         switch (globeIndex) {
             case 1:
+                console.log('Changing to deforestation quiz globe');
                 break;
             case 2:
                 console.log('Changing to emission quiz globe');
                 this.changeGlobe(initEmissionQuizGlobe, this.globeQuizService);
                 break;
             case 3:
+                console.log('Changing to co2 quiz globe');
                 this.changeGlobe(initCo2Globe);
                 break;
             case 4:
@@ -108,6 +110,7 @@ export class HomepageComponent implements AfterViewInit, OnInit {
                 this.changeGlobe(baseGlobe);
                 break;
         }
+        this.isContainer1Active = !this.isContainer1Active;
     }
     
 
@@ -126,7 +129,7 @@ export class HomepageComponent implements AfterViewInit, OnInit {
         newWorld.controls().autoRotateSpeed = -0.65;
         newWorld.controls().maxDistance = 1300;
 
-        
+        console.log('Changing globe');
         setTimeout(() => {
             this.renderer.addClass(container2.nativeElement, 'fade-in');
             this.renderer.removeClass(container2.nativeElement, 'fade-out');
@@ -134,6 +137,7 @@ export class HomepageComponent implements AfterViewInit, OnInit {
             this.renderer.removeClass(container1.nativeElement, 'fade-in');
             
             setTimeout(() => {
+                console.log('clear globe');
                 this.world?.scene().clear();
                 this.world = newWorld;
             }, 4000); 
