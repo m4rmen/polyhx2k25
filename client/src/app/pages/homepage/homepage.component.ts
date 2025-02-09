@@ -24,6 +24,7 @@ import { Subscription } from 'rxjs';
 import { initFoodProdGlob } from '../utils/foodProdGlobe';
 import { initFoodProdQuizGlob } from '../utils/foodProdQuizGlobe';
 import { endGameGlobe } from '../utils/endGameGlobe';
+import { RessourceComponent } from '../../components/ressource/ressource.component';
 
 
 @Component({
@@ -32,7 +33,7 @@ import { endGameGlobe } from '../utils/endGameGlobe';
         RouterModule,
         CommonModule,
         QuizPopupComponent,
-        GroqComponent,],
+        GroqComponent,RessourceComponent],
     templateUrl: './homepage.component.html',
     styleUrls: ['./homepage.component.css'],
     animations: [
