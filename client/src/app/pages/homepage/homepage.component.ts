@@ -94,6 +94,12 @@ export class HomepageComponent implements AfterViewInit, OnInit {
             case 3:
                 this.changeGlobe(initCo2Globe);
                 break;
+            case 4:
+                this.changeGlobe(initDeforestationQuizGlobe, this.globeQuizService);
+                break;
+            case 5:
+                this.changeGlobe(initDeforestationAnswerGlobe);
+                break;
             default:
                 this.changeGlobe(baseGlobe);
                 break;

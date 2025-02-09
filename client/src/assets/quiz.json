@@ -2,7 +2,7 @@
     "quizSteps": [
         {
             "type": "interactive",
-            "title": "Étape 1 : Sélection Interactive",
+            "title": "Question Interactive",
             "questions": [
                 {
                     "text": "CLiquez sur les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
@@ -23,7 +23,7 @@
         }
         ,{
             "type": "qcm",
-            "title": "Étape 1 : Questions à Choix Multiples",
+            "title": "Question à Choix Multiples",
             "questions": [
                 {
                     "text": "Quel est le pays le plus peuplé du monde ?",
@@ -42,25 +42,8 @@
                         }
                     ],
                     "answered": false
-                },
-                {
-                    "text": "Quelle est la capitale du Japon ?",
-                    "options": [
-                        {
-                            "text": "Tokyo",
-                            "correct": true
-                        },
-                        {
-                            "text": "Kyoto",
-                            "correct": false
-                        },
-                        {
-                            "text": "Osaka",
-                            "correct": false
-                        }
-                    ],
-                    "answered": false
                 }
+                
             ]
         }
        

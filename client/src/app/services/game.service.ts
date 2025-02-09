@@ -19,6 +19,7 @@ export class GameService {
   selectedAnswer: string | null = null;
   quizStarted = false;
   answeredCorrectly = false;
+  globeIndex = 0;
 
   clickedTopEmissionCountries: string[] = [];
   clickedDeforestationCountries: string[] = [];
@@ -73,6 +74,8 @@ export class GameService {
     if (this.quizSteps.length > 0) {
       this.currentStep = this.quizSteps[this.currentStepIndex];
       this.questions = this.currentStep.questions;
+      console.log('Loading current step, passing globe index :', ++this.globeIndex);
+      this.setGlobeType(++this.globeIndex);
     }
   }
 
@@ -94,7 +97,6 @@ export class GameService {
     this.quizStarted = true;
     this.currentStepIndex = 0;
     this.loadCurrentStep();
-    this.setGlobeType(2);
   }
 
   // Ends the quiz and emits an event so that the popup can close.
@@ -170,10 +172,11 @@ export class GameService {
     if (this.currentStep.type === 'interactive') {
       this.checkAnswersPerQuestion();
       question.answered = true;
-      this.setGlobeType(3);
-      this.buttonText = 'Suivant';
+      console.log('setting globe type to:', this.globeIndex + 1);
+      this.setGlobeType(++this.globeIndex); // 3
+      //this.buttonText = 'Suivant';
     } else if (this.buttonText === 'Suivant') {
-      this.nextQuestion();
+      this.nextStep();
     } else if (this.selectedAnswer) {
       question.answered = true;
       this.buttonText = 'Suivant';
@@ -181,16 +184,7 @@ export class GameService {
   }
 
   // Advances to the next question if available, or moves to the next step.
-  nextQuestion(): void {
-    if (this.currentQuestionIndex < this.currentStep.questions.length - 1) {
-      this.currentQuestionIndex++;
-      this.buttonText = 'Valider';
-      this.selectedAnswer = null;
-      this.answeredCorrectly = false;
-    } else {
-      this.nextStep();
-    }
-  }
+  
 
   // Advances to the next quiz step, or ends the quiz if none remain.
   nextStep(): void {
