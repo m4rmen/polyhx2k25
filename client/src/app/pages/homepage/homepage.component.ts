@@ -15,6 +15,8 @@ import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
 import { initDeforestationQuizGlobe } from '../utils/deforestationQuizGlobe';
 import { initDeforestationAnswerGlobe } from '../utils/deforestationAnswerGlobe';
 import { initPopulationGlobe } from '../utils/worldPopulationGlobe';
+import { initOvershootGlobe } from '../utils/overshootDaysGlobe';
+import { initOvershootQuizGlobe } from '../utils/overshootDayQuizGlobe';
 
 @Component({
     selector: 'app-homepage',
@@ -68,8 +70,6 @@ export class HomepageComponent implements AfterViewInit {
         this.hideButton = false;     // Fait réapparaître le bouton
     }
 
-
-
     changeGlobe() {
         // Fade out the current globe container
         this.renderer.addClass(this.globeContainer.nativeElement, 'fade-out');
@@ -78,7 +78,7 @@ export class HomepageComponent implements AfterViewInit {
 
         // Set timeout to allow the fade-out transition to complete before changing the globe
         setTimeout(() => {
-          const newWorld = initPopulationGlobe(this.globeContainer2);
+          const newWorld = initOvershootQuizGlobe(this.globeContainer2);
             
           newWorld.controls().autoRotate = true;
           newWorld.controls().autoRotateSpeed = -0.65;
