@@ -21,9 +21,9 @@ export function initDeforestationQuizGlobe(ref: ElementRef, eventService: GlobeQ
     .range(["red", "green"])
     .clamp(true);
 
-  const globe = new Globe(ref.nativeElement)
-    .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-    .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+  const globe = new Globe(ref.nativeElement, { animateIn: false, waitForGlobeReady: true })
+    .globeImageUrl('assets/earth-blue-marble.jpg')
+    .bumpImageUrl('assets/earth-topology.png')
     .backgroundImageUrl('assets/galaxy_starfield.png');
 
   globe

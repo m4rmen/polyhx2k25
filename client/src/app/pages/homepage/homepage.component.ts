@@ -14,9 +14,13 @@ import { GlobeQuizService } from '../../services/globe-quiz.service';
 import { initEmissionQuizGlobe } from '../utils/emissionQuizGlobe';
 import { initDeforestationQuizGlobe } from '../utils/deforestationQuizGlobe';
 import { initDeforestationAnswerGlobe } from '../utils/deforestationAnswerGlobe';
+import { initPopulationGlobe } from '../utils/worldPopulationGlobe';
+import { initOvershootGlobe } from '../utils/overshootDaysGlobe';
+import { initOvershootQuizGlobe } from '../utils/overshootDayQuizGlobe';
 import { baseGlobe } from '../utils/testglobe';
 import { GameService } from '../../services/game.service';
 import { Subscription } from 'rxjs';
+
 
 @Component({
     selector: 'app-homepage',
@@ -95,10 +99,10 @@ export class HomepageComponent implements AfterViewInit, OnInit {
                 this.changeGlobe(initCo2Globe);
                 break;
             case 4:
-                this.changeGlobe(initDeforestationQuizGlobe, this.globeQuizService);
+                this.changeGlobe(baseGlobe);
                 break;
             case 5:
-                this.changeGlobe(initDeforestationAnswerGlobe);
+                this.changeGlobe(initPopulationGlobe);
                 break;
             default:
                 this.changeGlobe(baseGlobe);

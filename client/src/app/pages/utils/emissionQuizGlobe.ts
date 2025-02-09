@@ -14,8 +14,8 @@ export function initEmissionQuizGlobe(ref: ElementRef, eventService: GlobeQuizSe
 
 
     const globe = new Globe(ref.nativeElement)
-      .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
-      .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
+      .globeImageUrl('assets/earth-blue-marble.jpg')
+      .bumpImageUrl('assets/earth-topology.png')
       .backgroundImageUrl('assets/galaxy_starfield.png');
 
       globe
