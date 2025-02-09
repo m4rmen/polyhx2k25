@@ -93,7 +93,7 @@ export class HomepageComponent implements AfterViewInit, OnInit {
     closeQuiz() {
         this.showQuizPopup = false;
         this.isHidden = false;
-        this.hideButton = false;
+        this.hideButton = true;
         this.showRessource = true;
     }
 
@@ -133,6 +133,9 @@ export class HomepageComponent implements AfterViewInit, OnInit {
                 break;
             case 12:
                 this.changeGlobe(initDeforestationAnswerGlobe);
+                break;
+            case 13:
+                this.changeGlobe(endGameGlobe);
                 break;
             default:
                 this.changeGlobe(baseGlobe);

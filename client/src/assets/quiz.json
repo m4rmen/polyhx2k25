@@ -12,15 +12,15 @@
                 "IND"
             ],
             "answerFeedback": {
-                "correct": "Bonne réponse!",
-                "incorrect": "Mauvaise réponse!"
+                "correct": "Correct ! La carte ci-contre représente les emissions de Co2 dans l'air en fonction des pays en 2021.",
+                "incorrect": "Dommage ! La carte ci-contre représenta les emissions de Co2 dans l'air en fonction des pays en 2021."
             },
             "answered": false,
             "globeIndexes": [
                 2,
                 3
             ],
-            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif. Donne-moi les trois pays qui émettent le plus de CO2 en kilotonnes (kt), avec une brève explication de ce phénomène. Limite ta réponse à moins de 150 mots, et n’utilise ni symboles spéciaux ni formules de politesse. Seulement du texte simple et factuel, pas de valeurs numeriques. A la fin tu trouvera le resultat de la personne si c'est true, elle a eu tout bon, si elle a faux elle a eu tout faux au quiz. Peux tu lui faire une message custom pour l'encourager de maniere chaleureuse et sympathique. NE specifie pas que tu connais le resultat du quiz. Il faut que ca soit fluide"
+            "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif. Donne-moi les trois pays qui émettent le plus de CO2 en kilotonnes (kt), avec une brève explication de ce phénomène. Limite ta réponse à moins de 150 mots, et n’utilise ni symboles spéciaux ni formules de politesse. Seulement du texte simple et factuel, pas de valeurs numériques. A la fin tu trouvera le resultat de la personne si c'est true, elle a eu tout bon, si elle a faux elle a eu tout faux au quiz. Peux tu lui faire une message custom pour l'encourager de manière chaleureuse et sympathique. NE spécifie pas que tu connais le résultat du quiz. Il faut que ca soit fluide"
         },
         {
             "id": 2,
@@ -51,14 +51,14 @@
             "id": 3,
             "type": "interactive",
             "title": "Question Interactive",
-            "question": "Si tout le monde sur Terre consommait comme les habitants de ce pays, lequel aurait la durée de vie la plus courte ?",
+            "question": "Si tout le monde sur Terre consommait comme les habitants de ce pays, lequel atteindra le le jour du dépassement le plus tôt ?",
             "options": [],
             "correctAnswers": [
                 "QAT"
             ],
             "answerFeedback": {
                 "correct": "Bravo ! Vous avez trouvé le pays qui consomme le plus par habitant.",
-                "incorrect": "Mauvaise réponse! Le Qatar est le pays qui consomme le plus par habitant."
+                "incorrect": "Mauvaise réponse ! Le Qatar est le pays qui consomme le plus par habitant."
             },
             "answered": false,
             "globeIndexes": [
@@ -80,8 +80,8 @@
                 "FRA"
             ],
             "answerFeedback": {
-                "correct": "Bravo, vous avez trouvé les 3 pays plus grand exportateurs de blé.",
-                "incorrect": "Mauvaise réponse! Les 3 pays plus grand exportateurs de blé sont : les États-Unis, la Chine et l'Inde."
+                "correct": "Bravo, vous avez trouvé 3 pays parmi les plus grand exportateurs de blé.",
+                "incorrect": "Mauvaise réponse ! Les plus grand exportateurs de blé sont : les États-Unis, la Chine et l'Inde."
             },
             "answered": false,
             "globeIndexes": [
@@ -93,7 +93,7 @@
             "id": 5,
             "type": "qcm",
             "title": "Question a choix multiples",
-            "question": "Quels sont l'espèces animales la plus menacées dans le monde parmis les 4 mentionnés?",
+            "question": "Quels sont l'espèces animales la plus menacées dans le monde parmi les 4 mentionnés ?",
             "options": [
                 "Tigre de Sumatra",
                 "Girafe",
@@ -129,14 +129,15 @@
                 "PRY"  
             ],
             "answerFeedback": {
-                "correct": "Bravo, vous avez trouvé les 3 pays qui déforeste le plus !",
-                "incorrect": "Mauvaise réponse! Les 3 pays qui déforeste le plus sont : le Brésil, l'Indonésie et la Russie."
+                "correct": "Bravo, vous avez trouvé 3 des pays qui déforeste le plus !",
+                "incorrect": "Mauvaise réponse ! Les pays qui déforeste le plus sont : le Brésil, l'Indonésie, Tanzanie, Myanmar et le Paraguay."
             },
             "answered": false,
             "globeIndexes": [
                 11,
                 12
-            ]
+            ],
+            "aiPrompt": "Listez les pays qui déforestent le plus et expliquez pourquoi. en moins de 150 mots"
         }
     ]
 }
