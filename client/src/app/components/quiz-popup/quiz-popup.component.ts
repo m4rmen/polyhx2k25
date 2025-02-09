@@ -17,10 +17,7 @@ export class QuizPopupComponent implements OnInit {
 
   ngOnInit(): void {
     this.gameService.loadQuiz().then(() => {
-      this.gameService.timerStarted = true;
-      this.gameService.startTimer(() => {
-        this.gameService.startQuiz();
-      });
+      this.gameService.startQuiz();
     });
 
     this.gameService.closePopup.subscribe(() => {
@@ -28,13 +25,13 @@ export class QuizPopupComponent implements OnInit {
     });
   }
 
-  onOptionSelect(optionText: string) {
-    this.gameService.onOptionSelect(optionText);
-  }
+  // onOptionSelect(optionText: string) {
+  //   this.gameService.onOptionSelected(optionText);
+  // }
 
-  validateAnswer() {
-    this.gameService.validateAnswer();
-  }
+  // validateAnswer() {
+  //   this.gameService.validateAnswer();
+  // }
 
   // You can also expose other methods (e.g., nextQuestion, nextStep) via buttons in your template.
 }

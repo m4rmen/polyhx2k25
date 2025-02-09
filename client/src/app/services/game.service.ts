@@ -3,6 +3,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { GlobeQuizService } from './globe-quiz.service';
 import { Subscription } from 'rxjs';
+import { GroqService } from './groq.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,57 +15,47 @@ export class GameService {
   private _groqResponse = new BehaviorSubject<string>('');
   public groqResponse$ = this._groqResponse.asObservable();
 
-  quizSteps: any[] = [];
-  currentStep: any = null;
-  questions: any[] = [];
-  currentStepIndex = 0;
+  quizQuestions: any[] = [];
   currentQuestionIndex = 0;
-  buttonText = 'Valider';
+  currentQuestion: any = {};
   selectedAnswer: string | null = null;
   quizStarted = false;
   answeredCorrectly = false;
-  globeIndex = 1;
+  globeIndex = 0;
+  clickedCountries: string[] = [];
 
-  clickedTopEmissionCountries: string[] = [];
-  clickedDeforestationCountries: string[] = [];
-
-  // Timer properties
-  timerStarted = false;
-  timeLeft = 3;
-  interval: any;
-  showStepTitle = false;
-
-  // Event emitter to notify when the quiz should close
   closePopup = new EventEmitter<void>();
-  //subscrbe to the clickedTopEmissionCountries
   private clickedTopEmissionCountriesSubscription!: Subscription;
-  //subscrbe to the clickedDeforestationCountries
   private clickedDeforestationCountriesSubscription!: Subscription;
 
 
-  constructor(private globeQuizService: GlobeQuizService) {
+  constructor(private globeQuizService: GlobeQuizService, private groqService: GroqService) {
     this.clickedTopEmissionCountriesSubscription = this.globeQuizService.clickedTopEmissionCountries$.subscribe((clickedTopEmissionCountries: string[]) => {
-      this.clickedTopEmissionCountries = clickedTopEmissionCountries;
-      if (this.clickedTopEmissionCountries.length == 3) {
-        this.validateAnswer();
+      this.clickedCountries = clickedTopEmissionCountries;
+      if (this.clickedCountries.length == 3) {
+        this.validateInteractiveQuestion();
       }
     });
     this.clickedDeforestationCountriesSubscription = this.globeQuizService.clickedDeforestationCountries$.subscribe((clickedDeforestationCountries: string[]) => {
-      this.clickedDeforestationCountries = clickedDeforestationCountries;
+      this.clickedCountries = clickedDeforestationCountries;
     });
   }
 
 
-
-
-  // Loads the quiz JSON from assets (or elsewhere)
   async loadQuiz(): Promise<void> {
     try {
       const response = await fetch('./assets/quiz.json');
       const data = await response.json();
-      this.quizSteps = data.quizSteps;
+      this.quizQuestions = data.quizQuestions;
     } catch (error) {
       console.error("Erreur lors du chargement du quiz :", error);
+    }
+  }
+ 
+  loadCurrentQuestion(): void {
+    if (this.quizQuestions.length > 0) {
+      this.currentQuestion = this.quizQuestions[this.currentQuestionIndex];
+      this.setGlobeType(this.currentQuestion.globeIndexes[0]);
     }
   }
 
@@ -72,56 +63,26 @@ export class GameService {
     this._globeType.next(newType);
   }
 
-
-  // Loads the current step from quizSteps based on currentStepIndex
-  loadCurrentStep(): void {
-    if (this.quizSteps.length > 0) {
-      this.currentStep = this.quizSteps[this.currentStepIndex];
-      this.questions = this.currentStep.questions;
-      this.setGlobeType(++this.globeIndex);
-    }
-  }
-
-  // Starts a countdown timer, then starts the quiz when time is up.
-  startTimer(callback: () => void): void {
-    this.interval = setInterval(() => {
-      this.timeLeft--;
-      this.showStepTitle = false;
-      if (this.timeLeft === 0) {
-        clearInterval(this.interval);
-        callback();
-        this.showStepTitle = false;
-      }
-    }, 1000);
-  }
-
-  // Begins the quiz by initializing state and loading the first step.
   startQuiz(): void {
     this.quizStarted = true;
-    this.currentStepIndex = 0;
-    this.loadCurrentStep();
+    this.loadCurrentQuestion();
   }
 
-  // Ends the quiz and emits an event so that the popup can close.
   endQuiz(): void {
     this.closePopup.emit();
     this.quizStarted = false;
     this.resetQuestions();
   }
 
-  // Resets questions and selections for the current step.
   resetQuestions(): void {
     this.currentQuestionIndex = 0;
-    this.buttonText = 'Valider';
-    this.selectedAnswer = null;
-    if (this.questions) {
-      this.questions.forEach(q => q.answered = false);
+    if (this.quizQuestions.length > 0) {
+      this.quizQuestions.forEach(q => q.answered = false);
     }
   }
 
-  // Called when an option is selected
-  onOptionSelect(optionText: string): void {
-    if (!this.questions[this.currentQuestionIndex].answered) {
+  onOptionSelected(optionText: string): void {
+    if (!this.currentQuestion.answered) {
       this.selectedAnswer = optionText;
     }
   }
@@ -136,67 +97,84 @@ export class GameService {
   }
 
 
-  checkAnswersPerQuestion(): void {
-    switch (this.currentQuestionIndex) {
-      case 0:
-        //Question 1 emissions co2
-        if (this.arraysEqual(this.clickedTopEmissionCountries, this.questions[this.currentQuestionIndex].correctAnswers)) {
-          this.answeredCorrectly = true;
-        } else {
-          this.answeredCorrectly = false;
-        }
-        break;
-      //modify its template
-      case 1:
-        if (this.arraysEqual(this.clickedTopEmissionCountries, ['CHN', 'USA', 'IND'])) {
-          this.answeredCorrectly = true;
-        } else {
-          this.answeredCorrectly = false;
-        }
-        break;
-      case 2:
-        if (this.arraysEqual(this.clickedTopEmissionCountries, ['CHN', 'USA', 'IND'])) {
-          this.answeredCorrectly = true;
-        } else {
-          this.answeredCorrectly = false;
-        }
-        break;
-      default:
-        break;
+  validateInteractiveQuestion(): void {
+    if (this.arraysEqual(this.clickedCountries, this.currentQuestion.correctAnswers)) {
+      this.answeredCorrectly = true;
+    }else {
+      this.answeredCorrectly = false;
     }
+    this.setGlobeType(this.currentQuestion.globeIndexes[1]);
+    this.currentQuestion.answered = true;
+
+    //       this.answeredCorrectly = true;
+    //     } else {
+    //       this.answeredCorrectly = false;
+    //     }
+    // switch (this.currentQuestionIndex) {
+    //   case 0:
+    //     //Question 1 emissions co2
+    //     if (this.arraysEqual(this.clickedCountries, this.currentQuestion.correctAnswers)) {
+    //       this.answeredCorrectly = true;
+    //     } else {
+    //       this.answeredCorrectly = false;
+    //     }
+    //     break;
+    //   //modify its template
+    //   case 1:
+    //     if (this.arraysEqual(this.clickedTopEmissionCountries, ['CHN', 'USA', 'IND'])) {
+    //       this.answeredCorrectly = true;
+    //     } else {
+    //       this.answeredCorrectly = false;
+    //     }
+    //     break;
+    //   case 2:
+    //     if (this.arraysEqual(this.clickedTopEmissionCountries, ['CHN', 'USA', 'IND'])) {
+    //       this.answeredCorrectly = true;
+    //     } else {
+    //       this.answeredCorrectly = false;
+    //     }
+    //     break;
+    //   default:
+    //     break;
   }
 
+
+  validateQCMQuestion(): void {
+    if (this.selectedAnswer === this.currentQuestion.correctAnswers[0]) {
+      this.answeredCorrectly = true;
+    } else {
+      this.answeredCorrectly = false;
+    }
+    this.setGlobeType(this.currentQuestion.globeIndexes[1]);
+    this.currentQuestion.answered = true;
+  }
+
+  nextStep(): void {
+    this.currentQuestionIndex++;
+    this.loadCurrentQuestion();
+  }
 
 
   // Validates the current answer. Depending on the quiz type or button state,
   // either marks the question as answered or moves to the next question.
-  validateAnswer(): void {
-    const question = this.currentStep.questions[this.currentQuestionIndex];
-    if (this.currentStep.type === 'interactive') {
-      this.checkAnswersPerQuestion();
-      question.answered = true;
-      this.setGlobeType(++this.globeIndex); // 3
-      this.groqService.getChatCompletion(this.questions[0].aiPrompt).then((response) => {
-        this._groqResponse.next(response);
-      });
-      //this.buttonText = 'Suivant';
-    } else if (this.buttonText === 'Suivant') {
-      this.nextStep();
-    } else if (this.selectedAnswer) {
-      question.answered = true;
-      this.buttonText = 'Suivant';
-    }
-  }
-
-  // Advances to the next quiz step, or ends the quiz if none remain.
-  // nextStep(): void {
-  //   if (this.currentStepIndex < this.quizSteps.length - 1) {
-  //     this.currentStepIndex++;
-  //     this.currentQuestionIndex = 0;
-  //     this.selectedAnswer = null;
-  //     this.loadCurrentStep();
-  //   } else {
-  //     this.endQuiz();
+  // validateAnswer(): void {
+  //   const question = this.currentStep.questions[this.currentQuestionIndex];
+  //   if (this.currentStep.type === 'interactive') {
+  //     this.checkAnswersPerQuestion();
+  //     question.answered = true;
+  //     this.setGlobeType(++this.globeIndex); // 3
+  //     this.groqService.getChatCompletion(this.questions[0].aiPrompt).then((response) => {
+  //       this._groqResponse.next(response);
+  //     });
+  //     //this.buttonText = 'Suivant';
+  //   } else if (this.buttonText === 'Suivant') {
+  //     //this.nextStep();
+  //   } else if (this.selectedAnswer) {
+  //     question.answered = true;
+  //     this.buttonText = 'Suivant';
   //   }
   // }
+
+  // Advances to the next quiz step, or ends the quiz if none remain.
+
 }

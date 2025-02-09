@@ -16,7 +16,7 @@
             <p>Plus d'information </p>
             <i class="fa-solid fa-info icon-option"></i>
         </button>
-        <button *ngIf="gameService.questions[0] && !gameService.questions[0].answered" class="groq-option">
+        <button *ngIf="gameService.currentQuestion && !gameService.currentQuestion.answered" class="groq-option">
             <p>Donne moi un hint</p>
             <i class="fa-solid fa-lightbulb icon-option"></i>
         </button>

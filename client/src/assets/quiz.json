@@ -1,5 +1,5 @@
 {
-    "quizSteps": [
+    "quizQuestions": [
         {
             "type": "interactive",
             "title": "Question Interactive",
@@ -15,6 +15,7 @@
                 "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
             },
             "answered": false,
+            "globeIndexes": [2,3],
             "aiPrompt": "Imagine que tu es un professeur donnant un court message éducatif. Donne-moi les trois pays qui émettent le plus de CO2 en kilotonnes (kt), avec une brève explication de ce phénomène. Limite ta réponse à moins de 100 mots, et n’utilise ni symboles spéciaux ni formules de politesse. Seulement du texte simple et factuel, pas de valeurs numeriques."
         },
         {
@@ -34,7 +35,8 @@
                 "correct": "Bravo, vous avez trouvé les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt).",
                 "incorrect": "Mauvaise réponse! Les 3 pays ayant la plus grande émission de CO2 en Kilo Tonnes (kt) sont : les États-Unis, la Chine et l'Inde."
             },
-            "answered": false
+            "answered": false,
+            "globeIndexes": [4,5]
         }
     ]
 }
