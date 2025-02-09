@@ -16,11 +16,10 @@
             <p>Plus d'information </p>
             <i class="fa-solid fa-info icon-option"></i>
         </button>
-        <button class="groq-option">
+        <button *ngIf="gameService.questions[0] && !gameService.questions[0].answered" class="groq-option">
             <p>Donne moi un hint</p>
             <i class="fa-solid fa-lightbulb icon-option"></i>
         </button>
     </div>
 
-    <button (click)="sendMessage()">Envoyer un message test</button>
 </div>

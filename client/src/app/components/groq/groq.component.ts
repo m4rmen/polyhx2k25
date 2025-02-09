@@ -1,5 +1,9 @@
-import { Component } from '@angular/core';
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { GameService } from '../../services/game.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-groq',
@@ -7,23 +11,25 @@ import { CommonModule } from '@angular/common';
   templateUrl: './groq.component.html',
   styleUrl: './groq.component.css'
 })
-export class GroqComponent {
-  messages: string[] = [
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum. Fusce euismod, sapien sit amet ullamcorper fermentum, nisi ligula faucibus mi, nec scelerisque turpis quam at metus. Curabitur eget lectus vitae mi lacinia lobortis. In euismod, elit in fermentum sodales, velit libero vulputate nunc, et auctor tortor lorem vitae enim."
-  ];
+export class GroqComponent implements OnInit {
+  response: string = "";
 
   displayedText = "";
-  typingSpeed = 30;
+  typingSpeed = 10;
   isTyping = false;
-  sendMessage() {
-    const randomMessage = this.messages[Math.floor(Math.random() * this.messages.length)];
-    this.displayedText = "";
-    this.isTyping = false;
-    setTimeout(() => {
-      this.isTyping = true;
-      this.typeText(randomMessage);
-    }, 100);
+
+  private groqResponseSubscription!: Subscription;
+
+
+  constructor(public gameService: GameService) { }
+
+  ngOnInit(): void {
+    this.groqResponseSubscription = this.gameService.groqResponse$.subscribe((groqResponse: any) => {
+      this.response = groqResponse.choices[0].message.content;
+      this.typeText(this.response);
+    });
   }
+
 
   typeText(text: string) {
     let index = 0;

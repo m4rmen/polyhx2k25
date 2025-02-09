@@ -3,6 +3,8 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { GlobeQuizService } from './globe-quiz.service';
 import { Subscription } from 'rxjs';
+import { GroqService } from './groq.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,10 @@ import { Subscription } from 'rxjs';
 export class GameService {
   private _globeType = new BehaviorSubject<number>(1);
   public globeType$ = this._globeType.asObservable();
+
+  private _groqResponse = new BehaviorSubject<string>('');
+  public groqResponse$ = this._groqResponse.asObservable();
+
   quizSteps: any[] = [];
   currentStep: any = null;
   questions: any[] = [];
@@ -38,7 +44,7 @@ export class GameService {
   private clickedDeforestationCountriesSubscription!: Subscription;
   
 
-  constructor(private globeQuizService: GlobeQuizService) { 
+  constructor(private globeQuizService: GlobeQuizService, private groqService: GroqService) { 
     this.clickedTopEmissionCountriesSubscription = this.globeQuizService.clickedTopEmissionCountries$.subscribe((clickedTopEmissionCountries: string[]) => {
       this.clickedTopEmissionCountries = clickedTopEmissionCountries;
       if (this.clickedTopEmissionCountries.length == 3) {
@@ -174,6 +180,9 @@ export class GameService {
       question.answered = true;
       console.log('setting globe type to:', this.globeIndex + 1);
       this.setGlobeType(++this.globeIndex); // 3
+      this.groqService.getChatCompletion(this.questions[0].aiPrompt).then((response) => {
+        this._groqResponse.next(response);
+      });
       //this.buttonText = 'Suivant';
     } else if (this.buttonText === 'Suivant') {
       this.nextStep();
