@@ -42,8 +42,8 @@ export class GameService {
       else if ((this.clickedCountries.length == 3 || this.clickedCountries.includes(this.currentQuestion.correctAnswers[0])) && this.currentQuestion.id === 3) {
         this.validateInteractiveQuestion(1);
       } 
-      // Food production question
-      else if (this.clickedCountries.length >= 3 && this.currentQuestion.id === 4) {
+      // Food production question and forest question
+      else if (this.clickedCountries.length >= 3 && (this.currentQuestion.id === 4 || this.currentQuestion.id === 6)) {
         let count = 0;
         this.clickedCountries.forEach((country) => {
           if (this.currentQuestion.correctAnswers.includes(country)) {

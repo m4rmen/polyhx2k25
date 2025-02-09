@@ -11,7 +11,6 @@ export function initFoodProdQuizGlob(ref: ElementRef, globeQuizService: GlobeQui
     const foodProdValues = Object.values(FOOD_PROD_DATA).filter(d => d > 0);
     const minFood = d3.min(foodProdValues) || 1;
     const maxFood = d3.max(foodProdValues) || 1;
-
     
     const top5FoodProdCountries = Object.entries(FOOD_PROD_DATA)
     .sort(([, a], [, b]) => b - a)
@@ -24,6 +23,8 @@ export function initFoodProdQuizGlob(ref: ElementRef, globeQuizService: GlobeQui
     .domain([minFood, maxFood])
     .range(["red", "green"])
     .clamp(true);
+
+    globeQuizService.resetValues();
     
     const globe = new Globe(ref.nativeElement)
     .globeImageUrl('assets/earth-blue-marble.jpg')
