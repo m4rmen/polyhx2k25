@@ -25,6 +25,7 @@ import { initFoodProdGlob } from '../utils/foodProdGlobe';
 import { initFoodProdQuizGlob } from '../utils/foodProdQuizGlobe';
 import { endGameGlobe } from '../utils/endGameGlobe';
 import { RessourceComponent } from '../../components/ressource/ressource.component';
+import { animalsGlobe } from '../utils/animalsGlobe';
 
 
 @Component({
@@ -123,6 +124,15 @@ export class HomepageComponent implements AfterViewInit, OnInit {
                 break;
             case 9:
                 this.changeGlobe(initFoodProdGlob);
+                break;
+            case 10:
+                this.changeGlobe(animalsGlobe);
+                break;
+            case 11:
+                this.changeGlobe(initDeforestationQuizGlobe, this.globeQuizService);
+                break;
+            case 12:
+                this.changeGlobe(initDeforestationAnswerGlobe);
                 break;
             default:
                 this.changeGlobe(baseGlobe);

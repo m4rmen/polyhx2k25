@@ -81,7 +81,7 @@
             ],
             "answerFeedback": {
                 "correct": "Bravo, vous avez trouvé les 3 pays plus grand exportateurs de blé.",
-                "incorrect": "Mauvaise réponse! Les 3 pays plsu grand exportateurs de blé sont : les États-Unis, la Chine et l'Inde."
+                "incorrect": "Mauvaise réponse! Les 3 pays plus grand exportateurs de blé sont : les États-Unis, la Chine et l'Inde."
             },
             "answered": false,
             "globeIndexes": [
@@ -110,10 +110,33 @@
             },
             "answered": false,
             "globeIndexes": [
-                4,
-                4
+                10,
+                10
             ],
             "aiPrompt": "Listez les espèces animales les plus menacées dans le monde et expliquez pourquoi."
+        },
+        {
+            "id": 6,
+            "type": "interactive",
+            "title": "Question Interactive",
+            "question": "Donner 3 pays dont le taux de déforestation est le plus important ?",
+            "options": [],
+            "correctAnswers": [
+                "BRA",                       
+                "IDN",                        
+                "TZA",                      
+                "MMR",                      
+                "PRY"  
+            ],
+            "answerFeedback": {
+                "correct": "Bravo, vous avez trouvé les 3 pays qui déforeste le plus !",
+                "incorrect": "Mauvaise réponse! Les 3 pays qui déforeste le plus sont : le Brésil, l'Indonésie et la Russie."
+            },
+            "answered": false,
+            "globeIndexes": [
+                11,
+                12
+            ]
         }
     ]
 }

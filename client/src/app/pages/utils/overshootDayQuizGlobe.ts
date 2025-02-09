@@ -46,7 +46,7 @@ export function initOvershootQuizGlobe(ref: ElementRef, globeQuizService: GlobeQ
             if (isClickedTopEmissionCountry && isoCode === answer) {
                 const overshootDate = new Date(OVERSHOOT_DAY_DATA[isoCode]);
                 return colorScale(overshootDate.getTime());
-            } else if (isClickedTopEmissionCountry && OVERSHOOT_DAY_DATA[isoCode]) {
+            } else if (isClickedTopEmissionCountry) {
                 return 'rgb(98, 98, 98)';
             }
             return 'rgba(0, 0, 0, 0.1)';
