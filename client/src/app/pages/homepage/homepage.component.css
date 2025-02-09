@@ -117,7 +117,7 @@ button.hide-button {
 }
 
 .globe-background.fade-out {
-    transition: opacity 4s ease-in-out;
+    transition: opacity 3s ease-in-out;
     opacity: 0;
     z-index: -1;
 }

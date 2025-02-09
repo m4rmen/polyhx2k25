@@ -17,7 +17,7 @@ import { initDeforestationAnswerGlobe } from '../utils/deforestationAnswerGlobe'
 import { initPopulationGlobe } from '../utils/worldPopulationGlobe';
 import { initOvershootGlobe } from '../utils/overshootDaysGlobe';
 import { initOvershootQuizGlobe } from '../utils/overshootDayQuizGlobe';
-import { baseGlobe } from '../utils/testglobe';
+import { baseGlobe } from '../utils/baseGlobe';
 import { GroqComponent } from '../../components/groq/groq.component';
 import { GameService } from '../../services/game.service';
 import { Subscription } from 'rxjs';
@@ -130,23 +130,32 @@ export class HomepageComponent implements AfterViewInit, OnInit {
         newWorld.controls().autoRotateSpeed = -0.65;
         newWorld.controls().maxDistance = 1300;
 
+        const currentCoords = this.world?.pointOfView();
+
+        if (currentCoords) {
+            newWorld.pointOfView(currentCoords, 0);
+        }
+
         setTimeout(() => {
             this.renderer.addClass(container2.nativeElement, 'fade-in');
             this.renderer.removeClass(container2.nativeElement, 'fade-out');
-            this.renderer.addClass(container1.nativeElement, 'fade-out');
-            this.renderer.removeClass(container1.nativeElement, 'fade-in');
+            
+            setTimeout(() => {
+                this.renderer.addClass(container1.nativeElement, 'fade-out');
+                this.renderer.removeClass(container1.nativeElement, 'fade-in');
+            }, 500);
 
             setTimeout(() => {
                 this.world?.scene().clear();
                 this.world = newWorld;
-            }, 4000);
-        }, 1000);
+            }, 3000); 
+        }, 1000); 
     }
 
     initGlobe(): void {
         this.world = new Globe(this.globeContainer1.nativeElement, { animateIn: true, waitForGlobeReady: true })
             .globeImageUrl('assets/earth-blue-marble.jpg')
-            .bumpImageUrl('assets/earth-topology.png');
+            .bumpImageUrl('assets/earth-topology.png').backgroundColor('#000000');
 
         this.world.controls().autoRotate = true;
         this.world.controls().autoRotateSpeed = -0.65;
