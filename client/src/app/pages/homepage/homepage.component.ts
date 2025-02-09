@@ -70,14 +70,24 @@ export class HomepageComponent implements AfterViewInit {
         this.hideButton = false;     // Fait réapparaître le bouton
     }
 
-    triggerChangeGlobe() {
-        if (this.isContainer1Active) {
-            this.changeGlobe(initCo2Globe);
-        } else {
-            this.changeGlobe(baseGlobe);
+
+    triggerChangeGlobe(globeIndex: number) {
+        switch (globeIndex) {
+            case 1:
+                this.changeGlobe(baseGlobe);
+                break;
+            case 2:
+                this.changeGlobe(initEmissionQuizGlobe);
+                break;
+            case 3:
+                this.changeGlobe(initCo2Globe);
+                break;
+            default:
+                this.changeGlobe(baseGlobe);
+                break;
         }
-        this.isContainer1Active = !this.isContainer1Active;
     }
+    
 
     changeGlobe(newGlobeFunc: CallableFunction): void {
         let container1: ElementRef; let container2: ElementRef;
