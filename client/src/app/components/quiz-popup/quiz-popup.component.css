@@ -6,7 +6,7 @@
     border-radius: 0.5rem;
     width: 32rem;
     height: 45rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1); */
     text-align: center;
     color: white;
 }
