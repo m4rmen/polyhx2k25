@@ -51,7 +51,7 @@
             "id": 3,
             "type": "interactive",
             "title": "Question Interactive",
-            "question": "Quel est le pays qui eppuise ses ressources naturelles le plus rapidement ?",
+            "question": "Quel est le pays qui épuise ses ressources naturelles le plus rapidement ?",
             "options": [],
             "correctAnswers": [
                 "QAT"
