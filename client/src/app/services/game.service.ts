@@ -3,8 +3,6 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { GlobeQuizService } from './globe-quiz.service';
 import { Subscription } from 'rxjs';
-import { GroqService } from './groq.service';
-
 
 @Injectable({
   providedIn: 'root'
@@ -43,12 +41,8 @@ export class GameService {
   //subscrbe to the clickedDeforestationCountries
   private clickedDeforestationCountriesSubscription!: Subscription;
 
-<<<<<<< HEAD
 
   constructor(private globeQuizService: GlobeQuizService) {
-=======
-  constructor(private globeQuizService: GlobeQuizService, private groqService: GroqService) { 
->>>>>>> 640ef70ef01907869e458b3b4100afab6bb6fbc7
     this.clickedTopEmissionCountriesSubscription = this.globeQuizService.clickedTopEmissionCountries$.subscribe((clickedTopEmissionCountries: string[]) => {
       this.clickedTopEmissionCountries = clickedTopEmissionCountries;
       if (this.clickedTopEmissionCountries.length == 3) {
@@ -178,20 +172,15 @@ export class GameService {
   // either marks the question as answered or moves to the next question.
   validateAnswer(): void {
     const question = this.currentStep.questions[this.currentQuestionIndex];
-    if (this.currentStep.type === 'interactive' && !question.answered) {
+    if (this.currentStep.type === 'interactive') {
       this.checkAnswersPerQuestion();
       question.answered = true;
       this.setGlobeType(++this.globeIndex); // 3
-<<<<<<< HEAD
-      this.buttonText = 'Suivant';
-=======
       this.groqService.getChatCompletion(this.questions[0].aiPrompt).then((response) => {
         this._groqResponse.next(response);
       });
       //this.buttonText = 'Suivant';
->>>>>>> 640ef70ef01907869e458b3b4100afab6bb6fbc7
     } else if (this.buttonText === 'Suivant') {
-      console.log('Prochaine question');
       this.nextStep();
     } else if (this.selectedAnswer) {
       question.answered = true;
@@ -200,14 +189,14 @@ export class GameService {
   }
 
   // Advances to the next quiz step, or ends the quiz if none remain.
-  nextStep(): void {
-    if (this.currentStepIndex < this.quizSteps.length - 1) {
-      this.currentStepIndex++;
-      this.currentQuestionIndex = 0;
-      this.selectedAnswer = null;
-      this.loadCurrentStep();
-    } else {
-      this.endQuiz();
-    }
-  }
+  // nextStep(): void {
+  //   if (this.currentStepIndex < this.quizSteps.length - 1) {
+  //     this.currentStepIndex++;
+  //     this.currentQuestionIndex = 0;
+  //     this.selectedAnswer = null;
+  //     this.loadCurrentStep();
+  //   } else {
+  //     this.endQuiz();
+  //   }
+  // }
 }

@@ -12,7 +12,7 @@
     <!-- Étape 1 : Réponse Interactive -->
     <div *ngIf="gameService.currentStep?.type === 'interactive' && !gameService.showStepTitle">
         <h3>{{ gameService.currentStep.questions?.text }}</h3>
-        <div *ngIf="gameService.questions[gameService.currentQuestionIndex].answered">
+        <div *ngIf="gameService.questions.answered">
             <h1>Réponses :</h1>
         </div>
         <div *ngIf="gameService.questions.answered" class="interactive-options">
