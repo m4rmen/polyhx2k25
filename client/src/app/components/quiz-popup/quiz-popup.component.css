@@ -3,28 +3,51 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    border: solid black;
     border-radius: 0.5rem;
-    width: 25rem;
+    width: 32rem;
     height: 45rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
     text-align: center;
     color: white;
 }
 
-.start-quiz {
+.timer {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.options-column {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin-top: 15rem;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.toggle-button {
+    padding: 1rem;
+    font-weight: 700;
+    width: 50%;
+    border: none;
+    border-radius: 0.5rem;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.toggle-button:hover {
+    transform: scale(1.1);
+    background-color: #007bff;
+    color: white;
 }
 
 .button {
-    background-color: #4CAF50;
+    background-color: #cfef00;
+    font-weight: 700;
     border: none;
-    color: white;
-    padding: 15px 32px;
+    color: black;
+    padding: 1rem 2rem;
     text-align: center;
     text-decoration: none;
     display: inline-block;
@@ -34,10 +57,18 @@
     border-radius: 2rem;
 }
 
+.quiz-footer {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    margin-top: 2rem;
+}
+
 .quit-button {
-    background-color: #f44336;
+    background-color: #ad0f04;
     border: none;
-    color: white;
+    font-weight: 700;
+    color: #000;
     padding: 15px 32px;
     text-align: center;
     text-decoration: none;
@@ -63,28 +94,5 @@
 .toggle-button.selected {
     background-color: #007bff;
     border-color: #007bff;
-    color: white;
-}
-
-
-.options-column {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.toggle-button {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #f9f9f9;
-    cursor: pointer;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
-}
-
-.toggle-button.selected {
-    background-color: #007bff;
-    border-color: #007bff;
-    color: white;
+    color: #fff;
 }

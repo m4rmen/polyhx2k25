@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Component } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
@@ -9,11 +9,15 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./quiz-popup.component.css'],
   imports: [FormsModule, CommonModule],
 })
-export class QuizPopupComponent {
+export class QuizPopupComponent implements OnInit {
+  @Output() closePopup = new EventEmitter<void>();
   quizStarted = false;
   currentQuestionIndex = 0;
   buttonText = 'Valider';
   selectedAnswer: string | null = null;
+  timerStarted = false;
+  timeLeft = 5; // Temps en secondes avant que le quiz commence (ajuster selon les besoins)
+  interval: any;
 
   questions = [
     {
@@ -37,6 +41,21 @@ export class QuizPopupComponent {
     },
   ];
 
+  ngOnInit(): void {
+    this.timerStarted = true;
+    this.startTimer();
+  }
+
+  startTimer() {
+    this.interval = setInterval(() => {
+      this.timeLeft--;
+      if (this.timeLeft === 0) {
+        clearInterval(this.interval);
+        this.startQuiz();
+      }
+    }, 1000);
+  }
+
   startQuiz() {
     this.quizStarted = true;
     this.currentQuestionIndex = 0;
@@ -44,6 +63,7 @@ export class QuizPopupComponent {
   }
 
   endQuiz() {
+    this.closePopup.emit();
     this.quizStarted = false;
     this.resetQuestions();
   }

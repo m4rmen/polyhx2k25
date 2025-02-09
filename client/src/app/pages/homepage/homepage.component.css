@@ -47,7 +47,7 @@ canvas {
 }
 
 button {
-    width: 15rem;
+    width: 22rem;
     cursor: pointer;
     font-weight: 700;
     transition: all 0.2s;
@@ -66,7 +66,7 @@ button:hover {
 
 button>svg {
     width: 34px;
-    margin-left: 7rem;
+    margin-left: 9rem;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -121,14 +121,15 @@ button.hide-button {
 .quiz-popup {
     position: absolute;
     top: 15%;
-    left: 75%;
+    left: 70%;
     opacity: 1;
     z-index: 1;
 }
 
 .globe-background {
-    opacity: 0; /* Initially invisible */
-    z-index: -1; 
+    opacity: 0;
+    /* Initially invisible */
+    z-index: -1;
 }
 
 .globe-background.fade-in {
@@ -143,6 +144,7 @@ button.hide-button {
     opacity: 0;
     z-index: -1;
 }
+
 .important {
     color: #cfef00;
 }
