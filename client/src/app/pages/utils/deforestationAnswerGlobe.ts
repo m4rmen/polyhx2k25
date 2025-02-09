@@ -4,49 +4,45 @@ import { countryData } from '../../../assets/country-data';
 import * as d3 from 'd3'; 
 import { ElementRef } from '@angular/core';
 import { FOREST_TRENDS } from '../../../assets/deforestationTrend';
+import { createBackground } from './background';
 
 export function initDeforestationAnswerGlobe(ref: ElementRef): GlobeInstance {
+  const maxDeforest = -360000;
+  const minDeforest = 360000;
   
-  const deforestationMapping: Record<string, number> = {};
-  FOREST_TRENDS.forEach(item => {
-    deforestationMapping[item.iso3c] = item.trend;
-  });
-
-  const trendValues = FOREST_TRENDS.map(d => d.trend);
-  const minTrend = Math.min(...trendValues);
-  const maxTrend = Math.max(...trendValues);
-
   const colorScale = d3.scaleLinear<string>()
-    .domain([minTrend, maxTrend])
-    .range(["red", "green"])
-    .clamp(true);
+  .domain([maxDeforest, minDeforest])
+  .range(["red", "green"])
+  .clamp(true);
 
-  const globe = new Globe(ref.nativeElement, { animateIn: false, waitForGlobeReady: true })
+  const globe = new Globe(ref.nativeElement)
     .globeImageUrl('assets/earth-blue-marble.jpg')
     .bumpImageUrl('assets/earth-topology.png')
     .backgroundImageUrl('assets/galaxy_starfield.png');
 
-  globe
+    globe
     .polygonsData(countryData.features)
-    .polygonAltitude(0.01)
+    .polygonAltitude(0.01)  
     .polygonCapColor((feat: any) => {
       const isoCode = feat.id;
-      const trend = deforestationMapping[isoCode] || 0;
-        return colorScale(trend);
+      const value = FOREST_TRENDS[isoCode] || 0;
+      if (value === 0) {
+        return 'rgba(0, 0, 0, 0.1)';
+      }
+      return colorScale(value);
     })
     .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
     .polygonStrokeColor(() => '#111')
     .polygonLabel((feat: any) => {
-      const isoCode = feat.id;
-      const trend = deforestationMapping[isoCode] || 0;
       return `
         <b>${feat.properties.name}</b><br/>
-        Deforestation Trend (% change): ${trend.toFixed(2)}
+        Hectare de forêt: ${Math.round(FOREST_TRENDS[feat.id]) || 'No data'}
       `;
     });
 
-    globe.controls().autoRotate = true;
-    globe.controls().autoRotateSpeed = -0.65;
+  globe.controls().autoRotate = true;
+  globe.controls().autoRotateSpeed = -0.65;
 
+  createBackground(globe);
   return globe;
 }
