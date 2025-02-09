@@ -116,8 +116,10 @@ export class GameService {
 
 
   validateQCMQuestion(): void {
-    if (this.currentQuestion.answered)
+    if (this.currentQuestion.answered){
       this.nextQuestion();
+      return;
+    }
     else if (this.selectedAnswer === this.currentQuestion.correctAnswers[0]) {
       this.answeredCorrectly = true;
     } else {
