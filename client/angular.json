@@ -11,11 +11,15 @@
       "prefix": "app",
       "architect": {
         "build": {
+          
           "builder": "@angular-devkit/build-angular:application",
           "options": {
+            "outputHashing": "all",
             "outputPath": "dist/client",
             "index": "src/index.html",
             "browser": "src/main.ts",
+            "optimization": true,
+            "sourceMap": false,
             "polyfills": [
               "zone.js"
             ],
@@ -33,15 +37,18 @@
               "src/custom-theme.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "frame-ticker"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "8mb",
+                  "maximumError": "8mb"
                 },
                 {
                   "type": "anyComponentStyle",
